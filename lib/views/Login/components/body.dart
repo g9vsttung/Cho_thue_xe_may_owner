@@ -1,7 +1,4 @@
-import 'package:chothuexemay_owner/constants/constant.dart';
 import 'package:chothuexemay_owner/view_model/google_signin_in_view_model.dart';
-import 'package:chothuexemay_owner/views/Home/home_view.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,8 +11,6 @@ class LoginBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<GoogleSignInViewModel>(context, listen: false);
-    final FirebaseApp =
-        GoogleSignInViewModel.initializeFirebase(context: context);
     return Container(
       child: Padding(
         padding: EdgeInsets.only(top: size.height * 0.55),

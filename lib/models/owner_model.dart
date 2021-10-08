@@ -13,7 +13,9 @@ class Owner {
   int numberOfbikes;
   double rating;
   int numberOfRatings;
-
+  //Login
+  String? acessToken;
+  String? accessId;
   factory Owner.jsonFrom(Map<String, dynamic> json) {
     return Owner(
         id: json['id'],

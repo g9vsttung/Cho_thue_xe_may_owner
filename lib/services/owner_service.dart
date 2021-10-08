@@ -17,4 +17,24 @@ class OwnerService {
       throw Exception("Unable to perform request");
     }
   }
+
+  Future<void> login(String uid, String accessToken) async {
+    final response = await http.post(
+      Uri.parse(OwnerApiPath.LOGIN),
+      headers: <String, String>{
+        'Content-Type': 'application/json ; charset=UTF-8',
+      },
+      body: jsonEncode(
+          <String, String>{'accessToken': accessToken, 'googleId': uid}),
+    );
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      print('Login success');
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to Login');
+    }
+  }
 }

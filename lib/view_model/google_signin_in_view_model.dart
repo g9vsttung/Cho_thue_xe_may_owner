@@ -1,3 +1,4 @@
+import 'package:chothuexemay_owner/Repositories/Implementations/owner_repository.dart';
 import 'package:chothuexemay_owner/views/Home/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,7 +10,7 @@ class GoogleSignInViewModel extends ChangeNotifier {
   final googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
-
+  OwnerRepository _ownerRepository = OwnerRepository();
   static Future<FirebaseApp> initializeFirebase({
     required BuildContext context,
   }) async {
@@ -29,6 +30,7 @@ class GoogleSignInViewModel extends ChangeNotifier {
   Future googleLogin({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
+    GoogleSignInAuthentication googleSignInAuthentication;
 
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -36,12 +38,12 @@ class GoogleSignInViewModel extends ChangeNotifier {
         await googleSignIn.signIn();
 
     if (googleSignInAccount != null) {
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
-
+      googleSignInAuthentication = await googleSignInAccount.authentication;
+      String? _acessToken = googleSignInAuthentication.accessToken;
+      String? _idToken = googleSignInAuthentication.idToken;
       final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
+        accessToken: _acessToken,
+        idToken: _idToken,
       );
 
       try {
@@ -49,6 +51,7 @@ class GoogleSignInViewModel extends ChangeNotifier {
             await auth.signInWithCredential(credential);
 
         user = userCredential.user;
+        _ownerRepository.login(user!.uid, _acessToken!);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           ScaffoldMessenger.of(context).showSnackBar(

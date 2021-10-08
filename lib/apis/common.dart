@@ -3,7 +3,7 @@
 
 const URL_SERVER = "http://52.74.12.123:80/";
 // ignore: prefer_const_declarations
-final _VERSION = "v1.0";
+final _VERSION = "v1";
 
 // ignore: prefer_const_declarations
 final _URL_API = URL_SERVER + "api/" + _VERSION;
@@ -31,6 +31,8 @@ class CustomerApiPath {
 
 class OwnerApiPath {
   static String GET_ALL = _URL_API + "/owners";
+  //Login
+  static String LOGIN = _URL_API + "/owners/login";
 }
 
 class AdminApiPath {
