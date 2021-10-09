@@ -11,7 +11,7 @@ class OwnerRepository implements IOwnerRepository {
   }
 
   @override
-  Future<void> login(String uid, String accessId) async {
-    service.login(uid, accessId);
+  Future<int> login(String uid, String accessId) async {
+    return service.login(uid, accessId);
   }
 }

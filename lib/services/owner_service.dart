@@ -18,7 +18,7 @@ class OwnerService {
     }
   }
 
-  Future<void> login(String uid, String accessToken) async {
+  Future<int> login(String uid, String accessToken) async {
     final response = await http.post(
       Uri.parse(OwnerApiPath.LOGIN),
       headers: <String, String>{
@@ -27,14 +27,6 @@ class OwnerService {
       body: jsonEncode(
           <String, String>{'accessToken': accessToken, 'googleId': uid}),
     );
-    if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      print('Login success');
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to Login');
-    }
+    return response.statusCode;
   }
 }

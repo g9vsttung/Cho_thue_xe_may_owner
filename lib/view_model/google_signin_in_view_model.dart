@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:chothuexemay_owner/Repositories/Implementations/owner_repository.dart';
 import 'package:chothuexemay_owner/views/Home/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +12,7 @@ class GoogleSignInViewModel extends ChangeNotifier {
   final googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
-  OwnerRepository _ownerRepository = OwnerRepository();
+  final OwnerRepository _ownerRepository = OwnerRepository();
   static Future<FirebaseApp> initializeFirebase({
     required BuildContext context,
   }) async {
@@ -39,19 +41,17 @@ class GoogleSignInViewModel extends ChangeNotifier {
 
     if (googleSignInAccount != null) {
       googleSignInAuthentication = await googleSignInAccount.authentication;
-      String? _acessToken = googleSignInAuthentication.accessToken;
-      String? _idToken = googleSignInAuthentication.idToken;
       final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: _acessToken,
-        idToken: _idToken,
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
       );
 
       try {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
-
         user = userCredential.user;
-        _ownerRepository.login(user!.uid, _acessToken!);
+        var accessToken = await userCredential.user!.getIdToken();
+        return await _ownerRepository.login(user!.uid, accessToken);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -72,7 +72,6 @@ class GoogleSignInViewModel extends ChangeNotifier {
       }
     }
     notifyListeners();
-    return user;
   }
 
   static Future<void> signOut({required BuildContext context}) async {
@@ -80,7 +79,7 @@ class GoogleSignInViewModel extends ChangeNotifier {
       await FirebaseAuth.instance.signOut();
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(customSnackBar(
-        content: 'Error signing out. Try again.',
+        content: 'Lỗi, vui lòng thử lại',
       ));
     }
   }
