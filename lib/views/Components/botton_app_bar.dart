@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors
 
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/views/Manage/manage_view.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar extends StatelessWidget {
@@ -94,6 +95,11 @@ class BottomBar extends StatelessWidget {
           //=============================================MANAGE
           if (selected == "manage")
             GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ManageView();
+                },));
+              },
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -113,6 +119,11 @@ class BottomBar extends StatelessWidget {
             )
           else
             GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ManageView();
+                },));
+              },
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
