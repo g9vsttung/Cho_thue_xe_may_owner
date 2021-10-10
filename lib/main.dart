@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:chothuexemay_owner/view_model/google_signin_in_view_model.dart';
+import 'package:chothuexemay_owner/views/Home/home_view.dart';
 import 'package:chothuexemay_owner/views/Login/login_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
             primaryColor: Color(0xFFFFEBEE),
             scaffoldBackgroundColor: Colors.white,
           ),
-          home: LoginView()),
+          home: HomeView()),
     );
   }
 }
