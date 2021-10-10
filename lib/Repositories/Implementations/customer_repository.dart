@@ -9,9 +9,4 @@ class CustomerRepository implements ICustomerRepository {
     Future.delayed(const Duration(seconds: 5));
     return service.getAll();
   }
-
-  @override
-  String sendOTP(String phone) {
-    return "not found";
-  }
 }

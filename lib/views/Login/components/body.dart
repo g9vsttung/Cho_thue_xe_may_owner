@@ -34,6 +34,8 @@ class LoginBody extends StatelessWidget {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (context) => HomeView()),
                       );
+                    } else if (isLoginSuccess == 404) {
+                      //New user
                     } else {
                       SnackBar(
                           content: Text(
