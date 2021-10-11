@@ -8,8 +8,11 @@ import 'package:chothuexemay_owner/views/Manage/SubView/Create/components/body.d
 import 'package:flutter/material.dart';
 
 class CreateView extends StatelessWidget {
-  const CreateView({Key? key}) : super(key: key);
 
+  String fisrtSelectBrand;
+  String fisrtSelectType;
+  String fisrtSelectYear;
+  CreateView({required this.fisrtSelectBrand,required this.fisrtSelectType, required this.fisrtSelectYear});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +21,7 @@ class CreateView extends StatelessWidget {
         backgroundColor: ColorConstants.background,
         title: TopAppBarMain(),
       ),
-      body: CreateBody(),
+      body: CreateBody(selectedBrand: fisrtSelectBrand,selectedType: fisrtSelectType, selectedYear:  fisrtSelectYear,),
       bottomNavigationBar: BottomAppBar(
         color: ColorConstants.background,
         child: BottomBar(selected: "manage"),

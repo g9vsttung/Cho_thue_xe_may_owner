@@ -4,11 +4,11 @@ import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DropDownBox extends StatefulWidget {
+class DropDownCreate extends StatefulWidget {
   String categoryDropDown;
   String selectedBrand = "";
   Function(String selected) onChanged;
-  DropDownBox(
+  DropDownCreate(
       {required this.categoryDropDown,
       required this.onChanged,
       String? brand}) {
@@ -16,12 +16,11 @@ class DropDownBox extends StatefulWidget {
   }
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
+    return _DropDownCreate();
   }
 }
 
-class _DropDownBox extends State<DropDownBox> {
+class _DropDownCreate extends State<DropDownCreate> {
   @override
   void initState() {
     // TODO: implement initState
@@ -43,7 +42,7 @@ class _DropDownBox extends State<DropDownBox> {
       });
     } else if (widget.categoryDropDown == "Type") {
       Brand brand = listBrandObject.firstWhere((Brand x) {
-        if (x.name == widget.selectedBrand)
+        if (x.id == widget.selectedBrand)
           return true;
         else
           return false;
@@ -70,8 +69,8 @@ class _DropDownBox extends State<DropDownBox> {
       child: DropdownButton(
           underline: SizedBox(),
           value: listItem[0],
-          onChanged: (selected) {
-            widget.onChanged(selected.toString());
+          onChanged: (value) {
+            widget.onChanged(value.toString());
           },
           iconSize: 12,
           icon: Image.asset(

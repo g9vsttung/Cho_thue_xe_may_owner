@@ -1,5 +1,7 @@
 import 'package:chothuexemay_owner/models/brand_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/views/Manage/SubView/Create/components/dropdown.dart';
+import 'package:chothuexemay_owner/views/Manage/SubView/Create/components/dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -7,6 +9,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 class CreateBody extends StatefulWidget {
+  String selectedBrand;
+  String selectedYear;
+  String selectedType;
+  CreateBody({required this.selectedBrand,required this.selectedYear, required this.selectedType});
   @override
   State<StatefulWidget> createState() {
     return _CreateBody();
@@ -16,9 +22,6 @@ class CreateBody extends StatefulWidget {
 class _CreateBody extends State<CreateBody> {
   TextEditingController colorController = TextEditingController();
   TextEditingController licensePlateController = TextEditingController();
-  String selectedBrand = "";
-  String selectedYear = "";
-  String selectedType = "";
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -130,9 +133,21 @@ class _CreateBody extends State<CreateBody> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    getDropDownBox("Brand", size),
-                    getDropDownBox("Type", size),
-                    getDropDownBox("Year", size),
+                    DropDownCreate(categoryDropDown: "Brand", onChanged: (value){
+                      setState(() {
+                        widget.selectedBrand=value;
+                      });
+                    },),
+                    DropDownCreate(categoryDropDown: "Type", onChanged: (value){
+                      setState(() {
+                        widget.selectedType=value;
+                      });
+                    },brand: widget.selectedBrand,),
+                    DropDownCreate( categoryDropDown: "Year", onChanged: (value){
+                      setState(() {
+                        widget.selectedYear=value;
+                      });
+                    }, ),
                     Container(
                       width: size.width * 0.4,
                       height: 35,
@@ -199,7 +214,9 @@ class _CreateBody extends State<CreateBody> {
                   color: Colors.orange,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10))),
-                  onPressed: () {},
+                  onPressed: () {
+
+                  },
                   child: Text(
                     "Đồng ý",
                     style: TextStyle(

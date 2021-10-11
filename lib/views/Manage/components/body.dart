@@ -2,12 +2,14 @@
 
 import 'package:chothuexemay_owner/models/bike_model_fake.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/views/Components/bike_info.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Create/create_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ManageBody extends StatelessWidget {
+class ManageBody extends StatefulWidget {
   List<BikeFake> list = [
     BikeFake("yamahaEx.png", "Yamaha", "Exciter", "blue", 2020, "17AB-SD45"),
     BikeFake("yamahaEx.png", "Yamaha", "Exciter", "blue", 2020, "17AB-SD45"),
@@ -19,7 +21,21 @@ class ManageBody extends StatelessWidget {
 
   ManageBody({Key? key}) : super(key: key);
   @override
+  State<StatefulWidget> createState() {
+    return _ManageBody();
+  }
+}
+class _ManageBody extends State<ManageBody>{
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<BrandViewModel>(context, listen: false).getAll();
+  }
+  @override
   Widget build(BuildContext context) {
+    final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
+
     return Padding(
       padding: EdgeInsets.all(12),
       child: SingleChildScrollView(
@@ -41,7 +57,10 @@ class ManageBody extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return CreateView();
+                      return CreateView(
+                          fisrtSelectBrand: _brandViewModel.brands[0].id,
+                          fisrtSelectType: _brandViewModel.brands[0].categories[0].id,
+                          fisrtSelectYear: "1");
                     },
                   ));
                 },
@@ -68,7 +87,7 @@ class ManageBody extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            for (BikeFake bike in list)
+            for (BikeFake bike in widget.list)
               BikeInfo(
                   image: bike.image,
                   brand: bike.brand,
@@ -81,4 +100,5 @@ class ManageBody extends StatelessWidget {
       ),
     );
   }
+
 }
