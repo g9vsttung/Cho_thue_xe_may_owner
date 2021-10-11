@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:chothuexemay_owner/models/brand_model.dart';
+import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/view_model/google_signin_in_view_model.dart';
 import 'package:chothuexemay_owner/views/Home/home_view.dart';
 import 'package:chothuexemay_owner/views/Login/login_view.dart';
@@ -20,7 +22,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<GoogleSignInViewModel>(
-            create: (context) => GoogleSignInViewModel())
+            create: (context) => GoogleSignInViewModel()),
+        ChangeNotifierProvider<BrandViewModel>(
+            create: (context) => BrandViewModel()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
             primaryColor: Color(0xFFFFEBEE),
             scaffoldBackgroundColor: Colors.white,
           ),
-          home: HomeView()),
+          home: LoginView()),
     );
   }
 }

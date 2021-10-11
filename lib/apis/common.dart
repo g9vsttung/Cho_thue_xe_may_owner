@@ -38,3 +38,7 @@ class OwnerApiPath {
 class AdminApiPath {
   static String GET_ALL = "";
 }
+
+class BrandApiPath {
+  static String GET_ALL = _URL_API + "/brands";
+}

@@ -29,7 +29,7 @@ class GoogleSignInViewModel extends ChangeNotifier {
     return firebaseApp;
   }
 
-  Future googleLogin({required BuildContext context}) async {
+  Future<int> googleLogin({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
     GoogleSignInAuthentication googleSignInAuthentication;
@@ -72,6 +72,7 @@ class GoogleSignInViewModel extends ChangeNotifier {
       }
     }
     notifyListeners();
+    return -1;
   }
 
   static Future<void> signOut({required BuildContext context}) async {
