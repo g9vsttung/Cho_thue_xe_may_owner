@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls, must_be_immutable
+
 import 'package:chothuexemay_owner/models/brand_model.dart';
 import 'package:chothuexemay_owner/models/category_model.dart';
 import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
@@ -9,10 +11,14 @@ class DropDownCreate extends StatefulWidget {
   String selectedBrand = "";
   Function(String selected) onChanged;
   DropDownCreate(
-      {required this.categoryDropDown,
+      {Key? key,
+      required this.categoryDropDown,
       required this.onChanged,
-      String? brand}) {
-    selectedBrand = brand!;
+      String? brand})
+      : super(key: key) {
+    if (brand != null) {
+      selectedBrand = brand;
+    }
   }
   @override
   State<StatefulWidget> createState() {
@@ -22,17 +28,11 @@ class DropDownCreate extends StatefulWidget {
 
 class _DropDownCreate extends State<DropDownCreate> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Provider.of<BrandViewModel>(context, listen: false).getAll();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
     Size size = MediaQuery.of(context).size;
     List<Brand> listBrandObject = _brandViewModel.brands;
+    // ignore: unused_local_variable
     Map<String, String> listYear = {'1': "2019", '2': "2020", '3': "2021"};
     List<Temporary> listItem = [];
     if (widget.categoryDropDown == "Brand") {
@@ -41,12 +41,10 @@ class _DropDownCreate extends State<DropDownCreate> {
         listItem.add(t);
       });
     } else if (widget.categoryDropDown == "Type") {
-      Brand brand = listBrandObject.firstWhere((Brand x) {
-        if (x.id == widget.selectedBrand)
-          return true;
-        else
-          return false;
-      });
+      Brand brand = listBrandObject
+          .firstWhere((Brand x) => x.name == widget.selectedBrand);
+
+      // ignore: curly_braces_in_flow_control_structures
       brand.categories.forEach((Category category) {
         Temporary t = Temporary(category.id, category.name);
         listItem.add(t);
@@ -67,8 +65,8 @@ class _DropDownCreate extends State<DropDownCreate> {
         border: Border.all(color: Colors.black, width: 1),
       ),
       child: DropdownButton(
-          underline: SizedBox(),
-          value: listItem[0],
+          underline: const SizedBox(),
+          value: listItem[0].value,
           onChanged: (value) {
             widget.onChanged(value.toString());
           },
@@ -80,12 +78,12 @@ class _DropDownCreate extends State<DropDownCreate> {
           ),
           items: listItem.map((Temporary t) {
             return DropdownMenuItem(
-              value: t.key,
-              child: Container(
+              value: t.value,
+              child: SizedBox(
                 width: size.width * 0.4 - 20,
                 child: Text(
                   t.value,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                     color: Colors.black,

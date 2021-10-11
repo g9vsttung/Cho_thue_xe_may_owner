@@ -25,13 +25,14 @@ class ManageBody extends StatefulWidget {
     return _ManageBody();
   }
 }
-class _ManageBody extends State<ManageBody>{
+
+class _ManageBody extends State<ManageBody> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<BrandViewModel>(context, listen: false).getAll();
   }
+
   @override
   Widget build(BuildContext context) {
     final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
@@ -53,13 +54,17 @@ class _ManageBody extends State<ManageBody>{
               height: 15,
             ),
             Center(
+              // ignore: deprecated_member_use
               child: RaisedButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
+                      String value = _brandViewModel.brands[0].name;
+                      String type = _brandViewModel.brands[0].categories[0].id;
+
                       return CreateView(
-                          fisrtSelectBrand: _brandViewModel.brands[0].id,
-                          fisrtSelectType: _brandViewModel.brands[0].categories[0].id,
+                          fisrtSelectBrand: value,
+                          fisrtSelectType: type,
                           fisrtSelectYear: "1");
                     },
                   ));
@@ -100,5 +105,4 @@ class _ManageBody extends State<ManageBody>{
       ),
     );
   }
-
 }

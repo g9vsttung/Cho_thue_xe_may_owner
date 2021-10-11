@@ -1,6 +1,6 @@
-import 'package:chothuexemay_owner/models/brand_model.dart';
+// ignore_for_file: must_be_immutable
+
 import 'package:chothuexemay_owner/utils/constants.dart';
-import 'package:chothuexemay_owner/views/Manage/SubView/Create/components/dropdown.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Create/components/dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,12 @@ class CreateBody extends StatefulWidget {
   String selectedBrand;
   String selectedYear;
   String selectedType;
-  CreateBody({required this.selectedBrand,required this.selectedYear, required this.selectedType});
+  CreateBody(
+      {Key? key,
+      required this.selectedBrand,
+      required this.selectedYear,
+      required this.selectedType})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _CreateBody();
@@ -28,12 +33,12 @@ class _CreateBody extends State<CreateBody> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Column(
             children: [
-              Center(
+              const Center(
                 child: Text(
                   "THÊM XE MỚI",
                   style: TextStyle(
@@ -43,35 +48,36 @@ class _CreateBody extends State<CreateBody> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Center(
                 child: Container(
                   width: size.width * 0.8,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       border: Border(
                           top: BorderSide(width: 1, color: Colors.black54))),
                 ),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Column(
             children: [
               Center(
-                child: Container(
+                child: SizedBox(
                   height: 35,
+                  // ignore: deprecated_member_use
                   child: RaisedButton(
                     onPressed: () {
                       //Thêm ảnh ở đây
                     },
                     color: Colors.green,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Text(
+                    child: const Text(
                       "Thêm ảnh",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -79,7 +85,7 @@ class _CreateBody extends State<CreateBody> {
                   ),
                 ),
               ),
-              Center(
+              const Center(
                 child: Text(
                   "anh_ma_an_chon_.PNG",
                   style: TextStyle(fontSize: 10, fontStyle: FontStyle.italic),
@@ -87,7 +93,7 @@ class _CreateBody extends State<CreateBody> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Container(
@@ -98,28 +104,29 @@ class _CreateBody extends State<CreateBody> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  // ignore: prefer_const_literals_to_create_immutables
                   children: [
-                    Text(
+                    const Text(
                       "Hãng",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
-                    Text(
+                    const Text(
                       "Loại xe",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
-                    Text(
+                    const Text(
                       "Đời xe",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
-                    Text(
+                    const Text(
                       "Màu",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
-                    Text(
+                    const Text(
                       "Biển số",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -133,54 +140,64 @@ class _CreateBody extends State<CreateBody> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    DropDownCreate(categoryDropDown: "Brand", onChanged: (value){
-                      setState(() {
-                        widget.selectedBrand=value;
-                      });
-                    },),
-                    DropDownCreate(categoryDropDown: "Type", onChanged: (value){
-                      setState(() {
-                        widget.selectedType=value;
-                      });
-                    },brand: widget.selectedBrand,),
-                    DropDownCreate( categoryDropDown: "Year", onChanged: (value){
-                      setState(() {
-                        widget.selectedYear=value;
-                      });
-                    }, ),
-                    Container(
+                    DropDownCreate(
+                      categoryDropDown: "Brand",
+                      onChanged: (value) {
+                        setState(() {
+                          widget.selectedBrand = value;
+                        });
+                      },
+                    ),
+                    DropDownCreate(
+                      categoryDropDown: "Type",
+                      onChanged: (value) {
+                        setState(() {
+                          widget.selectedType = value;
+                        });
+                      },
+                      brand: widget.selectedBrand,
+                    ),
+                    DropDownCreate(
+                      categoryDropDown: "Year",
+                      onChanged: (value) {
+                        setState(() {
+                          widget.selectedYear = value;
+                        });
+                      },
+                    ),
+                    SizedBox(
                       width: size.width * 0.4,
                       height: 35,
                       child: TextField(
                         controller: colorController,
                         decoration: InputDecoration(
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               fontStyle: FontStyle.italic,
                               color: Colors.grey,
                               fontSize: 14),
                           hintText: "Đỏ vàng",
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(width: 1, color: Colors.black),
+                                const BorderSide(width: 1, color: Colors.black),
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: size.width * 0.4,
                       height: 35,
                       child: TextField(
                         controller: licensePlateController,
                         decoration: InputDecoration(
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               fontStyle: FontStyle.italic,
                               color: Colors.grey,
                               fontSize: 14),
                           hintText: "59-AA 999.99",
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(width: 1, color: Colors.black),
+                                const BorderSide(width: 1, color: Colors.black),
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
@@ -194,36 +211,32 @@ class _CreateBody extends State<CreateBody> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Container(
-                child: RaisedButton(
-                  color: Colors.red,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  onPressed: () {},
-                  child: Text(
-                    "Hủy",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 16),
-                  ),
+              // ignore: deprecated_member_use
+              RaisedButton(
+                color: Colors.red,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                onPressed: () {},
+                child: const Text(
+                  "Hủy",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 16),
                 ),
               ),
-              Container(
-                child: RaisedButton(
-                  color: Colors.orange,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  onPressed: () {
-
-                  },
-                  child: Text(
-                    "Đồng ý",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 16),
-                  ),
+              // ignore: deprecated_member_use
+              RaisedButton(
+                color: Colors.orange,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                onPressed: () {},
+                child: const Text(
+                  "Đồng ý",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 16),
                 ),
               )
             ],

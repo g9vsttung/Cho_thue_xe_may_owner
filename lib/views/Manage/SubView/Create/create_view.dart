@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, must_be_immutable
 
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/views/Components/app_bar_main.dart';
@@ -8,11 +8,15 @@ import 'package:chothuexemay_owner/views/Manage/SubView/Create/components/body.d
 import 'package:flutter/material.dart';
 
 class CreateView extends StatelessWidget {
-
   String fisrtSelectBrand;
   String fisrtSelectType;
   String fisrtSelectYear;
-  CreateView({required this.fisrtSelectBrand,required this.fisrtSelectType, required this.fisrtSelectYear});
+  CreateView(
+      {Key? key,
+      required this.fisrtSelectBrand,
+      required this.fisrtSelectType,
+      required this.fisrtSelectYear})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +25,11 @@ class CreateView extends StatelessWidget {
         backgroundColor: ColorConstants.background,
         title: TopAppBarMain(),
       ),
-      body: CreateBody(selectedBrand: fisrtSelectBrand,selectedType: fisrtSelectType, selectedYear:  fisrtSelectYear,),
+      body: CreateBody(
+        selectedBrand: fisrtSelectBrand,
+        selectedType: fisrtSelectType,
+        selectedYear: fisrtSelectYear,
+      ),
       bottomNavigationBar: BottomAppBar(
         color: ColorConstants.background,
         child: BottomBar(selected: "manage"),
