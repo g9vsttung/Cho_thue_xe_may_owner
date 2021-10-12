@@ -13,6 +13,8 @@ class AreaApiPath {
   static String GET_ALL = "";
   // get a area by id
   static String GET_BY_ID = "";
+  //Get a area by name
+  static String GET_BY_NAME = _URL_API + "/areas?Name=";
 }
 
 class BikeApiPath {
@@ -20,6 +22,8 @@ class BikeApiPath {
   static String GET_ALL = _URL_API + "/bikes";
   // get a bike by id
   static String GET_BY_ID = "";
+  // create a bike
+  static String CREATE_BIKE = _URL_API + "/bikes";
 }
 
 class CustomerApiPath {
@@ -33,6 +37,8 @@ class OwnerApiPath {
   static String GET_ALL = _URL_API + "/owners";
   //Login
   static String LOGIN = _URL_API + "/owners/login";
+  //Get owner by id
+  static String GET_BY_ID = _URL_API + "/owners/";
 }
 
 class AdminApiPath {

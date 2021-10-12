@@ -1,8 +1,11 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors
 
+import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/models/bike_model_fake.dart';
+import 'package:chothuexemay_owner/models/brand_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
+import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
 import 'package:chothuexemay_owner/views/Components/bike_info.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Create/create_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,15 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ManageBody extends StatefulWidget {
-  List<BikeFake> list = [
-    BikeFake("yamahaEx.png", "Yamaha", "Exciter", "blue", 2020, "17AB-SD45"),
-    BikeFake("yamahaEx.png", "Yamaha", "Exciter", "blue", 2020, "17AB-SD45"),
-    BikeFake("yamahaEx.png", "Yamaha", "Exciter", "blue", 2020, "17AB-SD45"),
-    BikeFake("yamahaEx.png", "Yamaha", "Exciter", "blue", 2020, "17AB-SD45"),
-    BikeFake("yamahaEx.png", "Yamaha", "Exciter", "blue", 2020, "17AB-SD45"),
-    BikeFake("yamahaEx.png", "Yamaha", "Exciter", "blue", 2020, "17AB-SD45")
-  ];
-
   ManageBody({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -31,12 +25,15 @@ class _ManageBody extends State<ManageBody> {
   void initState() {
     super.initState();
     Provider.of<BrandViewModel>(context, listen: false).getAll();
+    Provider.of<OwnerViewModel>(context, listen: false).getBikes();
   }
 
   @override
   Widget build(BuildContext context) {
     final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
-
+    final OwnerViewModel _bikeViewModel = Provider.of<OwnerViewModel>(context);
+    List<Brand> brands = _brandViewModel.brands;
+    List<Bike> bikes = _bikeViewModel.bikes;
     return Padding(
       padding: EdgeInsets.all(12),
       child: SingleChildScrollView(
@@ -59,13 +56,14 @@ class _ManageBody extends State<ManageBody> {
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      String value = _brandViewModel.brands[0].id;
-                      String type = _brandViewModel.brands[0].categories[0].id;
+                      String value = brands[0].id;
+                      String type = brands[0].categories[0].id;
 
                       return CreateView(
                           fisrtSelectBrand: value,
                           fisrtSelectType: type,
-                          fisrtSelectYear: "1");
+                          fisrtSelectYear:
+                              StringConstants.YEAR_DROPDOWN_START.toString());
                     },
                   ));
                 },
@@ -92,13 +90,13 @@ class _ManageBody extends State<ManageBody> {
             SizedBox(
               height: 15,
             ),
-            for (BikeFake bike in widget.list)
+            for (Bike bike in bikes)
               BikeInfo(
-                  image: bike.image,
-                  brand: bike.brand,
-                  name: bike.name,
+                  image: "yamahaEx.png",
+                  brand: bike.brandName,
+                  name: bike.categoryName,
                   color: bike.color,
-                  year: bike.year,
+                  year: bike.modelYear,
                   bienSo: bike.licensePlate),
           ],
         ),

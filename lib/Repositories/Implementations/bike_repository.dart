@@ -9,4 +9,9 @@ class BikeRepository implements IBikeRepository {
     Future.delayed(const Duration(seconds: 5));
     return service.getAll();
   }
+
+  @override
+  Future<bool> createNewBike(Bike bike) async {
+    return service.createNewBike(bike);
+  }
 }

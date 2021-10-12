@@ -2,6 +2,7 @@
 
 import 'package:chothuexemay_owner/models/brand_model.dart';
 import 'package:chothuexemay_owner/models/category_model.dart';
+import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,12 +11,14 @@ class DropDownCreate extends StatefulWidget {
   String categoryDropDown;
   String selectedBrand = "";
   String dropDownValue;
+  List<Brand> brands;
   Function(String selected) onChanged;
   DropDownCreate(
       {Key? key,
       required this.categoryDropDown,
       required this.onChanged,
       String? brand,
+      required this.brands,
       required this.dropDownValue})
       : super(key: key) {
     if (brand != null) {
@@ -32,6 +35,7 @@ class _DropDownCreate extends State<DropDownCreate> {
   @override
   Widget build(BuildContext context) {
     final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
+    // _brandViewModel.getAll();
     Size size = MediaQuery.of(context).size;
     List<Brand> listBrandObject = _brandViewModel.brands;
     // ignore: unused_local_variable
@@ -54,51 +58,54 @@ class _DropDownCreate extends State<DropDownCreate> {
     if (widget.dropDownValue == "") {
       widget.dropDownValue = listItem[0].key;
     }
-    return Container(
-      width: size.width * 0.4,
-      height: 35,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: Colors.black, width: 1),
-      ),
-      child: DropdownButton(
-          underline: const SizedBox(),
-          value: widget.dropDownValue,
-          onChanged: (value) {
-            widget.onChanged(value.toString());
-          },
-          iconSize: 12,
-          icon: Image.asset(
-            "assets/icons/dropDown.png",
-            color: Colors.black,
-            width: 14,
-          ),
-          items: listItem.map((Temporary t) {
-            return DropdownMenuItem(
-              value: t.key,
-              child: SizedBox(
-                width: size.width * 0.4 - 20,
-                child: Text(
-                  t.value,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.black,
+    if (listItem.isNotEmpty) {
+      return Container(
+        width: size.width * 0.4,
+        height: 35,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: Colors.black, width: 1),
+        ),
+        child: DropdownButton(
+            underline: const SizedBox(),
+            value: widget.dropDownValue,
+            onChanged: (value) {
+              widget.onChanged(value.toString());
+            },
+            iconSize: 12,
+            icon: Image.asset(
+              "assets/icons/dropDown.png",
+              color: Colors.black,
+              width: 14,
+            ),
+            items: listItem.map((Temporary t) {
+              return DropdownMenuItem(
+                value: t.key,
+                child: SizedBox(
+                  width: size.width * 0.4 - 20,
+                  child: Text(
+                    t.value,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
-              ),
-            );
-          }).toList()),
-    );
+              );
+            }).toList()),
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 
   List<Temporary> createYearData() {
     List<Temporary> listYear = [];
     final DateTime now = DateTime.now();
-    int count = 1;
-    for (int i = 2012; i <= now.year; i++) {
-      Temporary t = Temporary((count++).toString(), i.toString());
+    for (int i = StringConstants.YEAR_DROPDOWN_START; i <= now.year; i++) {
+      Temporary t = Temporary(i.toString(), i.toString());
       listYear.add(t);
     }
     return listYear;

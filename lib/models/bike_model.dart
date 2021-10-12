@@ -1,18 +1,18 @@
 class Bike {
-  String id;
-  String licensePlate;
-  String color;
-  String modelYear;
-  String ownerId;
-  String categoryId;
-  int status;
-  String ownerPhone;
-  String ownerName;
-  String address;
-  double rating;
-  int numberOfRating;
-  String brandName;
-  String categoryName;
+  String id = "";
+  String licensePlate = "";
+  String color = "";
+  String modelYear = "";
+  String ownerId = "";
+  String categoryId = "";
+  int status = 0;
+  String ownerPhone = "";
+  String ownerName = "";
+  String address = "";
+  double rating = 0;
+  int numberOfRating = 0;
+  String brandName = "";
+  String categoryName = "";
   Bike(
       {required this.id,
       required this.licensePlate,
@@ -28,6 +28,8 @@ class Bike {
       required this.numberOfRating,
       required this.brandName,
       required this.categoryName});
+  Bike.createBike(
+      this.licensePlate, this.color, this.modelYear, this.categoryId);
   factory Bike.jsonFrom(Map<String, dynamic> json) {
     return Bike(
         id: json['id'],

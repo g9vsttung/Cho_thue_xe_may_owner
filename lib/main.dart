@@ -2,7 +2,8 @@
 
 import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/view_model/google_signin_in_view_model.dart';
-import 'package:chothuexemay_owner/views/Home/home_view.dart';
+import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
+import 'package:chothuexemay_owner/views/Login/login_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,8 @@ class MyApp extends StatelessWidget {
             create: (context) => GoogleSignInViewModel()),
         ChangeNotifierProvider<BrandViewModel>(
             create: (context) => BrandViewModel()),
+        ChangeNotifierProvider<OwnerViewModel>(
+            create: (create) => OwnerViewModel()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
             primaryColor: Color(0xFFFFEBEE),
             scaffoldBackgroundColor: Colors.white,
           ),
-          home: HomeView()),
+          home: LoginView()),
     );
   }
 }
