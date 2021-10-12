@@ -77,7 +77,7 @@ class BriefInfoOwner extends StatelessWidget {
                                     )),
                               ),
                               SizedBox(
-                                height: 5,
+                                height: 3,
                               ),
                               Text(
                                 "Tổng xe: $totalBike chiếc",
@@ -85,7 +85,7 @@ class BriefInfoOwner extends StatelessWidget {
                                     fontWeight: FontWeight.bold, fontSize: 14),
                               ),
                               SizedBox(
-                                height: 5,
+                                height: 3,
                               ),
                               Row(
                                 children: [
@@ -103,7 +103,7 @@ class BriefInfoOwner extends StatelessWidget {
                                       color: ColorConstants.unavailableStar,
                                     ),
                                   SizedBox(
-                                    width: 5,
+                                    width: 3,
                                   ),
                                   Text(
                                     "($totalRating lượt)",
@@ -124,7 +124,7 @@ class BriefInfoOwner extends StatelessWidget {
                       children: [
                         Image.asset(
                           StringConstants.iconDirectory + "location.png",
-                          width: 30,
+                          width: 35,
                         )
                       ],
                     )

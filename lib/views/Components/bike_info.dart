@@ -33,7 +33,7 @@ class BikeInfo extends StatelessWidget {
           GestureDetector(
             onTap: () {},
             child: Container(
-                width: size.width * 0.8,
+                width: size.width * 0.85,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   color: ColorConstants.containerBackground,
@@ -62,7 +62,7 @@ class BikeInfo extends StatelessWidget {
                               width: 10,
                             ),
                             Container(
-                              width: size.width * 0.5,
+                              width: size.width * 0.45,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

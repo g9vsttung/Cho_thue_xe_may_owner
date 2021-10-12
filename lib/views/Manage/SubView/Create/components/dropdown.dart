@@ -9,12 +9,14 @@ import 'package:provider/provider.dart';
 class DropDownCreate extends StatefulWidget {
   String categoryDropDown;
   String selectedBrand = "";
+  String dropDownValue;
   Function(String selected) onChanged;
   DropDownCreate(
       {Key? key,
       required this.categoryDropDown,
       required this.onChanged,
-      String? brand})
+      String? brand,
+      required this.dropDownValue})
       : super(key: key) {
     if (brand != null) {
       selectedBrand = brand;
@@ -42,7 +44,7 @@ class _DropDownCreate extends State<DropDownCreate> {
       });
     } else if (widget.categoryDropDown == "Type") {
       Brand brand = listBrandObject
-          .firstWhere((Brand x) => x.name == widget.selectedBrand);
+          .firstWhere((x) => x.id == widget.selectedBrand);
 
       // ignore: curly_braces_in_flow_control_structures
       brand.categories.forEach((Category category) {
@@ -57,6 +59,9 @@ class _DropDownCreate extends State<DropDownCreate> {
       t = Temporary('3', '2019');
       listItem.add(t);
     }
+    if(widget.dropDownValue == ""){
+      widget.dropDownValue=listItem[0].key;
+    }
     return Container(
       width: size.width * 0.4,
       height: 35,
@@ -66,7 +71,7 @@ class _DropDownCreate extends State<DropDownCreate> {
       ),
       child: DropdownButton(
           underline: const SizedBox(),
-          value: listItem[0].value,
+          value: widget.dropDownValue,
           onChanged: (value) {
             widget.onChanged(value.toString());
           },
@@ -78,7 +83,7 @@ class _DropDownCreate extends State<DropDownCreate> {
           ),
           items: listItem.map((Temporary t) {
             return DropdownMenuItem(
-              value: t.value,
+              value: t.key,
               child: SizedBox(
                 width: size.width * 0.4 - 20,
                 child: Text(

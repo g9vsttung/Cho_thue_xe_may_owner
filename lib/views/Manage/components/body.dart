@@ -59,7 +59,7 @@ class _ManageBody extends State<ManageBody> {
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      String value = _brandViewModel.brands[0].name;
+                      String value = _brandViewModel.brands[0].id;
                       String type = _brandViewModel.brands[0].categories[0].id;
 
                       return CreateView(

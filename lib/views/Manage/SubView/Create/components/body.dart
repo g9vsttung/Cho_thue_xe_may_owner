@@ -142,14 +142,17 @@ class _CreateBody extends State<CreateBody> {
                   children: [
                     DropDownCreate(
                       categoryDropDown: "Brand",
+                      dropDownValue: widget.selectedBrand,
                       onChanged: (value) {
                         setState(() {
                           widget.selectedBrand = value;
+                          widget.selectedType = "";
                         });
                       },
                     ),
                     DropDownCreate(
                       categoryDropDown: "Type",
+                      dropDownValue: widget.selectedType,
                       onChanged: (value) {
                         setState(() {
                           widget.selectedType = value;
@@ -159,6 +162,7 @@ class _CreateBody extends State<CreateBody> {
                     ),
                     DropDownCreate(
                       categoryDropDown: "Year",
+                      dropDownValue: widget.selectedYear,
                       onChanged: (value) {
                         setState(() {
                           widget.selectedYear = value;
