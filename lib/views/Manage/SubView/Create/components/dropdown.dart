@@ -35,7 +35,6 @@ class _DropDownCreate extends State<DropDownCreate> {
     Size size = MediaQuery.of(context).size;
     List<Brand> listBrandObject = _brandViewModel.brands;
     // ignore: unused_local_variable
-    Map<String, String> listYear = {'1': "2019", '2': "2020", '3': "2021"};
     List<Temporary> listItem = [];
     if (widget.categoryDropDown == "Brand") {
       listBrandObject.forEach((Brand brand) {
@@ -43,24 +42,17 @@ class _DropDownCreate extends State<DropDownCreate> {
         listItem.add(t);
       });
     } else if (widget.categoryDropDown == "Type") {
-      Brand brand = listBrandObject
-          .firstWhere((x) => x.id == widget.selectedBrand);
-
-      // ignore: curly_braces_in_flow_control_structures
+      Brand brand =
+          listBrandObject.firstWhere((x) => x.id == widget.selectedBrand);
       brand.categories.forEach((Category category) {
         Temporary t = Temporary(category.id, category.name);
         listItem.add(t);
       });
     } else {
-      Temporary t = Temporary('1', '2020');
-      listItem.add(t);
-      t = Temporary('2', '2021');
-      listItem.add(t);
-      t = Temporary('3', '2019');
-      listItem.add(t);
+      listItem = createYearData();
     }
-    if(widget.dropDownValue == ""){
-      widget.dropDownValue=listItem[0].key;
+    if (widget.dropDownValue == "") {
+      widget.dropDownValue = listItem[0].key;
     }
     return Container(
       width: size.width * 0.4,
@@ -99,6 +91,17 @@ class _DropDownCreate extends State<DropDownCreate> {
             );
           }).toList()),
     );
+  }
+
+  List<Temporary> createYearData() {
+    List<Temporary> listYear = [];
+    final DateTime now = DateTime.now();
+    int count = 1;
+    for (int i = 2012; i <= now.year; i++) {
+      Temporary t = Temporary((count++).toString(), i.toString());
+      listYear.add(t);
+    }
+    return listYear;
   }
 }
 
