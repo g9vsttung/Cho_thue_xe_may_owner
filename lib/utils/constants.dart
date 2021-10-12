@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 class ColorConstants {
@@ -14,4 +16,13 @@ class ColorConstants {
 class StringConstants {
   static const String imageDirectory = "assets/images/";
   static const String iconDirectory = "assets/icons/";
+  static const String FIREBASE_FOLDER_IMAGE_BIKE = "BikeImages";
+  static const int YEAR_DROPDOWN_START = 2012;
+  static const String BEARER = "Bearer ";
+}
+
+class GlobalDataConstants {
+  static const String USERID = "userID";
+  static const String AREAID = "areaId";
+  static const String TOKEN = "token";
 }
