@@ -11,7 +11,7 @@ class BikeInfo extends StatelessWidget {
   String color;
   int year;
   String bienSo;
-  String iconPath=StringConstants.iconDirectory;
+  String iconPath = StringConstants.iconDirectory;
   BikeInfo(
       {Key? key,
       required this.image,
@@ -33,14 +33,14 @@ class BikeInfo extends StatelessWidget {
           GestureDetector(
             onTap: () {},
             child: Container(
-                width: size.width*0.8,
+                width: size.width * 0.85,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   color: ColorConstants.containerBackground,
                 ),
                 child: Padding(
-                    padding:
-                    EdgeInsets.only(right: 5, top: 10, bottom: 10, left: 10),
+                    padding: EdgeInsets.only(
+                        right: 5, top: 10, bottom: 10, left: 10),
                     child: Stack(
                       children: [
                         Row(
@@ -50,11 +50,11 @@ class BikeInfo extends StatelessWidget {
                               onTap: () {},
                               child: ClipRRect(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
+                                      BorderRadius.all(Radius.circular(5)),
                                   child: Image.asset(
                                     StringConstants.imageDirectory + image,
-                                    width: 100,
-                                    height: 100,
+                                    width: size.width * 0.25,
+                                    height: size.width * 0.25,
                                     fit: BoxFit.fill,
                                   )),
                             ),
@@ -62,7 +62,7 @@ class BikeInfo extends StatelessWidget {
                               width: 10,
                             ),
                             Container(
-                              width: size.width * 0.4,
+                              width: size.width * 0.45,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -112,10 +112,11 @@ class BikeInfo extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GestureDetector(
-                              onTap: (){
-
-                              },
-                              child: Image.asset(iconPath+"edit.png",width: size.width*0.07,),
+                              onTap: () {},
+                              child: Image.asset(
+                                iconPath + "edit.png",
+                                width: size.width * 0.07,
+                              ),
                             )
                           ],
                         )

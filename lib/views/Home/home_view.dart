@@ -5,8 +5,6 @@ import 'package:chothuexemay_owner/views/Components/app_bar_main.dart';
 import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -19,9 +17,9 @@ class HomeView extends StatelessWidget {
         backgroundColor: ColorConstants.background,
         title: TopAppBarMain(),
       ),
-      body: Center(child:
-          Text("Login Success"),
-          ),
+      body: Center(
+        child: Text("Login Success"),
+      ),
       bottomNavigationBar: BottomAppBar(
         color: ColorConstants.background,
         child: BottomBar(selected: "home"),
