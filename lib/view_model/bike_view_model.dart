@@ -3,6 +3,7 @@
 import 'package:chothuexemay_owner/Repositories/Implementations/bike_repository.dart';
 import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class BikeViewModel extends ChangeNotifier {
   final List<Bike> bikes = [];
@@ -13,5 +14,9 @@ class BikeViewModel extends ChangeNotifier {
           bikes.add(element);
         }));
     notifyListeners();
+  }
+
+  Future<bool> createNewBike(Bike bike) async {
+    return await bikeRepository.createNewBike(bike);
   }
 }

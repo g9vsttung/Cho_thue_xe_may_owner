@@ -1,5 +1,7 @@
 import 'package:chothuexemay_owner/models/category_model.dart';
 
+import 'category_model.dart';
+
 class Brand {
   String name;
   String id;

@@ -1,12 +1,22 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:chothuexemay_owner/models/bike_model.dart';
+import 'package:chothuexemay_owner/models/brand_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/view_model/bike_view_model.dart';
+import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Create/components/dropdown.dart';
+import 'package:chothuexemay_owner/views/Manage/manage_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class CreateBody extends StatefulWidget {
   String selectedBrand;
@@ -25,10 +35,15 @@ class CreateBody extends StatefulWidget {
 }
 
 class _CreateBody extends State<CreateBody> {
+  File? _imageFile;
+  String _imagePath = "";
+  final BikeViewModel _bikeViewModel = BikeViewModel();
   TextEditingController colorController = TextEditingController();
   TextEditingController licensePlateController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
@@ -72,7 +87,7 @@ class _CreateBody extends State<CreateBody> {
                   // ignore: deprecated_member_use
                   child: RaisedButton(
                     onPressed: () {
-                      //Thêm ảnh ở đây
+                      pickImage();
                     },
                     color: Colors.green,
                     shape: const RoundedRectangleBorder(
@@ -85,10 +100,11 @@ class _CreateBody extends State<CreateBody> {
                   ),
                 ),
               ),
-              const Center(
+              Center(
                 child: Text(
-                  "anh_ma_an_chon_.PNG",
-                  style: TextStyle(fontSize: 10, fontStyle: FontStyle.italic),
+                  _imagePath,
+                  style: const TextStyle(
+                      fontSize: 10, fontStyle: FontStyle.italic),
                 ),
               ),
             ],
@@ -143,6 +159,7 @@ class _CreateBody extends State<CreateBody> {
                     DropDownCreate(
                       categoryDropDown: "Brand",
                       dropDownValue: widget.selectedBrand,
+                      brands: _brandViewModel.brands,
                       onChanged: (value) {
                         setState(() {
                           widget.selectedBrand = value;
@@ -153,6 +170,7 @@ class _CreateBody extends State<CreateBody> {
                     DropDownCreate(
                       categoryDropDown: "Type",
                       dropDownValue: widget.selectedType,
+                      brands: _brandViewModel.brands,
                       onChanged: (value) {
                         setState(() {
                           widget.selectedType = value;
@@ -163,6 +181,7 @@ class _CreateBody extends State<CreateBody> {
                     DropDownCreate(
                       categoryDropDown: "Year",
                       dropDownValue: widget.selectedYear,
+                      brands: _brandViewModel.brands,
                       onChanged: (value) {
                         setState(() {
                           widget.selectedYear = value;
@@ -234,7 +253,28 @@ class _CreateBody extends State<CreateBody> {
                 color: Colors.orange,
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                onPressed: () {},
+                onPressed: () async {
+                  Bike bike = Bike.createBike(
+                      licensePlateController.text.replaceAll(' ', ''),
+                      colorController.text,
+                      widget.selectedYear,
+                      widget.selectedType);
+                  bool isSuccess = await _bikeViewModel.createNewBike(bike);
+                  if (isSuccess) {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const ManageView();
+                      },
+                    ));
+                  } else {
+                    //Adding failed
+                  }
+                  // ImageStorageViewModel imageStorageViewModel =
+                  //     ImageStorageViewModel();
+                  // if (_imageFile != null)
+                  //   await imageStorageViewModel
+                  //       .uploadImageToFirebase(_imageFile!);
+                },
                 child: const Text(
                   "Đồng ý",
                   style: TextStyle(
@@ -248,5 +288,17 @@ class _CreateBody extends State<CreateBody> {
         ],
       ),
     );
+  }
+
+  Future pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _imageFile = File(pickedFile.path);
+        _imagePath = pickedFile.path;
+        log('Image Path $_imagePath');
+      }
+    });
   }
 }

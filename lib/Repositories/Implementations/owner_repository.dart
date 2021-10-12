@@ -1,4 +1,5 @@
 import 'package:chothuexemay_owner/Repositories/Interfaces/owner_interface.dart';
+import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/services/owner_service.dart';
 
@@ -13,5 +14,10 @@ class OwnerRepository implements IOwnerRepository {
   @override
   Future<int> login(String uid, String accessId) async {
     return service.login(uid, accessId);
+  }
+
+  @override
+  Future<List<Bike>> getListBike() {
+    return service.getListBike();
   }
 }

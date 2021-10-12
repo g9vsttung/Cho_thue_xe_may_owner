@@ -9,7 +9,7 @@ class BikeInfo extends StatelessWidget {
   String brand;
   String name;
   String color;
-  int year;
+  String year;
   String bienSo;
   String iconPath = StringConstants.iconDirectory;
   BikeInfo(
