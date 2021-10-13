@@ -20,4 +20,16 @@ class OwnerRepository implements IOwnerRepository {
   Future<List<Bike>> getListBike() {
     return service.getListBike();
   }
+
+  @override
+  Future<bool> logout() {
+    // TODO: implement logout
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Owner> updateProfile(Owner owner) {
+    // TODO: implement updateProfile
+    throw UnimplementedError();
+  }
 }
