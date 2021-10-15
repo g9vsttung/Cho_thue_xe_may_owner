@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Create/components/dropdown.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Edit/components/dropdown.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class EditBody extends StatefulWidget {
   String selectedBrand;
@@ -33,10 +35,12 @@ class EditBody extends StatefulWidget {
 }
 
 class _EditBody extends State<EditBody> {
+
   TextEditingController colorController = TextEditingController(text: "Màu xe (line 35)");
   TextEditingController licensePlateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
@@ -155,6 +159,7 @@ class _EditBody extends State<EditBody> {
                   children: [
                     DropDownManage(
                       categoryDropDown: "Brand",
+                      brands: _brandViewModel.brands,
                       dropDownValue: widget.selectedBrand,
                       onChanged: (value) {
                         setState(() {
@@ -164,6 +169,7 @@ class _EditBody extends State<EditBody> {
                       },
                     ),
                     DropDownManage(
+                      brands: _brandViewModel.brands,
                       categoryDropDown: "Type",
                       dropDownValue: widget.selectedType,
                       onChanged: (value) {
@@ -174,6 +180,7 @@ class _EditBody extends State<EditBody> {
                       brand: widget.selectedBrand,
                     ),
                     DropDownManage(
+                      brands: _brandViewModel.brands,
                       categoryDropDown: "Year",
                       dropDownValue: widget.selectedYear,
                       onChanged: (value) {

@@ -108,7 +108,7 @@ class _ManageBody extends State<ManageBody> {
                         return EditView(
                             fisrtSelectBrand: value,
                             fisrtSelectType: type,
-                            fisrtSelectYear: "1"
+                            fisrtSelectYear: "2012"
                         );
                       },
                     ));

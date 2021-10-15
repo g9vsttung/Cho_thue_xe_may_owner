@@ -91,12 +91,10 @@ class _DropDownManage extends State<DropDownManage> {
                     color: Colors.black,
                   ),textAlign: TextAlign.center,
                 ),
-              );
+              ));
             }).toList()),
       );
-    } else {
-      return const SizedBox();
-    }
+
   }
 
   List<Temporary> createYearData() {
