@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/views/Manage/SubView/Edit/edit_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,7 @@ class BikeInfo extends StatelessWidget {
   String year;
   String bienSo;
   String iconPath = StringConstants.iconDirectory;
+  Function() onEdit;
   BikeInfo(
       {Key? key,
       required this.image,
@@ -19,7 +21,9 @@ class BikeInfo extends StatelessWidget {
       required this.name,
       required this.color,
       required this.year,
-      required this.bienSo})
+      required this.bienSo,
+      required this.onEdit
+      })
       : super(key: key);
 
   @override
@@ -112,7 +116,7 @@ class BikeInfo extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: onEdit,
                               child: Image.asset(
                                 iconPath + "edit.png",
                                 width: size.width * 0.07,

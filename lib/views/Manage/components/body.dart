@@ -8,6 +8,7 @@ import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
 import 'package:chothuexemay_owner/views/Components/bike_info.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Create/create_view.dart';
+import 'package:chothuexemay_owner/views/Manage/SubView/Edit/edit_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -97,7 +98,23 @@ class _ManageBody extends State<ManageBody> {
                   name: bike.categoryName,
                   color: bike.color,
                   year: bike.modelYear,
-                  bienSo: bike.licensePlate),
+                  bienSo: bike.licensePlate,
+                  onEdit: (){
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        String value = _brandViewModel.brands[0].id;
+                        String type = _brandViewModel.brands[0].categories[0].id;
+
+                        return EditView(
+                            fisrtSelectBrand: value,
+                            fisrtSelectType: type,
+                            fisrtSelectYear: "1"
+                        );
+                      },
+                    ));
+                  },
+              ),
+                  
           ],
         ),
       ),
