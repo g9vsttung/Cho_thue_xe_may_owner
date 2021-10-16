@@ -26,7 +26,7 @@ class OwnerService {
   Future<int> login(String uid, String accessToken) async {
     //For BE testing
     log("ACCESS TOKEN: ${accessToken}");
-
+    log("GOOGLE ID: ${uid}");
     final response = await http.post(
       Uri.parse(OwnerApiPath.LOGIN),
       headers: <String, String>{
