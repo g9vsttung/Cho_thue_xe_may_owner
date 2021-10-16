@@ -4,12 +4,14 @@ import 'dart:convert';
 import 'package:chothuexemay_owner/apis/common.dart';
 import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
+import 'package:chothuexemay_owner/services/firebase_database.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OwnerService {
+  final _firebaseRealtimeService = FirebaseDatabaseCustom();
   Future<List<Owner>> getAll() async {
     Uri url = Uri.parse(OwnerApiPath.GET_ALL);
     final response = await http.get(url);
@@ -32,11 +34,17 @@ class OwnerService {
           <String, String>{'accessToken': accessToken, 'googleId': uid}),
     );
     //Store data
-    final SharedPreferences _preference = await SharedPreferences.getInstance();
-    String token = response.body;
-    await _preference.setString(GlobalDataConstants.TOKEN, token);
-    Map<String, dynamic> payload = Jwt.parseJwt(token);
-    await _preference.setString(GlobalDataConstants.USERID, payload["id"]);
+    if (response.statusCode == 200) {
+      final SharedPreferences _preference =
+          await SharedPreferences.getInstance();
+      String token = response.body;
+      await _preference.setString(GlobalDataConstants.TOKEN, token);
+      Map<String, dynamic> payload = Jwt.parseJwt(token);
+      await _preference.setString(GlobalDataConstants.USERID, payload["id"]);
+      //Location
+      _firebaseRealtimeService.storingLocationRealtime();
+    }
+
     return response.statusCode;
   }
 
