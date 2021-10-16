@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'dart:convert';
+import 'dart:developer';
 import 'package:chothuexemay_owner/apis/common.dart';
 import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
@@ -23,6 +24,9 @@ class OwnerService {
   }
 
   Future<int> login(String uid, String accessToken) async {
+    //For BE testing
+    log("ACCESS TOKEN: ${accessToken}");
+
     final response = await http.post(
       Uri.parse(OwnerApiPath.LOGIN),
       headers: <String, String>{
