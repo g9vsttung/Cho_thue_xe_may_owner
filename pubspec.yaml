@@ -29,6 +29,11 @@ dependencies:
   #Google Icon
   font_awesome_flutter: ^9.1.0
   
+  #Google map
+  geolocator: ^7.6.2
+  google_maps_flutter: ^2.0.11
+  flutter_polyline_points: ^1.0.0
+
   http: ^0.13.3
 
   cupertino_icons: ^1.0.2
