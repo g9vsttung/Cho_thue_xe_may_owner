@@ -43,7 +43,7 @@ class GeoLocatorCustom {
         desiredAccuracy: LocationAccuracy.bestForNavigation);
     var address = await Geocoder.local.findAddressesFromCoordinates(
         Coordinates(postion.latitude, postion.longitude));
-    String yourCityName = address.first.adminArea;
+    String yourCityName = address.first.adminArea.replaceAll('Thành phố ', '');
 
     return LatLng(postion.latitude, postion.longitude);
   }
