@@ -41,13 +41,14 @@ class FirebaseDatabaseCustom {
 
   Future<void> storingLocationRealtime() async {
     Map<String, LatLng> list = await getCustomerLocation();
-    _geoLocatorCustom.determinePosition();
     final _latlng = await _geoLocatorCustom.determinePosition();
-    String end = '(${_latlng.latitude},${_latlng.longitude})';
+    String start = '${_latlng.latitude},${_latlng.longitude}';
+    String ends = "";
     list.forEach((key, value) {
-      String start = '(${value.latitude},${value.longitude})';
-      distanceCalculator(start, end);
+      ends += '${value.latitude},${value.longitude}|';
     });
+    distanceCalculator(
+        start, ends.replaceRange(ends.length - 1, ends.length, ''));
     if (await _checkExist()) {
       _updateLocation(_latlng);
     } else {
@@ -77,26 +78,31 @@ class FirebaseDatabaseCustom {
         .catchError((error) => {log(error.toString())});
   }
 
-  void distanceCalculator(String start, String end) async {
-    final queryParameters = {
-      'start_point': start,
-      'end_point': end,
-      'unit': 'kilometers'
-    };
-    final headers = {
-      'content-type': 'application/json',
-      'x-rapidapi-host': 'distance-calculator.p.rapidapi.com',
-      'x-rapidapi-key': 'SIGN-UP-FOR-KEY',
-      'useQueryString': 'true'
-    };
-    Uri url = Uri.https(
-        'www.myurl.com',
-        'https://distance-calculator.p.rapidapi.com/v1/one_to_one',
-        queryParameters);
-    final response = await http.get(url, headers: headers);
+  // ignore: slash_for_doc_comments
+  /**Booking flow
+   * 1st: when users login -> store location in FirebaseRealtime
+   * 2st: when customer clicks 'Confirm Booking' -> Send [areaId, motorType]  -> find area by name to get ID 
+   * 3st: BE returns a list of owners have in the area for 'customers system' -> compare distances 
+   *                                                                         -> show notification for owner . Over 1min , skip and go to next owner
+   * 4st: if one owner accept -> return success screen
+   *      else over 3 mins -> customer: please try again
+   */
+  // this function will be called when user click booking
+  void distanceCalculator(String start, String ends) async {
+    //This list store distance from the start point to the destination pointS by meters.
+    List<int> distanceList = [];
+    const String _key = 'MkP5cLaGx6mRgulWqb7dSEkFPlZqLsCDNq1ZUku1';
+
+    Uri url = Uri.parse(
+        'https://rsapi.goong.io/DistanceMatrix?origins=${start}&destinations=${ends}&vehicle=bike&api_key=${_key}');
+
+    final response = await http.get(url);
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      log(body);
+      final result = body['rows'][0]['elements'];
+      result.forEach((r) => {
+            if (r['status'] == 'OK') {distanceList.add(r['distance']['value'])}
+          });
     } else {
       throw Exception("Unable to perform request");
     }

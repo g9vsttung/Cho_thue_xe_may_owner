@@ -1,3 +1,4 @@
+import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -36,8 +37,14 @@ class GeoLocatorCustom {
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
+
+    //Get city name
     final postion = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
+    var address = await Geocoder.local.findAddressesFromCoordinates(
+        Coordinates(postion.latitude, postion.longitude));
+    String yourCityName = address.first.adminArea;
+
     return LatLng(postion.latitude, postion.longitude);
   }
 }
