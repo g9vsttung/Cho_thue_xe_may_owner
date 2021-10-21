@@ -9,4 +9,10 @@ class CustomerRepository implements ICustomerRepository {
     Future.delayed(const Duration(seconds: 5));
     return service.getAll();
   }
+
+  @override
+  Future<Customer> getInformationCustomer(String CustomerId) {
+    // TODO: implement getInformationCustomer
+    throw UnimplementedError();
+  }
 }

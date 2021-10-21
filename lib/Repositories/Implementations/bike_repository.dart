@@ -14,4 +14,16 @@ class BikeRepository implements IBikeRepository {
   Future<bool> createNewBike(Bike bike) async {
     return service.createNewBike(bike);
   }
+
+  @override
+  Future<bool> deleteBike(String id) {
+    // TODO: implement deleteBike
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Bike> updateBike(Bike bike) {
+    // TODO: implement updateBike
+    throw UnimplementedError();
+  }
 }
