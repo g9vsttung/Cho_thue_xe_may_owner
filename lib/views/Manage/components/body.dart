@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors
 
 import 'package:chothuexemay_owner/models/bike_model.dart';
-import 'package:chothuexemay_owner/models/bike_model_fake.dart';
 import 'package:chothuexemay_owner/models/brand_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
