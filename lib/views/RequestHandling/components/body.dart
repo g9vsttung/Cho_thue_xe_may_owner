@@ -65,6 +65,8 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
               Image.network(
                 widget.order.bikeImage,
                 width: size.width * 0.5,
+                height: size.width * 0.4,
+                fit: BoxFit.fill,
               ),
             ],
           ),

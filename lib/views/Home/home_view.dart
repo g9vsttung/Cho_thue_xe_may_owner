@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:chothuexemay_owner/models/order_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/views/Components/app_bar_main.dart';
@@ -27,14 +29,23 @@ class _HomeViewState extends State<HomeView> {
 
   void firebaseCloudMessaging_Listeners() {
     _fcm.getToken().then((token) {
-      print("++++++++++++++" + token! + "+++++++++++++++++");
+      print("++++++++++++++" + token!);
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage evt) {
+      final data = jsonDecode(evt.data["json"]);
+      OrderModel order = OrderModel(
+          licensePlate: data["LicensePlate"],
+          dateRent: data["DateRent"],
+          bikeName: data["CateName"],
+          bikeImage: ImageConstants.getFullImagePath(data["ImgPath"]),
+          address: data["Address"],
+          price: data["Price"],
+          dateReturn: data["DateReturn"]);
       Navigator.push(context, MaterialPageRoute(
         builder: (context) {
           return RequestHandlingView(
-            order: OrderModel.jsonFromByDate(evt.data["json"]),
+            order: order,
           );
         },
       ));
@@ -43,7 +54,7 @@ class _HomeViewState extends State<HomeView> {
       Navigator.push(context, MaterialPageRoute(
         builder: (context) {
           return RequestHandlingView(
-            order: OrderModel.jsonFromByDate(evt.data["json"]),
+            order: OrderModel.jsonFromByHour(jsonDecode(evt.data["json"])),
           );
         },
       ));

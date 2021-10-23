@@ -5,7 +5,6 @@ class OrderModel {
   String dateRent;
   String address;
   double price;
-  String customerName;
   int timeRent = 0;
   String dateReturn = "";
   bool isRentByDate = true;
@@ -17,7 +16,6 @@ class OrderModel {
       required this.bikeImage,
       required this.address,
       required this.price,
-      required this.customerName,
       String? dateReturn,
       int? timeRent,
       bool? isRentByDate}) {
@@ -40,7 +38,6 @@ class OrderModel {
         bikeImage: json['BikeImage'],
         address: json['Address'],
         price: json['Price'],
-        customerName: json['CustomerName'],
         dateReturn: json['DateReturn']);
   }
 
@@ -52,7 +49,6 @@ class OrderModel {
         bikeImage: json['BikeImage'],
         address: json['Address'],
         price: json['Price'],
-        customerName: json['CustomerName'],
         timeRent: json['TimeRent'],
         isRentByDate: false);
   }
