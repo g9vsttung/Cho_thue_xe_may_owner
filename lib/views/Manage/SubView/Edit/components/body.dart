@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 
+import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Create/components/dropdown.dart';
@@ -11,35 +12,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class EditBody extends StatefulWidget {
-  String selectedBrand;
-  String selectedYear;
+  Bike bike;
 
-  String selectedType;
-  String selectedStatus;
+  EditBody({Key? key, required this.bike}) : super(key: key);
 
-  EditBody(
-      {Key? key,
-      required this.selectedBrand,
-      required this.selectedYear,
-      required this.selectedType,
-      required this.selectedStatus})
-      : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _EditBody();
   }
 }
 
-class _EditBody extends State<EditBody> {
+String initColor(Bike b) {
+  return b.color;
+}
 
-  TextEditingController colorController = TextEditingController(text: "Màu xe (line 35)");
+class _EditBody extends State<EditBody> {
+  TextEditingController colorController = TextEditingController();
   TextEditingController licensePlateController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    colorController.text = widget.bike.color;
     final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
@@ -141,7 +137,7 @@ class _EditBody extends State<EditBody> {
                     const Text(
                       "Trang thái",
                       style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     const Text(
                       "Biển số",
@@ -160,32 +156,32 @@ class _EditBody extends State<EditBody> {
                     DropDownManage(
                       categoryDropDown: "Brand",
                       brands: _brandViewModel.brands,
-                      dropDownValue: widget.selectedBrand,
+                      dropDownValue: widget.bike.brandName,
                       onChanged: (value) {
                         setState(() {
-                          widget.selectedBrand = value;
-                          widget.selectedType = "";
+                          widget.bike.brandName = value;
+                          widget.bike.categoryId = "";
                         });
                       },
                     ),
                     DropDownManage(
                       brands: _brandViewModel.brands,
                       categoryDropDown: "Type",
-                      dropDownValue: widget.selectedType,
+                      dropDownValue: widget.bike.categoryId,
                       onChanged: (value) {
                         setState(() {
-                          widget.selectedType = value;
+                          widget.bike.categoryId = value;
                         });
                       },
-                      brand: widget.selectedBrand,
+                      //brand: widget.bike.,
                     ),
                     DropDownManage(
                       brands: _brandViewModel.brands,
                       categoryDropDown: "Year",
-                      dropDownValue: widget.selectedYear,
+                      dropDownValue: widget.bike.modelYear,
                       onChanged: (value) {
                         setState(() {
-                          widget.selectedYear = value;
+                          widget.bike.modelYear = value;
                         });
                       },
                     ),
@@ -202,36 +198,35 @@ class _EditBody extends State<EditBody> {
                           hintText: "Đỏ vàng",
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                            const BorderSide(width: 1, color: Colors.black),
+                                const BorderSide(width: 1, color: Colors.black),
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
                       ),
                     ),
                     DropDownStatus(
-                      dropDownValue: widget.selectedStatus,
+                      dropDownValue: widget.bike.status.toString(),
                       onChanged: (value) {
                         setState(() {
-                          widget.selectedStatus = value;
+                          widget.bike.status = int.parse(value);
                         });
                       },
                     ),
                     SizedBox(
-                      width: size.width * 0.4,
-                      height: 35,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text("Biển số của xe",style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 16),)
-                        ],
-                      )
-                    ),
-
-
-
+                        width: size.width * 0.4,
+                        height: 35,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            Text(
+                              "Biển số của xe",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 16),
+                            )
+                          ],
+                        )),
                   ],
                 )
               ],
@@ -271,68 +266,73 @@ class _EditBody extends State<EditBody> {
                 ),
               )
             ],
-          ),SizedBox(height: 30,)
+          ),
+          const SizedBox(
+            height: 30,
+          )
         ],
       ),
     );
   }
+
   showMyAlertDialog() {
-      Dialog dialog = Dialog(
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Center(
-                child: Text(
-                  "Bạn có chắc muốn xóa không?",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold
+    Dialog dialog = Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Center(
+              child: Text(
+                "Bạn có chắc muốn xóa không?",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                RaisedButton(
+                  color: Colors.black38,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "Hủy",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 16),
                   ),
                 ),
-              ),
-              SizedBox(height: 15,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  RaisedButton(
-                    color: Colors.black38,
-                    onPressed: (){
-                      Navigator.pop(context);
-                    },
-                    child: Text("Hủy",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 16),
-                    ),
+                const SizedBox(
+                  width: 10,
+                ),
+                RaisedButton(
+                  color: Colors.red,
+                  onPressed: () {},
+                  child: const Text(
+                    "Xóa",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 16),
                   ),
-                  SizedBox(width: 10,),
-                  RaisedButton(
-                    color: Colors.red,
-                    onPressed: (){
-
-                    },
-                    child: Text("Xóa",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 16),
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
+                )
+              ],
+            )
+          ],
         ),
-        backgroundColor: Colors.white,
-      );
-      Future<dynamic> futureValue = showGeneralDialog(
-        context: context,
-        pageBuilder: (context, animation, secondaryAnimation) {
-          return dialog;
-        },
-      );
-    }
+      ),
+      backgroundColor: Colors.white,
+    );
+    Future<dynamic> futureValue = showGeneralDialog(
+      context: context,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return dialog;
+      },
+    );
+  }
 }

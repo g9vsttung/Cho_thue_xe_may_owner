@@ -6,7 +6,7 @@ class OwnerViewModel extends ChangeNotifier {
   final List<Bike> bikes = [];
   //final Map<Brand, List<Category>> brandCates = {};
   OwnerRepository ownerRepository = OwnerRepository();
-  void getBikes() async {
+  Future getBikes() async {
     bikes.clear();
     await ownerRepository
         .getListBike()

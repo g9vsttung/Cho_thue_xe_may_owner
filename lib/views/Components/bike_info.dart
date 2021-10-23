@@ -1,29 +1,14 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors, sized_box_for_whitespace
 
+import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
-import 'package:chothuexemay_owner/views/Manage/SubView/Edit/edit_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BikeInfo extends StatelessWidget {
-  String image;
-  String brand;
-  String name;
-  String color;
-  String year;
-  String bienSo;
-  String iconPath = StringConstants.iconDirectory;
+  Bike bike;
   Function() onEdit;
-  BikeInfo(
-      {Key? key,
-      required this.image,
-      required this.brand,
-      required this.name,
-      required this.color,
-      required this.year,
-      required this.bienSo,
-      required this.onEdit
-      })
+  BikeInfo({Key? key, required this.bike, required this.onEdit})
       : super(key: key);
 
   @override
@@ -55,8 +40,8 @@ class BikeInfo extends StatelessWidget {
                               child: ClipRRect(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
-                                  child: Image.asset(
-                                    StringConstants.imageDirectory + image,
+                                  child: Image.network(
+                                    bike.imgPath,
                                     width: size.width * 0.25,
                                     height: size.width * 0.25,
                                     fit: BoxFit.fill,
@@ -71,7 +56,7 @@ class BikeInfo extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Hãng: $brand",
+                                    "Hãng: ${bike.brandName}",
                                     style: TextStyle(fontSize: 14),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -79,7 +64,7 @@ class BikeInfo extends StatelessWidget {
                                     height: 5,
                                   ),
                                   Text(
-                                    "Loại xe: $name",
+                                    "Loại xe: ${bike.categoryName}",
                                     style: TextStyle(fontSize: 14),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -87,7 +72,7 @@ class BikeInfo extends StatelessWidget {
                                     height: 5,
                                   ),
                                   Text(
-                                    "Màu: $color",
+                                    "Màu: ${bike.color}",
                                     style: TextStyle(fontSize: 14),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -95,7 +80,7 @@ class BikeInfo extends StatelessWidget {
                                     height: 5,
                                   ),
                                   Text(
-                                    "Đời xe: $year",
+                                    "Đời xe: ${bike.modelYear}",
                                     style: TextStyle(fontSize: 14),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -103,7 +88,7 @@ class BikeInfo extends StatelessWidget {
                                     height: 5,
                                   ),
                                   Text(
-                                    "Biển: $bienSo",
+                                    "Biển: ${bike.licensePlate}",
                                     style: TextStyle(fontSize: 14),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -118,7 +103,7 @@ class BikeInfo extends StatelessWidget {
                             GestureDetector(
                               onTap: onEdit,
                               child: Image.asset(
-                                iconPath + "edit.png",
+                                StringConstants.iconDirectory + "edit.png",
                                 width: size.width * 0.07,
                               ),
                             )

@@ -7,7 +7,6 @@ import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/models/brand_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/bike_view_model.dart';
-import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Create/components/dropdown.dart';
 import 'package:chothuexemay_owner/views/Manage/manage_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,20 +15,25 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 class CreateBody extends StatefulWidget {
-  String selectedBrand;
-  String selectedYear;
-  String selectedType;
-  CreateBody(
-      {Key? key,
-      required this.selectedBrand,
-      required this.selectedYear,
-      required this.selectedType})
-      : super(key: key);
+  List<Brand> brands;
+  String? selectedBrand;
+  String selectedYear = StringConstants.YEAR_DROPDOWN_START.toString();
+  String? selectedType;
+  CreateBody({
+    Key? key,
+    required this.brands,
+  }) : super(key: key);
+  void init() {
+    selectedBrand = brands[0].id;
+    selectedType = brands[0].categories[0].id;
+  }
+
   @override
+  // ignore: no_logic_in_create_state
   State<StatefulWidget> createState() {
+    init();
     return _CreateBody();
   }
 }
@@ -37,13 +41,15 @@ class CreateBody extends StatefulWidget {
 class _CreateBody extends State<CreateBody> {
   File? _imageFile;
   String _imagePath = "";
+
+  _CreateBody();
+
   final BikeViewModel _bikeViewModel = BikeViewModel();
   TextEditingController colorController = TextEditingController();
   TextEditingController licensePlateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
@@ -158,8 +164,8 @@ class _CreateBody extends State<CreateBody> {
                   children: [
                     DropDownManage(
                       categoryDropDown: "Brand",
-                      dropDownValue: widget.selectedBrand,
-                      brands: _brandViewModel.brands,
+                      dropDownValue: widget.selectedBrand!,
+                      brands: widget.brands,
                       onChanged: (value) {
                         setState(() {
                           widget.selectedBrand = value;
@@ -169,8 +175,8 @@ class _CreateBody extends State<CreateBody> {
                     ),
                     DropDownManage(
                       categoryDropDown: "Type",
-                      dropDownValue: widget.selectedType,
-                      brands: _brandViewModel.brands,
+                      dropDownValue: widget.selectedType!,
+                      brands: widget.brands,
                       onChanged: (value) {
                         setState(() {
                           widget.selectedType = value;
@@ -181,7 +187,7 @@ class _CreateBody extends State<CreateBody> {
                     DropDownManage(
                       categoryDropDown: "Year",
                       dropDownValue: widget.selectedYear,
-                      brands: _brandViewModel.brands,
+                      brands: widget.brands,
                       onChanged: (value) {
                         setState(() {
                           widget.selectedYear = value;
@@ -239,7 +245,13 @@ class _CreateBody extends State<CreateBody> {
                 color: Colors.red,
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return ManageView();
+                    },
+                  ));
+                },
                 child: const Text(
                   "Hủy",
                   style: TextStyle(
@@ -258,7 +270,8 @@ class _CreateBody extends State<CreateBody> {
                       licensePlateController.text.replaceAll(' ', ''),
                       colorController.text,
                       widget.selectedYear,
-                      widget.selectedType);
+                      widget.selectedType!,
+                      _imageFile);
                   bool isSuccess = await _bikeViewModel.createNewBike(bike);
                   if (isSuccess) {
                     Navigator.push(context, MaterialPageRoute(
@@ -269,11 +282,6 @@ class _CreateBody extends State<CreateBody> {
                   } else {
                     //Adding failed
                   }
-                  // ImageStorageViewModel imageStorageViewModel =
-                  //     ImageStorageViewModel();
-                  // if (_imageFile != null)
-                  //   await imageStorageViewModel
-                  //       .uploadImageToFirebase(_imageFile!);
                 },
                 child: const Text(
                   "Đồng ý",
@@ -293,10 +301,15 @@ class _CreateBody extends State<CreateBody> {
   Future pickImage() async {
     final ImagePicker _picker = ImagePicker();
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
+    setState(() async {
       if (pickedFile != null) {
         _imageFile = File(pickedFile.path);
-        _imagePath = pickedFile.path;
+        _imagePath = pickedFile.name.toString();
+        int _length = _imagePath.length;
+
+        _imagePath = _imagePath.substring(0, 8) +
+            '...' +
+            _imagePath.substring(_length - 7, _length);
         log('Image Path $_imagePath');
       }
     });

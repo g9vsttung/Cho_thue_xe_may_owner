@@ -8,7 +8,7 @@ class BrandViewModel extends ChangeNotifier {
   final List<Brand> brands = [];
   //final Map<Brand, List<Category>> brandCates = {};
   BrandRepository brandRepository = BrandRepository();
-  void getAll() async {
+  Future getAll() async {
     brands.clear();
     await brandRepository.getAll().then((value) => value.forEach((element) {
           brands.add(element);

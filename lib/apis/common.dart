@@ -21,9 +21,13 @@ class BikeApiPath {
   // get all bikes
   static String GET_ALL = _URL_API + "/bikes";
   // get a bike by id
-  static String GET_BY_ID = "";
+  static String GET_BY_ID = _URL_API + "/bikes/";
   // create a bike
   static String CREATE_BIKE = _URL_API + "/bikes";
+  // delete a bike
+  static String DELETE_BIKE = _URL_API + "/bikes";
+  // update bike
+  static String UPDATE_BIKE = _URL_API + "/bikes";
 }
 
 class CustomerApiPath {

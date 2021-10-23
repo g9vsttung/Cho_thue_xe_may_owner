@@ -71,7 +71,6 @@ class _DropDownManage extends State<DropDownManage> {
           onChanged: (value) {
             widget.onChanged(value.toString());
           },
-
           iconSize: 12,
           icon: Image.asset(
             "assets/icons/dropDown.png",
@@ -80,21 +79,21 @@ class _DropDownManage extends State<DropDownManage> {
           ),
           items: listItem.map((Temporary t) {
             return DropdownMenuItem(
-              value: t.key,
-              child: SizedBox(
-                width: size.width * 0.4 - 20,
-                child: Text(
-                  t.value,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.black,
-                  ),textAlign: TextAlign.center,
-                ),
-              ));
-            }).toList()),
-      );
-
+                value: t.key,
+                child: SizedBox(
+                  width: size.width * 0.4 - 20,
+                  child: Text(
+                    t.value,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ));
+          }).toList()),
+    );
   }
 
   List<Temporary> createYearData() {

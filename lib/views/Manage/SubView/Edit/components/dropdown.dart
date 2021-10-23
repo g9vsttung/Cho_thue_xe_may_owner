@@ -1,20 +1,13 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls, must_be_immutable
 
-import 'package:chothuexemay_owner/models/brand_model.dart';
-import 'package:chothuexemay_owner/models/category_model.dart';
-import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class DropDownStatus extends StatefulWidget {
-
   String dropDownValue;
   Function(String selected) onChanged;
   DropDownStatus(
-      {Key? key,
-      required this.onChanged,
-      required this.dropDownValue})
-      : super(key: key) ;
+      {Key? key, required this.onChanged, required this.dropDownValue})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _DropDownStatus();
@@ -24,15 +17,14 @@ class DropDownStatus extends StatefulWidget {
 class _DropDownStatus extends State<DropDownStatus> {
   @override
   Widget build(BuildContext context) {
-    final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
     Size size = MediaQuery.of(context).size;
 
-    Temporary a=Temporary("1",true);
-    Temporary b=Temporary("2",false);
-    List<Temporary> listItem = [a,b];
+    BikeStatus a = BikeStatus("0", true);
+    BikeStatus b = BikeStatus("1", false);
+    List<BikeStatus> listItem = [a, b];
 
-    if(widget.dropDownValue == ""){
-      widget.dropDownValue=listItem[0].key;
+    if (widget.dropDownValue == "") {
+      widget.dropDownValue = listItem[0].key;
     }
     return Container(
       width: size.width * 0.4,
@@ -47,19 +39,18 @@ class _DropDownStatus extends State<DropDownStatus> {
           onChanged: (value) {
             widget.onChanged(value.toString());
           },
-
           iconSize: 12,
           icon: Image.asset(
             "assets/icons/dropDown.png",
             color: Colors.black,
             width: 14,
           ),
-          items: listItem.map((Temporary t) {
-            String value="";
-            if(t.value)
-              value="Available";
+          items: listItem.map((BikeStatus t) {
+            String value = "";
+            if (t.value)
+              value = "Hoạt động";
             else
-              value="Disable";
+              value = "Tạm ngưng";
             return DropdownMenuItem(
               value: t.key,
               child: SizedBox(
@@ -80,8 +71,8 @@ class _DropDownStatus extends State<DropDownStatus> {
   }
 }
 
-class Temporary {
+class BikeStatus {
   String key;
   bool value;
-  Temporary(this.key, this.value);
+  BikeStatus(this.key, this.value);
 }

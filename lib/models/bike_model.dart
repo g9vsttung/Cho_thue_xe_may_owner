@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:chothuexemay_owner/utils/constants.dart';
+
 class Bike {
   String id = "";
   String licensePlate = "";
@@ -13,6 +17,10 @@ class Bike {
   int numberOfRating = 0;
   String brandName = "";
   String categoryName = "";
+  String imgPath = "";
+  //Extra
+  File? imgFile;
+
   Bike(
       {required this.id,
       required this.licensePlate,
@@ -27,9 +35,10 @@ class Bike {
       required this.rating,
       required this.numberOfRating,
       required this.brandName,
-      required this.categoryName});
-  Bike.createBike(
-      this.licensePlate, this.color, this.modelYear, this.categoryId);
+      required this.categoryName,
+      required this.imgPath});
+  Bike.createBike(this.licensePlate, this.color, this.modelYear,
+      this.categoryId, this.imgFile);
   factory Bike.jsonFrom(Map<String, dynamic> json) {
     return Bike(
         id: json['id'],
@@ -45,6 +54,9 @@ class Bike {
         rating: json['rating'] ?? 0,
         numberOfRating: json['numberOfRating'] ?? 0,
         brandName: json['brandName'] ?? "",
-        categoryName: json['categoryName'] ?? "");
+        categoryName: json['categoryName'] ?? "",
+        imgPath: json['imgPath'] == null
+            ? ImageConstants.IMAGE_DEFAULT_PATH
+            : ImageConstants.getFullImagePath(json['imgPath']));
   }
 }
