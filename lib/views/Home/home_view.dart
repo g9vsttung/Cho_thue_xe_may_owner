@@ -21,7 +21,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
   @override
   void initState() {
@@ -30,7 +30,6 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void firebaseCloudMessaging_Listeners() {
-    final FirebaseDatabaseCustom fb = FirebaseDatabaseCustom();
     _fcm.getToken().then((token) async {
       print("++++++++++++++" + token!);
     });
