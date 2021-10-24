@@ -32,7 +32,6 @@ class _HomeViewState extends State<HomeView> {
   void firebaseCloudMessaging_Listeners() {
     final FirebaseDatabaseCustom fb = FirebaseDatabaseCustom();
     _fcm.getToken().then((token) async {
-      await fb.updateTokenFCM(token!);
       print("++++++++++++++" + token!);
     });
 

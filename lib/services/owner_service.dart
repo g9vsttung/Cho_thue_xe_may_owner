@@ -6,12 +6,14 @@ import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/services/firebase_database.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OwnerService {
   final _firebaseRealtimeService = FirebaseDatabaseCustom();
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   Future<List<Owner>> getAll() async {
     Uri url = Uri.parse(OwnerApiPath.GET_ALL);
     final response = await http.get(url);
@@ -43,6 +45,10 @@ class OwnerService {
       await _preference.setString(GlobalDataConstants.USERID, payload["id"]);
       //Location
       _firebaseRealtimeService.storingLocationRealtime();
+      //FCM token
+      _fcm.getToken().then((token) {
+        _firebaseRealtimeService.updateTokenFCM(token!);
+      });
     }
 
     return response.statusCode;
