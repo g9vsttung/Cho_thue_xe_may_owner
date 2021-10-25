@@ -42,6 +42,7 @@ class _HomeViewState extends State<HomeView> {
           bikeName: data["CateName"],
           bikeImage: ImageConstants.getFullImagePath(data["ImgPath"]),
           address: data["Address"],
+          customerName: data["CustomerName"],
           price: data["Price"],
           dateReturn: data["DateReturn"]);
       Navigator.push(context, MaterialPageRoute(

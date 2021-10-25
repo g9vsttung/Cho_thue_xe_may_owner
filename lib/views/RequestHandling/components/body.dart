@@ -5,6 +5,7 @@ import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:intl/intl.dart';
 
 class BodyRequestHandling extends StatefulWidget {
   //OrderModel order=OrderModel(customerName: "Nguyễn Văn A",licensePlate: "AB231-SAS41", dateRent: "22/10/2221", bikeName: "Air Blade", bikeImage: "https://lh3.googleusercontent.com/proxy/aukiih8-NiuxNPOwTwwSA3GPhwjpNL64lZ_N172VE5M_LR7rET6C3D70bBRxEpSPSBnkU00X5pEQIZI_KgO4cHBxSS1OOP154QzaQXya5HGQLmbQvOqBPTSf8kJNDtHyFjQx", address: "95 đg 21", price: 130, dateReturn: "21/10/2221");
@@ -21,6 +22,27 @@ class BodyRequestHandling extends StatefulWidget {
 class _BodyRequestHandling extends State<BodyRequestHandling> {
   @override
   Widget build(BuildContext context) {
+    DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
+    DateTime dateRent = dateFormat.parse(widget.order.dateRent);
+    DateTime dateReturn = dateFormat.parse(widget.order.dateReturn);
+    String txtDateRent = dateRent.day.toString() +
+        "/" +
+        dateRent.month.toString() +
+        "/" +
+        dateRent.year.toString() +
+        " - " +
+        dateRent.hour.toString() +
+        ":" +
+        dateRent.minute.toString();
+    String txtDateReturn = dateReturn.day.toString() +
+        "/" +
+        dateReturn.month.toString() +
+        "/" +
+        dateReturn.year.toString() +
+        " - " +
+        dateReturn.hour.toString() +
+        ":" +
+        dateReturn.minute.toString();
     Size size = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.only(top: 15, left: 5, right: 5, bottom: 5),
@@ -107,14 +129,14 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: const [
-                            // Text(
-                            //   "Tên:",
-                            //   style: TextStyle(
-                            //       fontSize: 18, fontWeight: FontWeight.bold),
-                            // ),
-                            // SizedBox(
-                            //   height: 10,
-                            // ),
+                            Text(
+                              "Tên:",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Text(
                               "Ngày thuê:",
                               style: TextStyle(
@@ -139,22 +161,22 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Text(
-                            //   widget.order.customerName,
-                            //   style: TextStyle(fontSize: 18),
-                            // ),
-                            // SizedBox(
-                            //   height: 10,
-                            // ),
                             Text(
-                              widget.order.dateRent,
+                              widget.order.customerName,
                               style: TextStyle(fontSize: 18),
                             ),
                             SizedBox(
                               height: 10,
                             ),
                             Text(
-                              widget.order.dateReturn,
+                              txtDateRent,
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              txtDateReturn,
                               style: TextStyle(fontSize: 18),
                             ),
                             SizedBox(
