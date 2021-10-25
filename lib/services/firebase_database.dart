@@ -17,8 +17,8 @@ class FirebaseDatabaseCustom {
   final String _pathOwnerLocation = 'locations/owners/';
   final String _latitudeChild = "latitude";
   final String _longitudeChild = "longitude";
-  final String _pathOwnerTokenFCM = "TokenFCM/owners";
-  final String _tokenFCMChild = "token";
+  final String _pathOwnerTokenFCM = "TrackingRegistrationId/owner/";
+  final String _tokenFCMChild = "registrationId";
 
   Future _checkExist() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
