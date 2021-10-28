@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chothuexemay_owner/models/order_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -20,6 +21,7 @@ class BodyRequestHandling extends StatefulWidget {
 }
 
 class _BodyRequestHandling extends State<BodyRequestHandling> {
+  OwnerViewModel _ownerViewModel=OwnerViewModel();
   @override
   Widget build(BuildContext context) {
     DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
@@ -231,7 +233,10 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     color: Colors.redAccent,
-                    onPressed: () {},
+                    onPressed: () {
+                      _ownerViewModel.denyOrder();
+                      Navigator.pop(context);
+                    },
                     child: const Text(
                       "TỪ CHỐI",
                       style:
@@ -245,7 +250,10 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     color: ColorConstants.background,
-                    onPressed: () {},
+                    onPressed: () {
+                      _ownerViewModel.acceptOrder();
+                      Navigator.pop(context);
+                    },
                     child: const Text(
                       "CHẤP NHẬN",
                       style: TextStyle(

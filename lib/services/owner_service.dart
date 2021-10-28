@@ -68,4 +68,26 @@ class OwnerService {
       throw Exception("Unable to perform request");
     }
   }
+  Future<int> acceptOrder() async{
+    final response = await http.post(Uri.parse(OwnerApiPath.ACCEPT),
+        headers: <String, String>{
+          'Content-Type': 'application/json ; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'ownerId': GlobalDataConstants.USERID,
+          'isAccepted': 'true',
+        }));
+    return response.statusCode;
+  }
+  Future<int> denyOrder() async{
+    final response = await http.post(Uri.parse(OwnerApiPath.DENY),
+        headers: <String, String>{
+          'Content-Type': 'application/json ; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'ownerId': GlobalDataConstants.USERID,
+          'isAccepted': 'false',
+        }));
+    return response.statusCode;
+  }
 }
