@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:chothuexemay_owner/models/order_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
+import 'package:chothuexemay_owner/views/Home/home_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -21,7 +22,10 @@ class BodyRequestHandling extends StatefulWidget {
 }
 
 class _BodyRequestHandling extends State<BodyRequestHandling> {
-  OwnerViewModel _ownerViewModel=OwnerViewModel();
+  OwnerViewModel _ownerViewModel = OwnerViewModel();
+  //Format currency number
+  RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+  String Function(Match) mathFunc = (Match match) => '${match[1]}.';
   @override
   Widget build(BuildContext context) {
     DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
@@ -218,7 +222,11 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                 width: 10,
               ),
               Text(
-                widget.order.price.round().toString() + ".000 vnđ",
+                widget.order.price
+                        .round()
+                        .toString()
+                        .replaceAllMapped(reg, mathFunc) +
+                    " vnđ",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ],
@@ -234,8 +242,13 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     color: Colors.redAccent,
                     onPressed: () {
-                      _ownerViewModel.denyOrder();
-                      Navigator.pop(context);
+                      _ownerViewModel.denyOrder(widget.order.customerId!);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return HomeView();
+                        }),
+                      );
                     },
                     child: const Text(
                       "TỪ CHỐI",
@@ -251,8 +264,13 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     color: ColorConstants.background,
                     onPressed: () {
-                      _ownerViewModel.acceptOrder();
-                      Navigator.pop(context);
+                      _ownerViewModel.acceptOrder(widget.order.customerId!);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return HomeView();
+                        }),
+                      );
                     },
                     child: const Text(
                       "CHẤP NHẬN",

@@ -3,12 +3,10 @@
 import 'dart:convert';
 
 import 'package:chothuexemay_owner/models/order_model.dart';
-import 'package:chothuexemay_owner/services/firebase_database.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/views/Components/app_bar_main.dart';
 import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
 import 'package:chothuexemay_owner/views/RequestHandling/request_handling_view.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +38,9 @@ class _HomeViewState extends State<HomeView> {
           licensePlate: data["LicensePlate"],
           dateRent: data["DateRent"],
           bikeName: data["CateName"],
-          bikeImage: ImageConstants.getFullImagePath(data["ImgPath"]),
+          customerId: data['CustomerId'],
+          bikeImage: ImageConstants.getFullImagePath(
+              data["ImgPath"] ?? ImageConstants.DEFAULT_IMG_NAME),
           address: data["Address"],
           customerName: data["CustomerName"],
           price: data["Price"],

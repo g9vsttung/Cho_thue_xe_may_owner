@@ -68,26 +68,30 @@ class OwnerService {
       throw Exception("Unable to perform request");
     }
   }
-  Future<int> acceptOrder() async{
-    final response = await http.post(Uri.parse(OwnerApiPath.ACCEPT),
-        headers: <String, String>{
-          'Content-Type': 'application/json ; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'ownerId': GlobalDataConstants.USERID,
-          'isAccepted': 'true',
-        }));
+
+  Future<int> acceptOrder(String customerId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final url = Uri.parse(
+        "http://18.138.110.46/api/v2/owners/sendBookingReply?ownerId=${prefs.getString(GlobalDataConstants.USERID).toString()}&customerId=$customerId&isAccepted=true");
+    final header = {
+      'Content-Type': 'application/json ; charset=UTF-8',
+      'Authorization':
+          'Bearer ' + prefs.getString(GlobalDataConstants.TOKEN).toString()
+    };
+    final response = await http.get(url, headers: header);
     return response.statusCode;
   }
-  Future<int> denyOrder() async{
-    final response = await http.post(Uri.parse(OwnerApiPath.DENY),
+
+  Future<int> denyOrder(String customerId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final response = await http.get(
+        Uri.parse(
+            "http://18.138.110.46/api/v2/owners/sendBookingReply?ownerId=${prefs.getString(GlobalDataConstants.USERID).toString()}&isAccepted=false&customerId=$customerId"),
         headers: <String, String>{
           'Content-Type': 'application/json ; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'ownerId': GlobalDataConstants.USERID,
-          'isAccepted': 'false',
-        }));
+          'Authorization':
+              'Bearer ' + prefs.getString(GlobalDataConstants.TOKEN).toString()
+        });
     return response.statusCode;
   }
 }

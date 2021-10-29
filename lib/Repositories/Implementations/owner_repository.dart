@@ -34,13 +34,12 @@ class OwnerRepository implements IOwnerRepository {
   }
 
   @override
-  Future<int> acceptOrder() {
-    return service.acceptOrder();
+  Future<int> acceptOrder(String customerId) {
+    return service.acceptOrder(customerId);
   }
 
   @override
-  Future<int> denyOrder() {
-    return service.denyOrder();
+  Future<int> denyOrder(String customerId) {
+    return service.denyOrder(customerId);
   }
-
 }
