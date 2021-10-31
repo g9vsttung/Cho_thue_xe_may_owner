@@ -1,13 +1,68 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
+import 'package:chothuexemay_owner/models/order_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/views/Components/app_bar_main.dart';
 import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
+import 'package:chothuexemay_owner/views/RequestHandling/request_handling_view.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    firebaseCloudMessaging_Listeners();
+  }
+
+  void firebaseCloudMessaging_Listeners() {
+    _fcm.getToken().then((token) async {
+      print("++++++++++++++" + token!);
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage evt) {
+      final data = jsonDecode(evt.data["json"]);
+      OrderModel order = OrderModel(
+          licensePlate: data["LicensePlate"],
+          dateRent: data["DateRent"],
+          bikeName: data["CateName"],
+          customerId: data['CustomerId'],
+          bikeImage: ImageConstants.getFullImagePath(
+              data["ImgPath"] ?? ImageConstants.DEFAULT_IMG_NAME),
+          address: data["Address"],
+          customerName: data["CustomerName"],
+          price: data["Price"],
+          dateReturn: data["DateReturn"]);
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) {
+          return RequestHandlingView(
+            order: order,
+          );
+        },
+      ));
+    });
+    FirebaseMessaging.onBackgroundMessage((evt) async {
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) {
+          return RequestHandlingView(
+            order: OrderModel.jsonFromByHour(jsonDecode(evt.data["json"])),
+          );
+        },
+      ));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

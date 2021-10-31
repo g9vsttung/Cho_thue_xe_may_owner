@@ -32,4 +32,14 @@ class OwnerRepository implements IOwnerRepository {
     // TODO: implement updateProfile
     throw UnimplementedError();
   }
+
+  @override
+  Future<int> acceptOrder(String customerId) {
+    return service.acceptOrder(customerId);
+  }
+
+  @override
+  Future<int> denyOrder(String customerId) {
+    return service.denyOrder(customerId);
+  }
 }

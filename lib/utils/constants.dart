@@ -26,3 +26,14 @@ class GlobalDataConstants {
   static const String AREAID = "areaId";
   static const String TOKEN = "token";
 }
+
+class ImageConstants {
+  static String getFullImagePath(String img) {
+    const _token = "7db7d73c-c7bb-4265-b21f-095a97a3986f";
+    return "https://firebasestorage.googleapis.com/v0/b/chothuexemay-35838.appspot.com/o/BikeImages%2F${img}?alt=media&token=${_token}";
+  }
+
+  static const String DEFAULT_IMG_NAME = "defaultimage.jpg";
+  static const String IMAGE_DEFAULT_PATH =
+      "https://firebasestorage.googleapis.com/v0/b/chothuexemay-35838.appspot.com/o/BikeImages%2Fdefaultimage.jpg?alt=media&token=7db7d73c-c7bb-4265-b21f-095a97a3986f";
+}
