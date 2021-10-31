@@ -6,12 +6,14 @@ import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/services/firebase_database.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OwnerService {
   final _firebaseRealtimeService = FirebaseDatabaseCustom();
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   Future<List<Owner>> getAll() async {
     Uri url = Uri.parse(OwnerApiPath.GET_ALL);
     final response = await http.get(url);
@@ -43,6 +45,10 @@ class OwnerService {
       await _preference.setString(GlobalDataConstants.USERID, payload["id"]);
       //Location
       _firebaseRealtimeService.storingLocationRealtime();
+      //FCM token
+      _fcm.getToken().then((token) {
+        _firebaseRealtimeService.updateTokenFCM(token!);
+      });
     }
 
     return response.statusCode;
@@ -61,5 +67,31 @@ class OwnerService {
     } else {
       throw Exception("Unable to perform request");
     }
+  }
+
+  Future<int> acceptOrder(String customerId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final url = Uri.parse(
+        "http://18.138.110.46/api/v2/owners/sendBookingReply?ownerId=${prefs.getString(GlobalDataConstants.USERID).toString()}&customerId=$customerId&isAccepted=true");
+    final header = {
+      'Content-Type': 'application/json ; charset=UTF-8',
+      'Authorization':
+          'Bearer ' + prefs.getString(GlobalDataConstants.TOKEN).toString()
+    };
+    final response = await http.get(url, headers: header);
+    return response.statusCode;
+  }
+
+  Future<int> denyOrder(String customerId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final response = await http.get(
+        Uri.parse(
+            "http://18.138.110.46/api/v2/owners/sendBookingReply?ownerId=${prefs.getString(GlobalDataConstants.USERID).toString()}&isAccepted=false&customerId=$customerId"),
+        headers: <String, String>{
+          'Content-Type': 'application/json ; charset=UTF-8',
+          'Authorization':
+              'Bearer ' + prefs.getString(GlobalDataConstants.TOKEN).toString()
+        });
+    return response.statusCode;
   }
 }

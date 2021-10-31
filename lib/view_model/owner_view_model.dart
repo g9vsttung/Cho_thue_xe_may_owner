@@ -15,4 +15,12 @@ class OwnerViewModel extends ChangeNotifier {
             }));
     notifyListeners();
   }
+
+  void acceptOrder(String customerId) {
+    ownerRepository.acceptOrder(customerId);
+  }
+
+  void denyOrder(String customerId) {
+    ownerRepository.denyOrder(customerId);
+  }
 }

@@ -15,6 +15,8 @@ class FirebaseDatabaseCustom {
   final String _pathOwnerLocation = 'locations/owners/';
   final String _latitudeChild = "latitude";
   final String _longitudeChild = "longitude";
+  final String _pathOwnerTokenFCM = "TrackingRegistrationId/owner/";
+  final String _tokenFCMChild = "registrationId";
 
   Future _checkExist() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -54,6 +56,19 @@ class FirebaseDatabaseCustom {
           _longitudeChild: latLng.longitude
         })
         .then((value) => log("Update store location to FirebaseDB"))
+        .catchError((error) => {log(error.toString())});
+  }
+
+  //Storing token firebase cloud messaging
+  Future updateTokenFCM(String token) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId = prefs.getString(GlobalDataConstants.USERID)!;
+    await database
+        .child(_pathOwnerTokenFCM + userId)
+        .set({
+          _tokenFCMChild: token,
+        })
+        .then((value) => log("Token FCM updated!"))
         .catchError((error) => {log(error.toString())});
   }
 }

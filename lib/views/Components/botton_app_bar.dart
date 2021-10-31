@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors
 
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/views/Home/home_view.dart';
 import 'package:chothuexemay_owner/views/Manage/manage_view.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ class BottomBar extends StatelessWidget {
   String selected = "";
 
   BottomBar({Key? key, required this.selected}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,6 +19,13 @@ class BottomBar extends StatelessWidget {
         children: [
           if (selected == "home")
             GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return HomeView();
+                  },
+                ));
+              },
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,6 +45,13 @@ class BottomBar extends StatelessWidget {
             )
           else
             GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return HomeView();
+                  },
+                ));
+              },
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,19 +70,19 @@ class BottomBar extends StatelessWidget {
               ),
             ),
           //=============================================================SEARCH
-          if (selected == "search")
+          if (selected == "order")
             GestureDetector(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset(
-                    "assets/icons/search.png",
+                    "assets/icons/order.png",
                     color: ColorConstants.selectedIcon,
                     width: 30,
                   ),
                   Text(
-                    "Tìm Kiếm",
+                    "Đơn đặt",
                     style: TextStyle(
                         fontSize: 12, color: ColorConstants.selectedIcon),
                   )
@@ -80,12 +96,12 @@ class BottomBar extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset(
-                    "assets/icons/search.png",
+                    "assets/icons/order.png",
                     color: ColorConstants.normalIcon,
                     width: 30,
                   ),
                   Text(
-                    "Tìm kiếm",
+                    "Đơn đặt",
                     style: TextStyle(
                         fontSize: 12, color: ColorConstants.normalIcon),
                   )
@@ -95,10 +111,12 @@ class BottomBar extends StatelessWidget {
           //=============================================MANAGE
           if (selected == "manage")
             GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ManageView();
-                },));
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return ManageView();
+                  },
+                ));
               },
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -107,7 +125,7 @@ class BottomBar extends StatelessWidget {
                   Image.asset(
                     "assets/icons/manageBike.png",
                     color: ColorConstants.selectedIcon,
-                    width: 30,
+                    width: 27,
                   ),
                   Text(
                     "Quản lí xe",
@@ -119,10 +137,12 @@ class BottomBar extends StatelessWidget {
             )
           else
             GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ManageView();
-                },));
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return ManageView();
+                  },
+                ));
               },
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -131,7 +151,7 @@ class BottomBar extends StatelessWidget {
                   Image.asset(
                     "assets/icons/manageBike.png",
                     color: ColorConstants.normalIcon,
-                    width: 30,
+                    width: 27,
                   ),
                   Text(
                     "Quản lí xe",
