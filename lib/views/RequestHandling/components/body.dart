@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:chothuexemay_owner/models/order_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
@@ -22,7 +20,7 @@ class BodyRequestHandling extends StatefulWidget {
 }
 
 class _BodyRequestHandling extends State<BodyRequestHandling> {
-  OwnerViewModel _ownerViewModel = OwnerViewModel();
+  final OwnerViewModel _ownerViewModel = OwnerViewModel();
   //Format currency number
   RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
   String Function(Match) mathFunc = (Match match) => '${match[1]}.';
@@ -51,7 +49,7 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
         dateReturn.minute.toString();
     Size size = MediaQuery.of(context).size;
     return Container(
-      padding: EdgeInsets.only(top: 15, left: 5, right: 5, bottom: 5),
+      padding: const EdgeInsets.only(top: 15, left: 5, right: 5, bottom: 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,35 +57,35 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              const Text(
                 "Xe được chọn",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Container(
-                padding: EdgeInsets.all(7),
+                padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
                     border:
                         Border.all(width: 1, color: ColorConstants.textBold),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       widget.order.licensePlate + " ",
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
                     Image.asset(StringConstants.iconDirectory + "point.png"),
                     Text(
                       " " + widget.order.bikeName,
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Image.network(
@@ -110,7 +108,7 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                         border: Border(
                             top: BorderSide(color: Colors.black, width: 1))),
                   ),
-                  Text(
+                  const Text(
                     "Thông tin khách hàng",
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
@@ -122,7 +120,7 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Container(
@@ -161,7 +159,7 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
                         Column(
@@ -169,23 +167,23 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                           children: [
                             Text(
                               widget.order.customerName,
-                              style: TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
                               txtDateRent,
-                              style: TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
                               txtDateReturn,
-                              style: TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                           ],
@@ -197,12 +195,12 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
                       widget.order.address,
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -218,7 +216,7 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                 StringConstants.iconDirectory + "price.png",
                 width: 40,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Text(
@@ -227,7 +225,8 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                         .toString()
                         .replaceAllMapped(reg, mathFunc) +
                     " vnđ",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -238,7 +237,7 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                   height: 45,
                   width: size.width * 0.46,
                   child: RaisedButton(
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     color: Colors.redAccent,
                     onPressed: () {
@@ -246,7 +245,7 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return HomeView();
+                          return const HomeView();
                         }),
                       );
                     },
@@ -260,7 +259,7 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                   height: 45,
                   width: size.width * 0.46,
                   child: RaisedButton(
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     color: ColorConstants.background,
                     onPressed: () {
@@ -268,7 +267,7 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return HomeView();
+                          return const HomeView();
                         }),
                       );
                     },

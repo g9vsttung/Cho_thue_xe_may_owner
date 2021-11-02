@@ -30,7 +30,7 @@ class GlobalDataConstants {
 class ImageConstants {
   static String getFullImagePath(String img) {
     const _token = "7db7d73c-c7bb-4265-b21f-095a97a3986f";
-    return "https://firebasestorage.googleapis.com/v0/b/chothuexemay-35838.appspot.com/o/BikeImages%2F${img}?alt=media&token=${_token}";
+    return "https://firebasestorage.googleapis.com/v0/b/chothuexemay-35838.appspot.com/o/BikeImages%2F$img?alt=media&token=$_token";
   }
 
   static const String DEFAULT_IMG_NAME = "defaultimage.jpg";

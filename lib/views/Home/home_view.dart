@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:chothuexemay_owner/models/order_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
@@ -21,7 +22,7 @@ class HomeView extends StatefulWidget {
 Future firebaseCloudMessaging_Listeners(BuildContext context) async {
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   _fcm.getToken().then((token) async {
-    print("++++++++++++++" + token!);
+    log('Got Firebase Token!');
   });
 
   FirebaseMessaging.onMessage.listen((RemoteMessage evt) {
