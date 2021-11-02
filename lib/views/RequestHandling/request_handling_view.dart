@@ -1,7 +1,5 @@
 import 'package:chothuexemay_owner/models/order_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
-import 'package:chothuexemay_owner/views/Components/app_bar_main.dart';
-import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
 import 'package:chothuexemay_owner/views/RequestHandling/components/body.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +7,7 @@ import 'package:flutter/material.dart';
 class RequestHandlingView extends StatelessWidget {
   OrderModel order;
 
-  RequestHandlingView({required this.order});
+  RequestHandlingView({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +15,7 @@ class RequestHandlingView extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: ColorConstants.background,
-        title: Center(
+        title: const Center(
             child: Text(
           "Bạn có yêu cầu thuê xe",
           style: TextStyle(

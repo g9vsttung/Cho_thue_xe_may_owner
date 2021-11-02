@@ -1,15 +1,15 @@
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:chothuexemay_owner/utils/constants.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class ImageStorageViewModel {
-  final picker = ImagePicker();
-  Future uploadImageToFirebase(File image) async {
-    FirebaseStorage storage = FirebaseStorage.instance;
+final FirebaseStorage storage = FirebaseStorage.instance;
+
+class FirebaseStorageCustom {
+  Future<String> uploadFile(File image) async {
     String fileNameInFireBaseStorage =
-        "image1" + DateTime.now().millisecondsSinceEpoch.toString();
+        "bike" + DateTime.now().millisecondsSinceEpoch.toString();
     Reference ref = storage
         .ref()
         .child(StringConstants.FIREBASE_FOLDER_IMAGE_BIKE)
@@ -18,8 +18,17 @@ class ImageStorageViewModel {
     uploadTask.whenComplete(() async {
       await ref.getDownloadURL();
     }).catchError((onError) {
+      fileNameInFireBaseStorage = "";
       log(onError);
     });
     return fileNameInFireBaseStorage;
+  }
+
+  Future<void> deleteFile(String filePath) async {
+    storage
+        .refFromURL(filePath)
+        .delete()
+        .whenComplete(() => 'Deleted $filePath')
+        .onError((error, stackTrace) => log(error.toString()));
   }
 }

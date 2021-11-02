@@ -1,38 +1,42 @@
+// ignore_for_file: prefer_const_constructors, must_be_immutable
+
 import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
-import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
+import 'package:chothuexemay_owner/view_model/bike_view_model.dart';
 import 'package:chothuexemay_owner/views/Components/app_bar_main.dart';
 import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
-import 'package:chothuexemay_owner/views/Manage/components/body.dart';
+import 'package:chothuexemay_owner/views/Manage/SubView/Edit/components/body.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ManageView extends StatelessWidget {
-  const ManageView({Key? key}) : super(key: key);
-
-  Future<Map<String, List<Object>>> getData(BuildContext context) async {
-    Map<String, List<Object>> list = {};
-    await Provider.of<OwnerViewModel>(context, listen: false).getBikes();
-    list['bikes'] = Provider.of<OwnerViewModel>(context, listen: false).bikes;
-    return list;
-  }
-
+class EditView extends StatelessWidget {
+  String bikeId;
+  String fisrtSelectBrand;
+  String fisrtSelectType;
+  String fisrtSelectYear;
+  EditView(
+      {Key? key,
+      required this.bikeId,
+      required this.fisrtSelectBrand,
+      required this.fisrtSelectType,
+      required this.fisrtSelectYear})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: ColorConstants.background,
-        title: const TopAppBarMain(),
+        title: TopAppBarMain(),
       ),
       body: FutureBuilder(
         builder: (context, napshot) {
           if (napshot.connectionState == ConnectionState.done) {
             if (napshot.hasData) {
-              final List<Bike> bikes =
-                  (napshot.data as dynamic)['bikes'] as List<Bike>;
-              return ManageBody(
-                bikes: bikes,
+              final Bike bike = napshot.data as Bike;
+              return EditBody(
+                bike: bike,
               );
             }
           }
@@ -47,5 +51,10 @@ class ManageView extends StatelessWidget {
         child: BottomBar(selected: "manage"),
       ),
     );
+  }
+
+  Future<Bike> getData(BuildContext context) async {
+    return await Provider.of<BikeViewModel>(context, listen: false)
+        .getById(bikeId);
   }
 }

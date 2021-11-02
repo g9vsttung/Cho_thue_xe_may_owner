@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:chothuexemay_owner/services/geolocation_service.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_database/firebase_database.dart';
-import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,7 +20,7 @@ class FirebaseDatabaseCustom {
 
   Future _checkExist() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId = prefs.getString(GlobalDataConstants.USERID)!;
+    userId = prefs.getString(GlobalDataConstants.USERID)!.toLowerCase();
     DataSnapshot snapshot =
         await database.child(_pathOwnerLocation + userId).once();
     return snapshot.value != null;

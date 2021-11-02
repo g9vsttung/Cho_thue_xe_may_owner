@@ -16,14 +16,17 @@ class BikeRepository implements IBikeRepository {
   }
 
   @override
-  Future<bool> deleteBike(String id) {
-    // TODO: implement deleteBike
-    throw UnimplementedError();
+  Future<bool> deleteBike(Bike bike) {
+    return service.deleteBike(bike);
   }
 
   @override
-  Future<Bike> updateBike(Bike bike) {
-    // TODO: implement updateBike
-    throw UnimplementedError();
+  Future<bool> updateBike(Bike bike) {
+    return service.updateBike(bike);
+  }
+
+  @override
+  Future<Bike> getById(String id) {
+    return service.getById(id);
   }
 }

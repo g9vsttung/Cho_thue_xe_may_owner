@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:chothuexemay_owner/view_model/bike_view_model.dart';
 import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/view_model/google_signin_in_view_model.dart';
 import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
@@ -27,6 +28,8 @@ class MyApp extends StatelessWidget {
             create: (context) => BrandViewModel()),
         ChangeNotifierProvider<OwnerViewModel>(
             create: (create) => OwnerViewModel()),
+        ChangeNotifierProvider<BikeViewModel>(
+            create: (create) => BikeViewModel()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
