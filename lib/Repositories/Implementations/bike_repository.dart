@@ -16,8 +16,8 @@ class BikeRepository implements IBikeRepository {
   }
 
   @override
-  Future<bool> deleteBike(String id) {
-    return service.deleteBike(id);
+  Future<bool> deleteBike(Bike bike) {
+    return service.deleteBike(bike);
   }
 
   @override

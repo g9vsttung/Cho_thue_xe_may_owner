@@ -31,4 +31,12 @@ class BikeViewModel extends ChangeNotifier {
   void setImage(File img) {
     this.img = img;
   }
+
+  Future<bool> updateBike(Bike bike) async {
+    return await _bikeRepository.updateBike(bike);
+  }
+
+  Future<bool> deleteBike(Bike bike) async {
+    return await _bikeRepository.deleteBike(bike);
+  }
 }

@@ -1,17 +1,22 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/view_model/bike_view_model.dart';
 import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Create/components/dropdown.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Edit/components/dropdown.dart';
+import 'package:chothuexemay_owner/views/Manage/manage_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class EditBody extends StatefulWidget {
@@ -25,17 +30,22 @@ class EditBody extends StatefulWidget {
   }
 }
 
-String initColor(Bike b) {
-  return b.color;
-}
-
 class _EditBody extends State<EditBody> {
-  TextEditingController colorController = TextEditingController();
-  TextEditingController licensePlateController = TextEditingController();
+  final TextEditingController colorController = TextEditingController();
+  final BikeViewModel _bikeViewModel = BikeViewModel();
+  Bike? _deleteBike;
+  File? _imageFile;
+  String _imagePath = "";
+
+  @override
+  void initState() {
+    colorController.text = widget.bike.color;
+    _deleteBike = Bike.deleteBike(widget.bike.id, widget.bike.imgFile);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    colorController.text = widget.bike.color;
     final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
@@ -79,24 +89,26 @@ class _EditBody extends State<EditBody> {
                   height: 35,
                   // ignore: deprecated_member_use
                   child: RaisedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       //Thêm ảnh ở đây
+                      await pickImage();
                     },
                     color: Colors.green,
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: const Text(
-                      "Sửa ảnh",
+                      "Cập nhật ảnh",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
               ),
-              const Center(
+              Center(
                 child: Text(
-                  "anh_ma_an_chon_.PNG",
-                  style: TextStyle(fontSize: 10, fontStyle: FontStyle.italic),
+                  _imagePath,
+                  style: const TextStyle(
+                      fontSize: 10, fontStyle: FontStyle.italic),
                 ),
               ),
             ],
@@ -156,10 +168,10 @@ class _EditBody extends State<EditBody> {
                     DropDownManage(
                       categoryDropDown: "Brand",
                       brands: _brandViewModel.brands,
-                      dropDownValue: widget.bike.brandName,
+                      dropDownValue: widget.bike.brandId,
                       onChanged: (value) {
                         setState(() {
-                          widget.bike.brandName = value;
+                          widget.bike.brandId = value;
                           widget.bike.categoryId = "";
                         });
                       },
@@ -168,6 +180,7 @@ class _EditBody extends State<EditBody> {
                       brands: _brandViewModel.brands,
                       categoryDropDown: "Type",
                       dropDownValue: widget.bike.categoryId,
+                      brand: widget.bike.brandId,
                       onChanged: (value) {
                         setState(() {
                           widget.bike.categoryId = value;
@@ -217,10 +230,10 @@ class _EditBody extends State<EditBody> {
                         height: 35,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
+                          children: [
                             Text(
-                              "Biển số của xe",
-                              style: TextStyle(
+                              widget.bike.licensePlate.toUpperCase(),
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                   fontSize: 16),
@@ -256,7 +269,27 @@ class _EditBody extends State<EditBody> {
                 color: Colors.orange,
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                onPressed: () {},
+                onPressed: () async {
+                  Bike bike = Bike.updateBike(
+                      widget.bike.id,
+                      widget.bike.licensePlate,
+                      colorController.text,
+                      widget.bike.modelYear,
+                      widget.bike.categoryId,
+                      widget.bike.status,
+                      _imageFile,
+                      widget.bike.imgFile);
+                  bool isSuccess = await _bikeViewModel.updateBike(bike);
+                  if (isSuccess) {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const ManageView();
+                      },
+                    ));
+                  } else {
+                    //Edit failed
+                  }
+                },
                 child: const Text(
                   "Sửa",
                   style: TextStyle(
@@ -312,7 +345,19 @@ class _EditBody extends State<EditBody> {
                 ),
                 RaisedButton(
                   color: Colors.red,
-                  onPressed: () {},
+                  onPressed: () async {
+                    bool isSuccess =
+                        await _bikeViewModel.deleteBike(_deleteBike!);
+                    if (isSuccess) {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return const ManageView();
+                        },
+                      ));
+                    } else {
+                      //Delete failed
+                    }
+                  },
                   child: const Text(
                     "Xóa",
                     style: TextStyle(
@@ -334,5 +379,22 @@ class _EditBody extends State<EditBody> {
         return dialog;
       },
     );
+  }
+
+  Future pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _imageFile = File(pickedFile.path);
+        _imagePath = pickedFile.name.toString();
+        int _length = _imagePath.length;
+
+        _imagePath = _imagePath.substring(0, 8) +
+            '...' +
+            _imagePath.substring(_length - 7, _length);
+        log('Image Path $_imagePath');
+      }
+    });
   }
 }

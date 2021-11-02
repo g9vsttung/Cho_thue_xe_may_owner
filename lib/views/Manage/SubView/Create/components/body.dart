@@ -248,7 +248,7 @@ class _CreateBody extends State<CreateBody> {
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return ManageView();
+                      return const ManageView();
                     },
                   ));
                 },
@@ -301,7 +301,7 @@ class _CreateBody extends State<CreateBody> {
   Future pickImage() async {
     final ImagePicker _picker = ImagePicker();
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() async {
+    setState(() {
       if (pickedFile != null) {
         _imageFile = File(pickedFile.path);
         _imagePath = pickedFile.name.toString();

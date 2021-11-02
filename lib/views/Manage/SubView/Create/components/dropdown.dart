@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class DropDownManage extends StatefulWidget {
   String categoryDropDown;
-  String selectedBrand = "";
+  String? selectedBrand;
   String dropDownValue;
   List<Brand> brands;
   Function(String selected) onChanged;

@@ -16,11 +16,12 @@ class Bike {
   double rating = 0;
   int numberOfRating = 0;
   String brandName = "";
+  String brandId = "";
   String categoryName = "";
   String imgPath = "";
   //Extra
   File? imgFile;
-
+  File? imgFileOld;
   Bike(
       {required this.id,
       required this.licensePlate,
@@ -36,9 +37,13 @@ class Bike {
       required this.numberOfRating,
       required this.brandName,
       required this.categoryName,
-      required this.imgPath});
+      required this.imgPath,
+      required this.brandId});
   Bike.createBike(this.licensePlate, this.color, this.modelYear,
       this.categoryId, this.imgFile);
+  Bike.updateBike(this.id, this.licensePlate, this.color, this.modelYear,
+      this.categoryId, this.status, this.imgFile, this.imgFileOld);
+  Bike.deleteBike(this.id, this.imgFile);
   factory Bike.jsonFrom(Map<String, dynamic> json) {
     return Bike(
         id: json['id'],
@@ -57,6 +62,7 @@ class Bike {
         categoryName: json['categoryName'] ?? "",
         imgPath: json['imgPath'] == null
             ? ImageConstants.IMAGE_DEFAULT_PATH
-            : ImageConstants.getFullImagePath(json['imgPath']));
+            : ImageConstants.getFullImagePath(json['imgPath']),
+        brandId: json['brandId'] ?? "");
   }
 }

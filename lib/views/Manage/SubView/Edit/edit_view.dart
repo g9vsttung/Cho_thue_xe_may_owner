@@ -37,10 +37,6 @@ class EditView extends StatelessWidget {
               final Bike bike = napshot.data as Bike;
               return EditBody(
                 bike: bike,
-                // selectedBrand: fisrtSelectBrand,
-                // selectedType: fisrtSelectType,
-                // selectedYear: fisrtSelectYear,
-                // selectedStatus: '1',
               );
             }
           }
