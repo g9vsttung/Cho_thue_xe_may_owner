@@ -385,10 +385,10 @@ class _EditBody extends State<EditBody> {
   Widget previewImage(Size size) {
     if (_imageFile != null) {
       return Image.file(_imageFile!,
-          fit: BoxFit.fill, height: size.height * 0.2, width: size.width * 0.8);
+          fit: BoxFit.fill, height: size.height * 0.2, width: size.width * 0.7);
     }
     return Image.network(widget.bike.imgPath,
-        fit: BoxFit.fill, height: size.height * 0.2, width: size.width * 0.8);
+        fit: BoxFit.fill, height: size.height * 0.2, width: size.width * 0.7);
   }
 
   Future pickImage() async {
