@@ -113,12 +113,13 @@ class _EditBody extends State<EditBody> {
               ),
             ],
           ),
-          const SizedBox(
+          previewImage(size),
+          SizedBox(
             height: 15,
           ),
           Container(
             padding: EdgeInsets.only(left: size.width * 0.1),
-            height: size.height * 0.6,
+            height: size.height * 0.5,
             child: Row(
               children: [
                 Column(
@@ -379,6 +380,15 @@ class _EditBody extends State<EditBody> {
         return dialog;
       },
     );
+  }
+
+  Widget previewImage(Size size) {
+    if (_imageFile != null) {
+      return Image.file(_imageFile!,
+          fit: BoxFit.fill, height: size.height * 0.2, width: size.width * 0.7);
+    }
+    return Image.network(widget.bike.imgPath,
+        fit: BoxFit.fill, height: size.height * 0.2, width: size.width * 0.7);
   }
 
   Future pickImage() async {

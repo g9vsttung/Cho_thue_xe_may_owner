@@ -115,12 +115,10 @@ class _CreateBody extends State<CreateBody> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
-          ),
+          previewImage(size),
           Container(
             padding: EdgeInsets.only(left: size.width * 0.1),
-            height: size.height * 0.6,
+            height: size.height * 0.5,
             child: Row(
               children: [
                 Column(
@@ -296,6 +294,14 @@ class _CreateBody extends State<CreateBody> {
         ],
       ),
     );
+  }
+
+  Widget previewImage(Size size) {
+    if (_imageFile != null) {
+      return Image.file(_imageFile!,
+          fit: BoxFit.fill, height: size.height * 0.2, width: size.width * 0.7);
+    }
+    return Container();
   }
 
   Future pickImage() async {
