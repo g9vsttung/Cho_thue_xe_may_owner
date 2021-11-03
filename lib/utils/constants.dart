@@ -25,6 +25,7 @@ class GlobalDataConstants {
   static const String USERID = "userID";
   static const String AREAID = "areaId";
   static const String TOKEN = "token";
+  static const String USER_NAME = "userName";
 }
 
 class ImageConstants {

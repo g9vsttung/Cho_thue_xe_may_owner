@@ -43,6 +43,8 @@ class OwnerApiPath {
   static String LOGIN = _URL_API + "/owners/login";
   //Get owner by id
   static String GET_BY_ID = _URL_API + "/owners/";
+  //Get list bike of owner
+  static String GET_LIST_BIKE_BY_ID = _URL_API + "/bikes/suitableBike/";
   //Accept order
   static String ACCEPT = _URL_API + "/owners/";
   //Deny order

@@ -39,7 +39,10 @@ class OwnerService {
     if (response.statusCode == 200) {
       final SharedPreferences _preference =
           await SharedPreferences.getInstance();
-      String token = response.body;
+      final body = jsonDecode(response.body);
+      String fullName = body['fullName'];
+      await _preference.setString(GlobalDataConstants.USER_NAME, fullName);
+      String token = body['token'];
       await _preference.setString(GlobalDataConstants.TOKEN, token);
       Map<String, dynamic> payload = Jwt.parseJwt(token);
       await _preference.setString(GlobalDataConstants.USERID, payload["id"]);
@@ -58,11 +61,11 @@ class OwnerService {
     final SharedPreferences _preference = await SharedPreferences.getInstance();
     String ownerId =
         _preference.getString(GlobalDataConstants.USERID).toString();
-    Uri url = Uri.parse(OwnerApiPath.GET_BY_ID + ownerId);
+    Uri url = Uri.parse(OwnerApiPath.GET_LIST_BIKE_BY_ID + ownerId);
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      final Iterable bikes = body["listBike"];
+      final Iterable bikes = body;
       return bikes.map((o) => Bike.jsonFrom(o)).toList();
     } else {
       throw Exception("Unable to perform request");
