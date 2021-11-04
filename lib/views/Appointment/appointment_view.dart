@@ -11,13 +11,16 @@ class AppointmentView extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: ColorConstants.background,
-        title: TopAppBarTitle(title: "Đơn đặt"),
+        title: TopAppBarTitle(
+          title: "Đơn của bạn",
+          hasBack: false,
+        ),
       ),
       body: BodyAppointment(),
       backgroundColor: Colors.grey[300],
       bottomNavigationBar: BottomAppBar(
         color: ColorConstants.background,
-        child: BottomBar(selected: "schedule"),
+        child: BottomBar(selected: "order"),
       ),
     );
   }

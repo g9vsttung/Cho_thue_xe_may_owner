@@ -95,16 +95,49 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                     SizedBox(
                       height: 15,
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Tên khách hàng: ",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
+                        Text(widget.booking.customerName!,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ))
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
                     const Text("Địa chỉ của khách hàng:",
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                     const SizedBox(
                       height: 15,
                     ),
-                    Text(widget.booking.address,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        )),
+                    Text(
+                      widget.booking.address,
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                      maxLines: 2,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Số điện thoại: ",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
+                        Text(widget.booking.customerPhone!,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ))
+                      ],
+                    ),
                     const SizedBox(
                       height: 15,
                     ),

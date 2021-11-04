@@ -3,10 +3,13 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:chothuexemay_owner/models/feedback_model.dart';
 import 'package:chothuexemay_owner/models/order_model.dart';
+import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/views/Components/app_bar_main.dart';
 import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
+import 'package:chothuexemay_owner/views/Home/components/body.dart';
 import 'package:chothuexemay_owner/views/RequestHandling/request_handling_view.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,9 +75,52 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: ColorConstants.background,
         title: TopAppBarMain(),
       ),
-      body: Center(
-        child: Text("Login Success"),
-      ),
+      body: BodyHome(
+          owner: Owner(
+              id: "id",
+              phoneNumber: "phoneNumber",
+              fullname: "fullname",
+              address: "address",
+              numberOfbikes: 1,
+              rating: 3,
+              numberOfRatings: 42,
+              areaId: "areaId",
+              status: 0,
+              adminId: "adminId",
+              banTimes: 0,
+              mail: "mail",
+              feedbacks: [
+            FeedbackModel(
+                content: "contentasdasdasdasdsadas asdasd sadasd asdasd asdas",
+                rating: 4,
+                date: "20/10/2021",
+                image: "https://www.w3schools.com/howto/img_avatar.png",
+                name: "Tung Vu"),
+            FeedbackModel(
+                content: "",
+                rating: 3,
+                date: "20/10/2021",
+                image: "https://www.w3schools.com/howto/img_avatar.png",
+                name: "Tung Vu"),
+            FeedbackModel(
+                content: "contentasdasdasdasdsadas asdasd sadasd asdasd asdas",
+                rating: 5,
+                date: "20/10/2021",
+                image: "https://www.w3schools.com/howto/img_avatar.png",
+                name: "Tung Vu"),
+            FeedbackModel(
+                content: "contentasdasdasdasdsadas asdasd sadasd asdasd asdas",
+                rating: 4,
+                date: "20/10/2021",
+                image: "https://www.w3schools.com/howto/img_avatar.png",
+                name: "Tung Vu"),
+            FeedbackModel(
+                content: "contentasdasdasdasdsadas asdasd sadasd asdasd asdas",
+                rating: 4,
+                date: "20/10/2021",
+                image: "https://www.w3schools.com/howto/img_avatar.png",
+                name: "Tung Vu"),
+          ])),
       bottomNavigationBar: BottomAppBar(
         color: ColorConstants.background,
         child: BottomBar(selected: "home"),

@@ -19,6 +19,4 @@ class WalletService {
       throw Exception("Unable to perform request");
     }
   }
-
-  Future<List<TransactionHistory>> getWalletTransaction() async {}
 }

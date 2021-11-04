@@ -21,7 +21,7 @@ class AppointmentDetailView extends StatelessWidget {
       body: BodyAppointmentDetail(booking: booking),
       bottomNavigationBar: BottomAppBar(
         color: ColorConstants.background,
-        child: BottomBar(selected: "schedule"),
+        child: BottomBar(selected: "order"),
       ),
     );
   }

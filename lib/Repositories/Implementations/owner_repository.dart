@@ -1,5 +1,6 @@
 import 'package:chothuexemay_owner/Repositories/Interfaces/owner_interface.dart';
 import 'package:chothuexemay_owner/models/bike_model.dart';
+import 'package:chothuexemay_owner/models/history_wallet_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/models/wallet_model.dart';
 import 'package:chothuexemay_owner/services/owner_service.dart';
@@ -54,5 +55,11 @@ class OwnerRepository implements IOwnerRepository {
   @override
   Future<Wallet> getWallet() {
     return _walletService.getWallet();
+  }
+
+  @override
+  Future<List<TransactionHistory>> getWalletTranstions() {
+    // TODO: implement getWalletTranstions
+    throw UnimplementedError();
   }
 }
