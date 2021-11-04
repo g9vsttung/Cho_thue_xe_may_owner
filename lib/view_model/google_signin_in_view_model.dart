@@ -2,6 +2,7 @@
 
 import 'package:chothuexemay_owner/Repositories/Implementations/owner_repository.dart';
 import 'package:chothuexemay_owner/views/Home/home_view.dart';
+import 'package:chothuexemay_owner/views/Login/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -75,9 +76,14 @@ class GoogleSignInViewModel extends ChangeNotifier {
     return -1;
   }
 
-  static Future<void> signOut({required BuildContext context}) async {
+  Future signOut({required BuildContext context}) async {
     try {
       await FirebaseAuth.instance.signOut();
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) {
+          return LoginView();
+        },
+      ));
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(customSnackBar(
         content: 'Lỗi, vui lòng thử lại',

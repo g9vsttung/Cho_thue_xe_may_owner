@@ -6,24 +6,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BodyWallet extends StatelessWidget {
-  Wallet wallet = Wallet(balance: 120000, history: [
-    TransactionHistory(
-        action: true, amount: 100000, date: DateTime.now(), id: "ASDDAS"),
-    TransactionHistory(
-        action: false, amount: 50000, date: DateTime.now(), id: "ASDDAS"),
-    TransactionHistory(
-        action: false, amount: 20000, date: DateTime.now(), id: "ASDDAS"),
-    TransactionHistory(
-        action: true, amount: 120000, date: DateTime.now(), id: "ASDDAS"),
-    TransactionHistory(
-        action: true, amount: 30000, date: DateTime.now(), id: "ASDDAS"),
-    TransactionHistory(
-        action: true, amount: 350000, date: DateTime.now(), id: "ASDDAS"),
-    TransactionHistory(
-        action: false, amount: 100000, date: DateTime.now(), id: "ASDDAS"),
-    TransactionHistory(
-        action: true, amount: 130000, date: DateTime.now(), id: "ASDDAS"),
-  ]);
+  Wallet wallet;
+
+  BodyWallet({Key? key, required this.wallet}) : super(key: key);
+
+  // Wallet wallet = Wallet.general(balance: 120000, history: [
+  //   TransactionHistory(
+  //       action: true, amount: 100000, date: DateTime.now(), id: "ASDDAS"),
+  //   TransactionHistory(
+  //       action: false, amount: 50000, date: DateTime.now(), id: "ASDDAS"),
+  //   TransactionHistory(
+  //       action: false, amount: 20000, date: DateTime.now(), id: "ASDDAS"),
+  //   TransactionHistory(
+  //       action: true, amount: 120000, date: DateTime.now(), id: "ASDDAS"),
+  //   TransactionHistory(
+  //       action: true, amount: 30000, date: DateTime.now(), id: "ASDDAS"),
+  //   TransactionHistory(
+  //       action: true, amount: 350000, date: DateTime.now(), id: "ASDDAS"),
+  //   TransactionHistory(
+  //       action: false, amount: 100000, date: DateTime.now(), id: "ASDDAS"),
+  //   TransactionHistory(
+  //       action: true, amount: 130000, date: DateTime.now(), id: "ASDDAS"),
+  // ]);
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +77,7 @@ class BodyWallet extends StatelessWidget {
               ],
             ),
           ),
-          for (TransactionHistory trans in wallet.history)
+          for (TransactionHistory trans in wallet.history!)
             transactionHistory(trans, size),
         ],
       ),
@@ -83,15 +87,15 @@ class BodyWallet extends StatelessWidget {
   Widget walletBox(Size size, BuildContext context) {
     return Container(
       width: size.width * 0.85,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: ColorConstants.containerBackground,
       ),
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Column(
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(
+            const Text(
               "Số dư",
               style: TextStyle(
                 fontSize: 18,
@@ -103,12 +107,12 @@ class BodyWallet extends StatelessWidget {
               children: [
                 Text(
                   wallet.balance.round().toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
+                const Text(
                   " VND",
                   style: TextStyle(
                     fontSize: 15,
@@ -117,7 +121,7 @@ class BodyWallet extends StatelessWidget {
               ],
             )
           ]),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Container(
@@ -126,7 +130,7 @@ class BodyWallet extends StatelessWidget {
             decoration:
                 BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Row(
@@ -142,10 +146,10 @@ class BodyWallet extends StatelessWidget {
                 },
                 child: Container(
                   width: size.width * 0.35,
-                  padding: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                       color: Colors.grey[300],
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                      borderRadius: const BorderRadius.all(Radius.circular(5))),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -153,7 +157,7 @@ class BodyWallet extends StatelessWidget {
                         StringConstants.iconDirectory + "recharge.png",
                         width: size.width * 0.1,
                       ),
-                      Text(
+                      const Text(
                         "Nạp tiền",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
@@ -164,10 +168,10 @@ class BodyWallet extends StatelessWidget {
               ),
               Container(
                 width: size.width * 0.35,
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                     color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                    borderRadius: const BorderRadius.all(Radius.circular(5))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -175,7 +179,7 @@ class BodyWallet extends StatelessWidget {
                       StringConstants.iconDirectory + "withdraw.png",
                       width: size.width * 0.1,
                     ),
-                    Text(
+                    const Text(
                       "Rút tiền",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -206,7 +210,7 @@ class BodyWallet extends StatelessWidget {
       children: [
         Container(
           width: size.width,
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           color: ColorConstants.containerBackground,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -216,14 +220,15 @@ class BodyWallet extends StatelessWidget {
                 children: [
                   Text(
                     text,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(
                     "ID: " + trans.id,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                     ),
                   ),
@@ -239,19 +244,20 @@ class BodyWallet extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: color),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(
                     trans.date.toString().split(" ")[0],
-                    style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+                    style: const TextStyle(
+                        fontSize: 14, fontStyle: FontStyle.italic),
                   ),
                 ],
               )
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 2,
         )
       ],

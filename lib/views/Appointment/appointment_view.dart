@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/views/Appointment/components/body.dart';
 import 'package:chothuexemay_owner/views/Components/app_bar.dart';
-import 'package:flutter/material.dart';
 
 class AppointmentView extends StatelessWidget {
   @override

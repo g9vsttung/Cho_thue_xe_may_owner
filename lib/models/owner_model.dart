@@ -1,4 +1,3 @@
-import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/models/feedback_model.dart';
 
 class Owner {
@@ -14,7 +13,7 @@ class Owner {
   int numberOfbikes;
   double rating;
   int numberOfRatings;
-  double balance;
+
   List<FeedbackModel> feedbacks;
 
   factory Owner.jsonFrom(Map<String, dynamic> json) {
@@ -31,7 +30,6 @@ class Owner {
         banTimes: json['banTimes'] ?? 0,
         mail: json['mail'] ?? "Unknow",
         status: json['status'] ?? 0,
-        balance: json['balance'] ?? 0,
         feedbacks: (json['listFeedback'] == null
             ? []
             : (json['listFeedback'] as List)
@@ -40,19 +38,19 @@ class Owner {
   }
 
   //Constructor
-  Owner(
-      {required this.id,
-      required this.phoneNumber,
-      required this.fullname,
-      required this.address,
-      required this.numberOfbikes,
-      required this.rating,
-      required this.numberOfRatings,
-      required this.areaId,
-      required this.status,
-      required this.adminId,
-      required this.banTimes,
-      required this.mail,
-      required this.feedbacks,
-      required this.balance});
+  Owner({
+    required this.id,
+    required this.phoneNumber,
+    required this.fullname,
+    required this.address,
+    required this.numberOfbikes,
+    required this.rating,
+    required this.numberOfRatings,
+    required this.areaId,
+    required this.status,
+    required this.adminId,
+    required this.banTimes,
+    required this.mail,
+    required this.feedbacks,
+  });
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'dart:convert';
+import 'dart:developer';
 import 'package:chothuexemay_owner/apis/common.dart';
 import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
@@ -45,6 +46,7 @@ class OwnerService {
       String token = body['token'];
       await _preference.setString(GlobalDataConstants.TOKEN, token);
       Map<String, dynamic> payload = Jwt.parseJwt(token);
+      log(payload["id"]);
       await _preference.setString(GlobalDataConstants.USERID, payload["id"]);
       //Location
       _firebaseRealtimeService.storingLocationRealtime();
@@ -96,5 +98,19 @@ class OwnerService {
               'Bearer ' + prefs.getString(GlobalDataConstants.TOKEN).toString()
         });
     return response.statusCode;
+  }
+
+  Future<Owner> viewProfile() async {
+    final SharedPreferences _preference = await SharedPreferences.getInstance();
+    String ownerId =
+        _preference.getString(GlobalDataConstants.USERID).toString();
+    Uri url = Uri.parse(OwnerApiPath.VIEW_PROFILE + ownerId);
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      return Owner.jsonFrom(body);
+    } else {
+      throw Exception("Unable to perform request");
+    }
   }
 }

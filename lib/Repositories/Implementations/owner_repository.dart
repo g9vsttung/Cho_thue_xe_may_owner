@@ -1,10 +1,13 @@
 import 'package:chothuexemay_owner/Repositories/Interfaces/owner_interface.dart';
 import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
+import 'package:chothuexemay_owner/models/wallet_model.dart';
 import 'package:chothuexemay_owner/services/owner_service.dart';
+import 'package:chothuexemay_owner/services/wallet_service.dart';
 
 class OwnerRepository implements IOwnerRepository {
   OwnerService service = OwnerService();
+  WalletService _walletService = WalletService();
   @override
   Future<List<Owner>> getAll() async {
     Future.delayed(const Duration(seconds: 5));
@@ -41,5 +44,15 @@ class OwnerRepository implements IOwnerRepository {
   @override
   Future<int> denyOrder(String customerId) {
     return service.denyOrder(customerId);
+  }
+
+  @override
+  Future<Owner> viewProfile() {
+    return service.viewProfile();
+  }
+
+  @override
+  Future<Wallet> getWallet() {
+    return _walletService.getWallet();
   }
 }

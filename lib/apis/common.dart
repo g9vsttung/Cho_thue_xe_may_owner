@@ -49,6 +49,8 @@ class OwnerApiPath {
   static String ACCEPT = _URL_API + "/owners/";
   //Deny order
   static String DENY = _URL_API + "/owners/";
+  //View Profile
+  static String VIEW_PROFILE = _URL_API + "/owners/";
 }
 
 class AdminApiPath {
@@ -57,4 +59,12 @@ class AdminApiPath {
 
 class BrandApiPath {
   static String GET_ALL = _URL_API + "/brands";
+}
+
+class WalletApiPath {
+  static String GET_WALLET = _URL_API + '/wallets/';
+}
+
+class BookingApiPath {
+  static String GET_ALL_TRANSACTIONS = _URL_API + '/bookings';
 }

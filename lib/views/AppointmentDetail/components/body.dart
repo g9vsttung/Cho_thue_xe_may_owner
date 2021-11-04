@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 
 class BodyAppointmentDetail extends StatefulWidget {
   Booking booking;
@@ -96,10 +95,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                     SizedBox(
                       height: 15,
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    const Text("Địa chỉ của bạn:",
+                    const Text("Địa chỉ của khách hàng:",
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                     const SizedBox(

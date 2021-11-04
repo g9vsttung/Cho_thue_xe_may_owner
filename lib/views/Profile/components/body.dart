@@ -1,5 +1,6 @@
 import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/view_model/google_signin_in_view_model.dart';
 import 'package:chothuexemay_owner/views/Appointment/appointment_view.dart';
 import 'package:chothuexemay_owner/views/Manage/manage_view.dart';
 import 'package:chothuexemay_owner/views/Wallet/wallet_view.dart';
@@ -7,27 +8,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BodyProfile extends StatefulWidget {
+  Owner owner;
+  double balance;
+  BodyProfile({Key? key, required this.owner, required this.balance})
+      : super(key: key);
+
   @override
   State<BodyProfile> createState() => _BodyProfileState();
 }
 
 class _BodyProfileState extends State<BodyProfile> {
-  Owner owner = Owner(
-      id: "1",
-      phoneNumber: "0777997001",
-      fullname: "Nguyen Van A",
-      address: "dfsdfs",
-      numberOfbikes: 42,
-      rating: 4.2,
-      numberOfRatings: 42,
-      areaId: "areaId",
-      status: 1,
-      adminId: "adminId",
-      banTimes: 0,
-      mail: "mail",
-      feedbacks: [],
-      balance: 120);
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -53,7 +43,7 @@ class _BodyProfileState extends State<BodyProfile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        owner.fullname,
+                        widget.owner.fullname,
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
@@ -61,7 +51,7 @@ class _BodyProfileState extends State<BodyProfile> {
                         height: 5,
                       ),
                       Text(
-                        "Số điệnn thoại: " + owner.phoneNumber,
+                        "Số điệnn thoại: " + widget.owner.phoneNumber,
                         style: TextStyle(
                           fontSize: 14,
                         ),
@@ -70,7 +60,7 @@ class _BodyProfileState extends State<BodyProfile> {
                         height: 5,
                       ),
                       Text(
-                        "Số dư trong ví: " + owner.balance.toString() + " VND",
+                        "Số dư trong ví: " + widget.balance.toString() + " VND",
                         style: TextStyle(
                           fontSize: 14,
                         ),
@@ -112,7 +102,10 @@ class _BodyProfileState extends State<BodyProfile> {
             },
           ));
         }),
-        getOptionFrame("Đăng xuất", () {}),
+        getOptionFrame("Đăng xuất", () {
+          GoogleSignInViewModel _ggle = GoogleSignInViewModel();
+          _ggle.signOut(context: context);
+        }),
       ],
     );
   }

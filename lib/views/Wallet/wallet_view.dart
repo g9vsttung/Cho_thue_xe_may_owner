@@ -1,7 +1,9 @@
+import 'package:chothuexemay_owner/models/wallet_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
 import 'package:chothuexemay_owner/views/Components/app_bar.dart';
-import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'components/body.dart';
 
@@ -16,8 +18,32 @@ class WalletView extends StatelessWidget {
           title: "Ví tiền",
         ),
       ),
-      body: BodyWallet(),
+      body: FutureBuilder(
+        builder: (context, napshot) {
+          if (napshot.connectionState == ConnectionState.done) {
+            if (napshot.hasData) {
+              final wallet = (napshot.data as dynamic)['wallet'] as Wallet;
+              return BodyWallet(
+                wallet: wallet,
+              );
+            }
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+        future: getData(context),
+      ),
       backgroundColor: Colors.grey[200],
     );
+  }
+
+  Future<Map<String, dynamic>> getData(BuildContext context) async {
+    Map<String, dynamic> list = {};
+    list['wallet'] =
+        await Provider.of<OwnerViewModel>(context, listen: false).getWallet();
+    list['transaction'] =
+        await Provider.of<OwnerViewModel>(context, listen: false).getWallet();
+    return list;
   }
 }
