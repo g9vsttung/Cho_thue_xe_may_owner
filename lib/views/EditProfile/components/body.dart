@@ -92,7 +92,6 @@ class _BodyEditProfileState extends State<BodyEditProfile> {
                 borderRadius: const BorderRadius.all(Radius.circular(5))),
             padding: const EdgeInsets.only(left: 10),
             width: double.infinity,
-            // height: size.height*0.3,
             child: Center(
               child: TextField(
                 controller: phoneController,

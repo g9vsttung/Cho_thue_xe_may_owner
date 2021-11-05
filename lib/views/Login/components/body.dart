@@ -4,6 +4,7 @@ import 'package:chothuexemay_owner/view_model/google_signin_in_view_model.dart';
 import 'package:chothuexemay_owner/views/Home/home_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -29,20 +30,23 @@ class LoginBody extends StatelessWidget {
                   onPressed: () async {
                     int isLoginSuccess =
                         await provider.googleLogin(context: context);
-                    // Code: 200: Success -
+
                     if (isLoginSuccess == 200) {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => HomeView()),
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute<dynamic>(
+                          builder: (BuildContext context) => HomeView(),
+                        ),
+                        (route) => false,
                       );
                     } else if (isLoginSuccess == 404) {
                       //New user
                     } else {
-                      SnackBar(
-                          content: Text(
-                        'Xin lỗi, bạn không thể đăng nhập lúc này.',
-                        style: TextStyle(
-                            color: Colors.redAccent, letterSpacing: 0.5),
-                      ));
+                      Fluttertoast.showToast(
+                        msg: 'Xin lỗi, bạn không thể đăng nhập lúc này.',
+                        gravity: ToastGravity.CENTER,
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
                     }
                   },
                   icon: FaIcon(
