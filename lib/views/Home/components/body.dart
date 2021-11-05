@@ -33,12 +33,12 @@ class BodyHome extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              for (int i = 1; i <= owner.rating; i++)
+              for (int i = 1; i <= owner.rating.round(); i++)
                 Image.asset(
                   StringConstants.iconDirectory + "starRating.png",
                   width: 18,
                 ),
-              for (int i = 1; i <= 5 - owner.rating; i++)
+              for (int i = 1; i <= 5 - owner.rating.round(); i++)
                 Image.asset(
                   StringConstants.iconDirectory + "starBorder.png",
                   width: 18,
