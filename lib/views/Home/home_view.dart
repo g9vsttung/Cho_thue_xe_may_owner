@@ -9,6 +9,7 @@ import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/feedback_view_model.dart';
 import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
+import 'package:chothuexemay_owner/views/Components/app_bar.dart';
 import 'package:chothuexemay_owner/views/Components/app_bar_main.dart';
 import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
 import 'package:chothuexemay_owner/views/Home/components/body.dart';
@@ -76,7 +77,7 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: ColorConstants.background,
-        title: TopAppBarMain(),
+        title: TopAppBarTitle(title: "Trang chủ",hasBack: false,),
       ),
       body: FutureBuilder(
         builder: (context, napshot) {
