@@ -267,4 +267,15 @@ class BodyWallet extends StatelessWidget {
       ],
     );
   }
+
+  //true: rút | false: nạp
+  List<TransactionHistory> filterTransactions(bool action) {
+    List<TransactionHistory> rs = [];
+    for (TransactionHistory transaction in transactions) {
+      if (transaction.action == action) {
+        rs.add(transaction);
+      }
+    }
+    return rs;
+  }
 }
