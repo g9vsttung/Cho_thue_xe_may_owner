@@ -79,11 +79,13 @@ class GoogleSignInViewModel extends ChangeNotifier {
   Future signOut({required BuildContext context}) async {
     try {
       await FirebaseAuth.instance.signOut();
-      Navigator.push(context, MaterialPageRoute(
-        builder: (context) {
-          return LoginView();
-        },
-      ));
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => LoginView(),
+        ),
+            (route) => false,
+      );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(customSnackBar(
         content: 'Lỗi, vui lòng thử lại',
