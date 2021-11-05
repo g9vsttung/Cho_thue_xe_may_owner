@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, prefer_function_declarations_over_variables
+
 import 'package:chothuexemay_owner/models/history_wallet_model.dart';
 import 'package:chothuexemay_owner/models/wallet_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
@@ -17,7 +19,7 @@ class BodyWallet extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
           walletBox(size, context),
@@ -30,7 +32,7 @@ class BodyWallet extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   "Lịch sử giao dịch",
                   style: TextStyle(
                     fontSize: 18,
@@ -40,14 +42,14 @@ class BodyWallet extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
+                    const Text(
                       "Lọc",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Image.asset(
@@ -62,7 +64,7 @@ class BodyWallet extends StatelessWidget {
           if (transactions.isNotEmpty)
             for (TransactionHistory trans in transactions)
               transactionHistory(trans, size),
-          if (transactions.isEmpty) Text('Chưa có giao dịch nào'),
+          if (transactions.isEmpty) const Text('Chưa có giao dịch nào'),
         ],
       ),
     );
@@ -157,13 +159,7 @@ class BodyWallet extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                  onTap: () {
-                    // Navigator.push(context, MaterialPageRoute(
-                    //   builder: (context) {
-                    //     return RechargeView(balance: wallet.balance);
-                    //   },
-                    // ));
-                  },
+                  onTap: () {},
                   child: Container(
                     width: size.width * 0.35,
                     padding: const EdgeInsets.all(5),

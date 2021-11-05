@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, deprecated_member_use
 
 import 'dart:developer';
 import 'dart:io';
@@ -87,10 +87,8 @@ class _EditBody extends State<EditBody> {
               Center(
                 child: SizedBox(
                   height: 35,
-                  // ignore: deprecated_member_use
                   child: RaisedButton(
                     onPressed: () async {
-                      //Thêm ảnh ở đây
                       await pickImage();
                     },
                     color: Colors.green,
@@ -114,7 +112,7 @@ class _EditBody extends State<EditBody> {
             ],
           ),
           previewImage(size),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Container(
@@ -187,7 +185,6 @@ class _EditBody extends State<EditBody> {
                           widget.bike.categoryId = value;
                         });
                       },
-                      //brand: widget.bike.,
                     ),
                     DropDownManage(
                       brands: _brandViewModel.brands,
@@ -249,7 +246,6 @@ class _EditBody extends State<EditBody> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              // ignore: deprecated_member_use
               RaisedButton(
                 color: Colors.red,
                 shape: const RoundedRectangleBorder(
@@ -265,7 +261,6 @@ class _EditBody extends State<EditBody> {
                       fontSize: 16),
                 ),
               ),
-              // ignore: deprecated_member_use
               RaisedButton(
                 color: Colors.orange,
                 shape: const RoundedRectangleBorder(
@@ -374,6 +369,7 @@ class _EditBody extends State<EditBody> {
       ),
       backgroundColor: Colors.white,
     );
+    // ignore: unused_local_variable
     Future<dynamic> futureValue = showGeneralDialog(
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) {

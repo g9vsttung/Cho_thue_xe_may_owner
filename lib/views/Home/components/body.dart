@@ -6,28 +6,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 
+// ignore: must_be_immutable
 class BodyHome extends StatelessWidget {
   Owner owner;
   List<FeedbackModel> feedbacks;
-  BodyHome({required this.owner, required this.feedbacks});
+  BodyHome({Key? key, required this.owner, required this.feedbacks})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 35,
           ),
           Text(
             "Xin chào, " + owner.fullname,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Row(
@@ -45,22 +46,22 @@ class BodyHome extends StatelessWidget {
                 ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(
             "(" + owner.numberOfRatings.toString() + " đánh giá)",
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 35,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 25),
             child: Row(
-              children: [
+              children: const [
                 Text(
                   "Đánh giá của bạn",
                   style: TextStyle(
@@ -70,7 +71,7 @@ class BodyHome extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           for (FeedbackModel feedback in feedbacks) feedbackBox(feedback),
@@ -107,7 +108,7 @@ class BodyHome extends StatelessWidget {
                               borderRadius: BorderRadius.circular(50.0),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Column(
@@ -116,7 +117,7 @@ class BodyHome extends StatelessWidget {
                             children: [
                               Text(
                                 feedback.customerName,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16),
                               ),
                             ],
@@ -140,7 +141,7 @@ class BodyHome extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -154,7 +155,7 @@ class BodyHome extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             )
           ],

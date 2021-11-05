@@ -35,7 +35,7 @@ class _DropDownManage extends State<DropDownManage> {
   @override
   Widget build(BuildContext context) {
     final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
-    // _brandViewModel.getAll();
+
     Size size = MediaQuery.of(context).size;
     List<Brand> listBrandObject = _brandViewModel.brands;
     // ignore: unused_local_variable

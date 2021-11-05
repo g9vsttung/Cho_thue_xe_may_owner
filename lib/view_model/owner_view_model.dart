@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:chothuexemay_owner/Repositories/Implementations/booking_repository.dart';
 import 'package:chothuexemay_owner/Repositories/Implementations/owner_repository.dart';
 import 'package:chothuexemay_owner/Repositories/Interfaces/booking_interface.dart';
@@ -47,7 +49,8 @@ class OwnerViewModel extends ChangeNotifier {
   Future<List<TransactionHistory>> getWalletTransactions() async {
     return await ownerRepository.getWalletTranstions();
   }
-  Future<bool> updateProfile(String name, String phone, String address)async{
+
+  Future<bool> updateProfile(String name, String phone, String address) async {
     return await ownerRepository.updateProfile(name, phone, address);
   }
 }

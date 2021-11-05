@@ -14,6 +14,7 @@ class GoogleSignInViewModel extends ChangeNotifier {
   GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
   final OwnerRepository _ownerRepository = OwnerRepository();
+
   static Future<FirebaseApp> initializeFirebase({
     required BuildContext context,
   }) async {
@@ -84,7 +85,7 @@ class GoogleSignInViewModel extends ChangeNotifier {
         MaterialPageRoute<dynamic>(
           builder: (BuildContext context) => LoginView(),
         ),
-            (route) => false,
+        (route) => false,
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(customSnackBar(

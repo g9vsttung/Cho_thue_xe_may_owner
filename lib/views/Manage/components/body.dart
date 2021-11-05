@@ -32,7 +32,6 @@ class _ManageBody extends State<ManageBody> {
   Widget build(BuildContext context) {
     final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
 
-    //List<Brand> brands = _brandViewModel.brands;
     List<Bike> bikes = widget.bikes;
     return Padding(
       padding: EdgeInsets.all(12),

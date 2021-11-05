@@ -1,14 +1,14 @@
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/views/Components/app_bar.dart';
-import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'components/body.dart';
 
+// ignore: must_be_immutable
 class RechargeView extends StatelessWidget {
   double balance;
 
-  RechargeView({required this.balance});
+  RechargeView({Key? key, required this.balance}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

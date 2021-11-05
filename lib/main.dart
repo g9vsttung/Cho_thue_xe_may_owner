@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:chothuexemay_owner/models/category_model.dart';
 import 'package:chothuexemay_owner/view_model/bike_view_model.dart';
 import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/view_model/category_view_model.dart';

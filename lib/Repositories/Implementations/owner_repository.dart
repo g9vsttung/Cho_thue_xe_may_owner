@@ -8,7 +8,7 @@ import 'package:chothuexemay_owner/services/wallet_service.dart';
 
 class OwnerRepository implements IOwnerRepository {
   OwnerService service = OwnerService();
-  WalletService _walletService = WalletService();
+  final WalletService _walletService = WalletService();
   @override
   Future<List<Owner>> getAll() async {
     Future.delayed(const Duration(seconds: 5));
@@ -27,12 +27,11 @@ class OwnerRepository implements IOwnerRepository {
 
   @override
   Future<bool> logout() {
-    // TODO: implement logout
     throw UnimplementedError();
   }
 
   @override
-  Future<bool> updateProfile(String name,String phone,String address) {
+  Future<bool> updateProfile(String name, String phone, String address) {
     return service.updateProfile(name, phone, address);
   }
 

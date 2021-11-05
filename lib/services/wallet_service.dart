@@ -36,6 +36,7 @@ class WalletService {
           "bankId": "",
           "bankName": ""
         }));
+    return response.statusCode == 200;
   }
 
   Future<List<TransactionHistory>> getWalletTransaction() async {

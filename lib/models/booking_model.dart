@@ -1,5 +1,4 @@
 import 'package:chothuexemay_owner/models/bike_model.dart';
-import 'package:chothuexemay_owner/models/customer_model.dart';
 import 'package:chothuexemay_owner/models/feedback_model.dart';
 
 class Booking {

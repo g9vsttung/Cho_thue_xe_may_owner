@@ -12,7 +12,6 @@ class BookingRepository implements IBookingRepository {
 
   @override
   Future<BookingTranstion> getBookingTransactionById(String id) {
-    // TODO: implement getBookingTransactionById
     throw UnimplementedError();
   }
 

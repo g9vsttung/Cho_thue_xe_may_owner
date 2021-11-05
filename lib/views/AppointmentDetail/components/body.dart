@@ -1,15 +1,15 @@
 // ignore_for_file: prefer_function_declarations_over_variables
-import 'package:chothuexemay_owner/models/booking_model.dart';
 import 'package:chothuexemay_owner/models/booking_transaction.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 
+// ignore: must_be_immutable
 class BodyAppointmentDetail extends StatefulWidget {
   BookingTranstion booking;
 
-  BodyAppointmentDetail({required this.booking});
+  BodyAppointmentDetail({Key? key, required this.booking}) : super(key: key);
 
   @override
   State<BodyAppointmentDetail> createState() => _BodyAppointmentDetail();
@@ -22,8 +22,6 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
 
   @override
   Widget build(BuildContext context) {
-    //_customerViewModel.booking(widget.dateRent, widget.dateReturn);
-    Size size = MediaQuery.of(context).size;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -51,7 +49,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Ngày thuê:",
+                        const Text("Ngày thuê:",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
                         Text(
@@ -59,18 +57,18 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                                 .toString()
                                 .substring(0, 16)
                                 .replaceAll('T', ' '),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                             )),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Ngày trả:",
+                        const Text("Ngày trả:",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
                         Text(
@@ -78,27 +76,27 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                                 .toString()
                                 .substring(0, 16)
                                 .replaceAll('T', ' '),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                             )),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Loại xe:",
+                        const Text("Loại xe:",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
                         Text(widget.booking.bike.brandName,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                             )),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Row(
@@ -108,7 +106,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
                         Text(widget.booking.customerName!,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                             ))
                       ],
@@ -139,7 +137,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
                         Text(widget.booking.customerPhone!,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                             ))
                       ],
@@ -172,7 +170,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                             widget.booking.status == 0
                                 ? "Chờ giao xe"
                                 : "Khách đang thuê",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                             ))
                       ],
@@ -184,8 +182,8 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
             ),
             Container(
               color: Colors.grey[300],
-              padding:
-                  EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 10),
+              padding: const EdgeInsets.only(
+                  top: 10, left: 15, right: 15, bottom: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
@@ -193,7 +191,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Tổng cộng",
+                      const Text("Tổng cộng",
                           style: TextStyle(
                             fontSize: 18,
                           )),
@@ -203,7 +201,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                                   .toString()
                                   .replaceAllMapped(reg, mathFunc) +
                               ' đ',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
                     ],
                   ),

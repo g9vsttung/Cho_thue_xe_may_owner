@@ -8,7 +8,8 @@ class TopAppBarTitle extends StatefulWidget {
   String title;
   bool hasBack = true;
 
-  TopAppBarTitle({Key? key, required this.title, bool? hasBack}) {
+  TopAppBarTitle({Key? key, required this.title, bool? hasBack})
+      : super(key: key) {
     if (hasBack != null) {
       this.hasBack = hasBack;
     }

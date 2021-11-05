@@ -71,7 +71,6 @@ class BottomBar extends StatelessWidget {
                 ],
               ),
             ),
-          //=============================================================SEARCH
           if (selected == "order")
             GestureDetector(
               onTap: () {
@@ -124,7 +123,6 @@ class BottomBar extends StatelessWidget {
                 ],
               ),
             ),
-          //=============================================MANAGE
           if (selected == "manage")
             GestureDetector(
               onTap: () {
@@ -177,7 +175,6 @@ class BottomBar extends StatelessWidget {
                 ],
               ),
             ),
-          //================================================PROFILE
           if (selected == "profile")
             GestureDetector(
               onTap: () {

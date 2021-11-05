@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, prefer_function_declarations_over_variables
+
 import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/google_signin_in_view_model.dart';
@@ -28,7 +30,8 @@ class _BodyProfileState extends State<BodyProfile> {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+          padding:
+              const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
           color: Colors.white,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +44,7 @@ class _BodyProfileState extends State<BodyProfile> {
                     StringConstants.imageDirectory + "avatar.png",
                     width: 65,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Column(
@@ -49,19 +52,19 @@ class _BodyProfileState extends State<BodyProfile> {
                     children: [
                       Text(
                         widget.owner.fullname,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
                         "Số điện thoại: " + widget.owner.phoneNumber,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -70,7 +73,7 @@ class _BodyProfileState extends State<BodyProfile> {
                                 .toString()
                                 .replaceAllMapped(reg, mathFunc) +
                             " VND",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                         ),
                       )
@@ -80,9 +83,11 @@ class _BodyProfileState extends State<BodyProfile> {
               ),
               IconButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return EditProfileView(owner: widget.owner);
-                    },));
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return EditProfileView(owner: widget.owner);
+                      },
+                    ));
                   },
                   icon: Image.asset(
                     StringConstants.iconDirectory + "edit.png",
@@ -91,27 +96,27 @@ class _BodyProfileState extends State<BodyProfile> {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         getOptionFrame("Lịch đặt của tôi", () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return AppointmentView();
+              return const AppointmentView();
             },
           ));
         }),
         getOptionFrame("Xe của tôi", () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return ManageView();
+              return const ManageView();
             },
           ));
         }),
         getOptionFrame("Ví của tôi", () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return WalletView();
+              return const WalletView();
             },
           ));
         }),
@@ -127,8 +132,9 @@ class _BodyProfileState extends State<BodyProfile> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.only(bottom: 2),
-        padding: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
+        margin: const EdgeInsets.only(bottom: 2),
+        padding:
+            const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
         color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -136,7 +142,7 @@ class _BodyProfileState extends State<BodyProfile> {
           children: [
             Text(
               text,
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
             Image.asset(
               StringConstants.iconDirectory + "detail.png",

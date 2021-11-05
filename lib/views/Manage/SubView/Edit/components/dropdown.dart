@@ -47,10 +47,11 @@ class _DropDownStatus extends State<DropDownStatus> {
           ),
           items: listItem.map((BikeStatus t) {
             String value = "";
-            if (t.value)
+            if (t.value) {
               value = "Hoạt động";
-            else
+            } else {
               value = "Tạm ngưng";
+            }
             return DropdownMenuItem(
               value: t.key,
               child: SizedBox(

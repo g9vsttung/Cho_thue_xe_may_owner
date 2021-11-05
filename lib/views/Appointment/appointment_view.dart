@@ -12,6 +12,8 @@ import 'package:chothuexemay_owner/views/Components/app_bar.dart';
 import 'package:provider/provider.dart';
 
 class AppointmentView extends StatelessWidget {
+  const AppointmentView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
