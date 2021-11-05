@@ -11,8 +11,7 @@ class CustomerRepository implements ICustomerRepository {
   }
 
   @override
-  Future<Customer> getInformationCustomer(String CustomerId) {
-    // TODO: implement getInformationCustomer
-    throw UnimplementedError();
+  Future<Customer> getInformationCustomer(String customerId) async {
+    return await service.getCustomerById(customerId);
   }
 }

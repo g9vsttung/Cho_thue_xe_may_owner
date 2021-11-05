@@ -19,6 +19,10 @@ class _BodyRechargeState extends State<BodyRecharge> {
 
   @override
   Widget build(BuildContext context) {
+    //Format currency number
+    RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+    String Function(Match) mathFunc = (Match match) => '${match[1]}.';
+
     Size size = MediaQuery.of(context).size;
 
     return Column(
@@ -42,7 +46,10 @@ class _BodyRechargeState extends State<BodyRecharge> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        widget.balance.round().toString(),
+                        widget.balance
+                            .round()
+                            .toString()
+                            .replaceAllMapped(reg, mathFunc),
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
@@ -165,6 +172,10 @@ class _BodyRechargeState extends State<BodyRecharge> {
   }
 
   Widget amountBox(int amount, Size size) {
+    //Format currency number
+    RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+    String Function(Match) mathFunc = (Match match) => '${match[1]}.';
+
     Color? color = Colors.white;
     if (selectedAmount == amount) {
       color = Colors.blue[200];
@@ -184,7 +195,7 @@ class _BodyRechargeState extends State<BodyRecharge> {
         padding: EdgeInsets.only(top: 10, bottom: 10),
         child: Center(
           child: Text(
-            amount.toString() + " VND",
+            amount.toString().replaceAllMapped(reg, mathFunc) + " VND",
             style: TextStyle(fontSize: 12),
           ),
         ),

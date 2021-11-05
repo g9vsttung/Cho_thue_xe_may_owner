@@ -1,6 +1,10 @@
+import 'package:chothuexemay_owner/Repositories/Implementations/booking_repository.dart';
 import 'package:chothuexemay_owner/Repositories/Implementations/owner_repository.dart';
+import 'package:chothuexemay_owner/Repositories/Interfaces/booking_interface.dart';
 import 'package:chothuexemay_owner/Repositories/Interfaces/owner_interface.dart';
 import 'package:chothuexemay_owner/models/bike_model.dart';
+import 'package:chothuexemay_owner/models/booking_transaction.dart';
+import 'package:chothuexemay_owner/models/history_wallet_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/models/wallet_model.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +12,7 @@ import 'package:flutter/material.dart';
 class OwnerViewModel extends ChangeNotifier {
   final List<Bike> bikes = [];
   IOwnerRepository ownerRepository = OwnerRepository();
+  final IBookingRepository _bookingRepository = BookingRepository();
 
   Future getBikes() async {
     bikes.clear();
@@ -33,5 +38,13 @@ class OwnerViewModel extends ChangeNotifier {
 
   Future<Wallet> getWallet() async {
     return await ownerRepository.getWallet();
+  }
+
+  Future<List<BookingTranstion>> getBookingTransactions() async {
+    return await _bookingRepository.getBookingTransactions();
+  }
+
+  Future<List<TransactionHistory>> getWalletTransactions() async {
+    return await ownerRepository.getWalletTranstions();
   }
 }

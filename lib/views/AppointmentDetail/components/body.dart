@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 import 'package:chothuexemay_owner/models/booking_model.dart';
+import 'package:chothuexemay_owner/models/booking_transaction.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 
 class BodyAppointmentDetail extends StatefulWidget {
-  Booking booking;
+  BookingTranstion booking;
 
   BodyAppointmentDetail({required this.booking});
 
@@ -53,7 +54,11 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                         Text("Ngày thuê:",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
-                        Text(widget.booking.dateRent.toString().split(" ")[0],
+                        Text(
+                            widget.booking.dateRentActual
+                                .toString()
+                                .substring(0, 16)
+                                .replaceAll('T', ' '),
                             style: TextStyle(
                               fontSize: 18,
                             )),
@@ -69,9 +74,10 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
                         Text(
-                            widget.booking.dateReturnExpected
+                            widget.booking.dateReturnActual
                                 .toString()
-                                .split(" ")[0],
+                                .substring(0, 16)
+                                .replaceAll('T', ' '),
                             style: TextStyle(
                               fontSize: 18,
                             )),
@@ -143,11 +149,11 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text("Phương thức thanh toán: ",
+                      children: const [
+                        Text("Phương thức thanh toán: ",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
-                        Text(widget.booking.paymentMethod,
+                        Text('Tiền mặt',
                             style: TextStyle(
                               fontSize: 18,
                             ))

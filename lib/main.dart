@@ -1,7 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:chothuexemay_owner/models/category_model.dart';
 import 'package:chothuexemay_owner/view_model/bike_view_model.dart';
 import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
+import 'package:chothuexemay_owner/view_model/category_view_model.dart';
+import 'package:chothuexemay_owner/view_model/customer_view_model.dart';
+import 'package:chothuexemay_owner/view_model/feedback_view_model.dart';
 import 'package:chothuexemay_owner/view_model/google_signin_in_view_model.dart';
 import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
 import 'package:chothuexemay_owner/views/Login/login_view.dart';
@@ -30,6 +34,12 @@ class MyApp extends StatelessWidget {
             create: (create) => OwnerViewModel()),
         ChangeNotifierProvider<BikeViewModel>(
             create: (create) => BikeViewModel()),
+        ChangeNotifierProvider<CustomerViewModel>(
+            create: (create) => CustomerViewModel()),
+        ChangeNotifierProvider<CategoryViewModel>(
+            create: (create) => CategoryViewModel()),
+        ChangeNotifierProvider<FeedbackViewModel>(
+            create: (create) => FeedbackViewModel()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

@@ -19,4 +19,41 @@ class WalletService {
       throw Exception("Unable to perform request");
     }
   }
+
+  Future createWallet() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    Uri url = Uri.parse(WalletApiPath.CREATE);
+
+    final response = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json ; charset=UTF-8',
+          'Authorization':
+              'Bearer ' + prefs.getString(GlobalDataConstants.TOKEN).toString()
+        },
+        body: jsonEncode(<String, String>{
+          "id": prefs.getString(GlobalDataConstants.USERID).toString(),
+          "momoId": "",
+          "bankId": "",
+          "bankName": ""
+        }));
+  }
+
+  Future<List<TransactionHistory>> getWalletTransaction() async {
+    final SharedPreferences _preference = await SharedPreferences.getInstance();
+    Uri url = Uri.parse(WalletApiPath.GET_HISTORY_TRANSACTIONS +
+        _preference.getString(GlobalDataConstants.USERID).toString());
+    final headers = {
+      'Content-Type': 'application/json ; charset=UTF-8',
+    };
+    final response = await http.get(url, headers: headers);
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      Iterable transactions = body['data'];
+      return transactions.map((e) => TransactionHistory.jsonFrom(e)).toList();
+    } else if (response.statusCode == 404) {
+      return [];
+    } else {
+      throw Exception("Unable to perform request");
+    }
+  }
 }

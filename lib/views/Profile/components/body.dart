@@ -18,6 +18,10 @@ class BodyProfile extends StatefulWidget {
 }
 
 class _BodyProfileState extends State<BodyProfile> {
+  //Format currency number
+  RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+  String Function(Match) mathFunc = (Match match) => '${match[1]}.';
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -60,7 +64,11 @@ class _BodyProfileState extends State<BodyProfile> {
                         height: 5,
                       ),
                       Text(
-                        "Số dư trong ví: " + widget.balance.toString() + " VND",
+                        "Số dư trong ví: " +
+                            widget.balance
+                                .toString()
+                                .replaceAllMapped(reg, mathFunc) +
+                            " VND",
                         style: TextStyle(
                           fontSize: 14,
                         ),

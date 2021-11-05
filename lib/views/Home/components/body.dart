@@ -8,8 +8,8 @@ import 'package:flutter/rendering.dart';
 
 class BodyHome extends StatelessWidget {
   Owner owner;
-
-  BodyHome({required this.owner});
+  List<FeedbackModel> feedbacks;
+  BodyHome({required this.owner, required this.feedbacks});
 
   @override
   Widget build(BuildContext context) {
@@ -73,91 +73,94 @@ class BodyHome extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          for (FeedbackModel feedback in owner.feedbacks) feedbackBox(feedback),
+          for (FeedbackModel feedback in feedbacks) feedbackBox(feedback),
         ],
       ),
     );
   }
 
   Widget feedbackBox(FeedbackModel feedback) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 25, right: 25),
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: ColorConstants.containerBackground,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        CircleAvatar(
-                          radius: 16.0,
-                          child: ClipRRect(
-                            child: Image.network(feedback.image!),
-                            borderRadius: BorderRadius.circular(50.0),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              feedback.name!,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
+    if (feedback.status == 0) {
+      return Padding(
+        padding: const EdgeInsets.only(left: 25, right: 25),
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(
+                  color: ColorConstants.containerBackground,
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CircleAvatar(
+                            radius: 16.0,
+                            child: ClipRRect(
+                              child: Image.asset(
+                                  StringConstants.iconDirectory + 'user.jpg'),
+                              borderRadius: BorderRadius.circular(50.0),
                             ),
-                            Text(
-                              feedback.date,
-                              style: TextStyle(
-                                  fontStyle: FontStyle.italic, fontSize: 14),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        for (int i = 1; i <= feedback.rating; i++)
-                          Image.asset(
-                            StringConstants.iconDirectory + "starRating.png",
-                            width: 18,
                           ),
-                        for (int i = 1; i <= 5 - feedback.rating; i++)
-                          Image.asset(
-                            StringConstants.iconDirectory + "starBorder.png",
-                            width: 18,
+                          SizedBox(
+                            width: 5,
                           ),
-                      ],
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  feedback.content,
-                  maxLines: 3,
-                )
-              ],
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                feedback.customerName,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          for (int i = 1; i <= feedback.rating; i++)
+                            Image.asset(
+                              StringConstants.iconDirectory + "starRating.png",
+                              width: 18,
+                            ),
+                          for (int i = 1; i <= 5 - feedback.rating; i++)
+                            Image.asset(
+                              StringConstants.iconDirectory + "starBorder.png",
+                              width: 18,
+                            ),
+                        ],
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        feedback.content,
+                        maxLines: 3,
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 10,
-          )
-        ],
-      ),
-    );
+            SizedBox(
+              height: 10,
+            )
+          ],
+        ),
+      );
+    }
+    return Container();
   }
 }

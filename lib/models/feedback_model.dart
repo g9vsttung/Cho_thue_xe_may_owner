@@ -2,7 +2,9 @@ class FeedbackModel {
   String? id;
   String content;
   int rating;
-  String date;
+
+  int status;
+  String customerName;
   String? image;
   String? name;
 
@@ -12,7 +14,8 @@ class FeedbackModel {
       String? name,
       required this.content,
       required this.rating,
-      required this.date}) {
+      required this.customerName,
+      required this.status}) {
     if (id != null) {
       this.id = id;
     }
@@ -29,6 +32,7 @@ class FeedbackModel {
         id: json["id"],
         content: json["content"],
         rating: json["rating"],
-        date: json["date"]);
+        customerName: json['customerName'],
+        status: json['status'].toInt());
   }
 }

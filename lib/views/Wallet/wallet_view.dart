@@ -1,3 +1,4 @@
+import 'package:chothuexemay_owner/models/history_wallet_model.dart';
 import 'package:chothuexemay_owner/models/wallet_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
@@ -23,8 +24,11 @@ class WalletView extends StatelessWidget {
           if (napshot.connectionState == ConnectionState.done) {
             if (napshot.hasData) {
               final wallet = (napshot.data as dynamic)['wallet'] as Wallet;
+              final transactions = (napshot.data as dynamic)['transactions']
+                  as List<TransactionHistory>;
               return BodyWallet(
                 wallet: wallet,
+                transactions: transactions,
               );
             }
           }
@@ -42,8 +46,9 @@ class WalletView extends StatelessWidget {
     Map<String, dynamic> list = {};
     list['wallet'] =
         await Provider.of<OwnerViewModel>(context, listen: false).getWallet();
-    list['transaction'] =
-        await Provider.of<OwnerViewModel>(context, listen: false).getWallet();
+    list['transactions'] =
+        await Provider.of<OwnerViewModel>(context, listen: false)
+            .getWalletTransactions();
     return list;
   }
 }

@@ -7,6 +7,8 @@ import 'package:chothuexemay_owner/models/feedback_model.dart';
 import 'package:chothuexemay_owner/models/order_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/view_model/feedback_view_model.dart';
+import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
 import 'package:chothuexemay_owner/views/Components/app_bar_main.dart';
 import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
 import 'package:chothuexemay_owner/views/Home/components/body.dart';
@@ -14,6 +16,7 @@ import 'package:chothuexemay_owner/views/RequestHandling/request_handling_view.d
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -75,56 +78,39 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: ColorConstants.background,
         title: TopAppBarMain(),
       ),
-      body: BodyHome(
-          owner: Owner(
-              id: "id",
-              phoneNumber: "phoneNumber",
-              fullname: "fullname",
-              address: "address",
-              numberOfbikes: 1,
-              rating: 3,
-              numberOfRatings: 42,
-              areaId: "areaId",
-              status: 0,
-              adminId: "adminId",
-              banTimes: 0,
-              mail: "mail",
-              feedbacks: [
-            FeedbackModel(
-                content: "contentasdasdasdasdsadas asdasd sadasd asdasd asdas",
-                rating: 4,
-                date: "20/10/2021",
-                image: "https://www.w3schools.com/howto/img_avatar.png",
-                name: "Tung Vu"),
-            FeedbackModel(
-                content: "",
-                rating: 3,
-                date: "20/10/2021",
-                image: "https://www.w3schools.com/howto/img_avatar.png",
-                name: "Tung Vu"),
-            FeedbackModel(
-                content: "contentasdasdasdasdsadas asdasd sadasd asdasd asdas",
-                rating: 5,
-                date: "20/10/2021",
-                image: "https://www.w3schools.com/howto/img_avatar.png",
-                name: "Tung Vu"),
-            FeedbackModel(
-                content: "contentasdasdasdasdsadas asdasd sadasd asdasd asdas",
-                rating: 4,
-                date: "20/10/2021",
-                image: "https://www.w3schools.com/howto/img_avatar.png",
-                name: "Tung Vu"),
-            FeedbackModel(
-                content: "contentasdasdasdasdsadas asdasd sadasd asdasd asdas",
-                rating: 4,
-                date: "20/10/2021",
-                image: "https://www.w3schools.com/howto/img_avatar.png",
-                name: "Tung Vu"),
-          ])),
+      body: FutureBuilder(
+        builder: (context, napshot) {
+          if (napshot.connectionState == ConnectionState.done) {
+            if (napshot.hasData) {
+              final owner = (napshot.data as dynamic)['owner'] as Owner;
+              final feedbacks =
+                  (napshot.data as dynamic)['feedbacks'] as List<FeedbackModel>;
+              return BodyHome(
+                owner: owner,
+                feedbacks: feedbacks,
+              );
+            }
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+        future: getData(context),
+      ),
       bottomNavigationBar: BottomAppBar(
         color: ColorConstants.background,
         child: BottomBar(selected: "home"),
       ),
     );
+  }
+
+  Future<Map<String, dynamic>> getData(BuildContext context) async {
+    Map<String, dynamic> list = {};
+    list['owner'] =
+        await Provider.of<OwnerViewModel>(context, listen: false).viewProfile();
+    list['feedbacks'] =
+        await Provider.of<FeedbackViewModel>(context, listen: false).getAll();
+
+    return list;
   }
 }
