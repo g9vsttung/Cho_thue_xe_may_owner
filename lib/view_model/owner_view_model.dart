@@ -47,4 +47,7 @@ class OwnerViewModel extends ChangeNotifier {
   Future<List<TransactionHistory>> getWalletTransactions() async {
     return await ownerRepository.getWalletTranstions();
   }
+  Future<bool> updateProfile(String name, String phone, String address)async{
+    return await ownerRepository.updateProfile(name, phone, address);
+  }
 }

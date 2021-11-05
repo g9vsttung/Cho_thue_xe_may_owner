@@ -2,6 +2,7 @@ import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/google_signin_in_view_model.dart';
 import 'package:chothuexemay_owner/views/Appointment/appointment_view.dart';
+import 'package:chothuexemay_owner/views/EditProfile/edit_profile.dart';
 import 'package:chothuexemay_owner/views/Manage/manage_view.dart';
 import 'package:chothuexemay_owner/views/Wallet/wallet_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,7 +56,7 @@ class _BodyProfileState extends State<BodyProfile> {
                         height: 5,
                       ),
                       Text(
-                        "Số điệnn thoại: " + widget.owner.phoneNumber,
+                        "Số điện thoại: " + widget.owner.phoneNumber,
                         style: TextStyle(
                           fontSize: 14,
                         ),
@@ -78,7 +79,11 @@ class _BodyProfileState extends State<BodyProfile> {
                 ],
               ),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return EditProfileView(owner: widget.owner);
+                    },));
+                  },
                   icon: Image.asset(
                     StringConstants.iconDirectory + "edit.png",
                     width: 25,

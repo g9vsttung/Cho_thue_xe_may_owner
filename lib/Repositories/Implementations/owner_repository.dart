@@ -32,9 +32,8 @@ class OwnerRepository implements IOwnerRepository {
   }
 
   @override
-  Future<Owner> updateProfile(Owner owner) {
-    // TODO: implement updateProfile
-    throw UnimplementedError();
+  Future<bool> updateProfile(String name,String phone,String address) {
+    return service.updateProfile(name, phone, address);
   }
 
   @override
