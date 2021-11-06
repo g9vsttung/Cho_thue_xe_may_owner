@@ -39,16 +39,6 @@ class _ManageBody extends State<ManageBody> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Bảng giá",
-              style: TextStyle(
-                  color: ColorConstants.textBold,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18),
-            ),
-            SizedBox(
-              height: 15,
-            ),
             Center(
               // ignore: deprecated_member_use
               child: RaisedButton(

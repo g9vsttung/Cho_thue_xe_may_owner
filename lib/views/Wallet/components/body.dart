@@ -7,12 +7,25 @@ import 'package:chothuexemay_owner/views/Recharge/recharge_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class BodyWallet extends StatelessWidget {
+class BodyWallet extends StatefulWidget {
   Wallet wallet;
   List<TransactionHistory> transactions;
   BodyWallet({Key? key, required this.wallet, required this.transactions})
       : super(key: key);
 
+  @override
+  State<BodyWallet> createState() => _BodyWalletState();
+}
+
+class _BodyWalletState extends State<BodyWallet> {
+  List<TransactionHistory> showList=[];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    showList=widget.transactions;
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -29,42 +42,57 @@ class BodyWallet extends StatelessWidget {
                 right: size.width * 0.074,
                 top: 20,
                 bottom: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
               children: [
-                const Text(
-                  "Lịch sử giao dịch",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
                 Row(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      "Lọc",
+                      "Lịch sử giao dịch",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Image.asset(
-                      StringConstants.iconDirectory + "filter.png",
-                      width: 20,
-                    ),
+                    GestureDetector(
+                      onTap: (){
+                        showMyAlertDialog(size, context);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(top: 5, bottom: 5, left: 10,right: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: ColorConstants.containerBoldBackground
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                             Image.asset(
+                              StringConstants.iconDirectory + "filter.png",
+                              width: 20,
+                            ),
+                            SizedBox(width: 10,),
+                            const Text(
+                              "Bộ lọc",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
                   ],
-                )
+                ),
               ],
             ),
           ),
-          if (transactions.isNotEmpty)
-            for (TransactionHistory trans in transactions)
+          if (showList.isNotEmpty)
+            for (TransactionHistory trans in showList)
               transactionHistory(trans, size),
-          if (transactions.isEmpty) const Text('Chưa có giao dịch nào'),
+          if (showList.isEmpty) const Text('Chưa có giao dịch nào'),
         ],
       ),
     );
@@ -95,7 +123,7 @@ class BodyWallet extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  wallet.balance
+                  widget.wallet.balance
                       .round()
                       .toString()
                       .replaceAllMapped(reg, mathFunc),
@@ -132,7 +160,7 @@ class BodyWallet extends StatelessWidget {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return RechargeView(balance: wallet.balance);
+                      return RechargeView(balance: widget.wallet.balance);
                     },
                   ));
                 },
@@ -194,8 +222,16 @@ class BodyWallet extends StatelessWidget {
     RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
     String Function(Match) mathFunc = (Match match) => '${match[1]}.';
 
-    String text =
-        trans.action ? "Rút tiền từ tài khoản" : "Nạp tiền vào tài khoản";
+    String text ="";
+    if(trans.action){
+      if(trans.bookingId!=null){
+        text= "Rút tiền từ tài khoản";
+      }else{
+        text= "Trả chi phí";
+      }
+    }else{
+      text="Nạp tiền vào tài khoản";
+    }
     Color color = Colors.white;
     String beforeAmount = "";
     if (trans.action) {
@@ -268,14 +304,88 @@ class BodyWallet extends StatelessWidget {
     );
   }
 
-  //true: rút | false: nạp
   List<TransactionHistory> filterTransactions(bool action) {
     List<TransactionHistory> rs = [];
-    for (TransactionHistory transaction in transactions) {
+    for (TransactionHistory transaction in widget.transactions) {
       if (transaction.action == action) {
         rs.add(transaction);
       }
     }
     return rs;
+  }
+
+  showMyAlertDialog(Size size, BuildContext context) {
+    Dialog dialog = Dialog(
+            child: Container(
+        decoration: BoxDecoration(
+          color: ColorConstants.containerBackground,
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Chọn bộ lọc",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              RaisedButton(onPressed: (){
+                Navigator.pop(context, "nap");
+              },
+                color: ColorConstants.containerBoldBackground,
+              child: Text(
+                "Cộng vào"
+              ),),
+              SizedBox(
+                height: 10,
+              ),
+              RaisedButton(onPressed: (){
+                Navigator.pop(context, "rut");
+              },
+                color: ColorConstants.containerBoldBackground,
+                child: Text(
+                    "Trừ ra"
+                ),),
+              SizedBox(
+                height: 10,
+              ),
+              RaisedButton(onPressed: (){
+                Navigator.pop(context, "all");
+              },
+                color: ColorConstants.containerBoldBackground,
+                child: Text(
+                    "Tất cả"
+                ),)
+
+            ],
+          ),
+        ),
+      ),
+      backgroundColor: Colors.white,
+    );
+    Future<dynamic> futureValue = showGeneralDialog(
+      context: context,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return dialog;
+      },
+    ).then((value){
+      if(value == "all"){
+        setState(() {
+          showList= widget.transactions;
+        });
+      }else{
+        bool action=true;
+        if(value == "nap"){
+          action=false;
+        }
+        setState(() {
+          showList= filterTransactions(action);
+        });
+      }
+    });
   }
 }
