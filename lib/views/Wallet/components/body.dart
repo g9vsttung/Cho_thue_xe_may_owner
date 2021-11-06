@@ -19,17 +19,42 @@ class BodyWallet extends StatefulWidget {
 
 class _BodyWalletState extends State<BodyWallet> {
   List<TransactionHistory> showList = [];
-
+  int page=1;
+  bool allLoaded=false;
+  ScrollController scrollController=ScrollController();
   @override
   void initState() {
     super.initState();
     showList = widget.transactions;
+    scrollController.addListener(() {
+      if(scrollController.position.pixels >= scrollController.position.maxScrollExtent){
+        if(allLoaded) {
+          return;
+        }
+        page++;
+        List<TransactionHistory> listAdd=[];
+        //Thêm code get TransactionByPage vô listAdd
+        if(listAdd.isEmpty){
+          allLoaded=true;
+        }else{
+          setState(() {
+            showList.addAll(listAdd);
+          });
+        }
+      }
+    });
   }
-
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    scrollController.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
+      controller: scrollController,
       child: Column(
         children: [
           const SizedBox(
@@ -350,7 +375,7 @@ class _BodyWalletState extends State<BodyWallet> {
                   Navigator.pop(context, "rut");
                 },
                 color: ColorConstants.containerBoldBackground,
-                child: const Text("Ngườn chi"),
+                child: const Text("Nguồn chi"),
               ),
               const SizedBox(
                 height: 10,

@@ -23,9 +23,11 @@ class BodyRequestHandling extends StatefulWidget {
 
 class _BodyRequestHandling extends State<BodyRequestHandling> {
   final OwnerViewModel _ownerViewModel = OwnerViewModel();
+
   //Format currency number
   RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
   String Function(Match) mathFunc = (Match match) => '${match[1]}.';
+
   @override
   Widget build(BuildContext context) {
     DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
@@ -244,12 +246,10 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                     color: Colors.redAccent,
                     onPressed: () {
                       _ownerViewModel.denyOrder(widget.order.customerId!);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const HomeView();
-                        }),
-                      );
+                      Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(builder: (context) {
+                            return const HomeView();
+                          }), (Route<dynamic> route) => false);
                     },
                     child: const Text(
                       "TỪ CHỐI",
@@ -266,12 +266,10 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                     color: ColorConstants.background,
                     onPressed: () {
                       _ownerViewModel.acceptOrder(widget.order.customerId!);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const HomeView();
-                        }),
-                      );
+                      Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const HomeView();
+                      }), (Route<dynamic> route) => false);
                     },
                     child: const Text(
                       "CHẤP NHẬN",

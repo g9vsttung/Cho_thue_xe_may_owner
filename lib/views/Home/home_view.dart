@@ -25,13 +25,28 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-Future firebaseCloudMessaging_Listeners(BuildContext context) async {
-  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  _fcm.getToken().then((token) async {
-    log('Got Firebase Token!');
-  });
 
-  FirebaseMessaging.onMessage.listen((RemoteMessage evt) {
+
+class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+    firebaseCloudMessaging_Listeners(context);
+  }
+  Future firebaseCloudMessaging_Listeners(BuildContext context) async {
+    final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+    _fcm.getToken().then((token) async {
+      log('Got Firebase Token!');
+    });
+    FirebaseMessaging.onMessage.listen((RemoteMessage evt) {
+      doNotiAction(evt);
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage evt) {
+      doNotiAction(evt);
+    });
+    //
+  }
+  doNotiAction(RemoteMessage evt){
     final data = jsonDecode(evt.data["json"]);
     OrderModel order = OrderModel(
         licensePlate: data["LicensePlate"],
@@ -44,32 +59,14 @@ Future firebaseCloudMessaging_Listeners(BuildContext context) async {
         customerName: data["CustomerName"],
         price: data["Price"],
         dateReturn: data["DateReturn"]);
-    Navigator.push(context, MaterialPageRoute(
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
       builder: (context) {
         return RequestHandlingView(
           order: order,
         );
       },
-    ));
-  });
-  FirebaseMessaging.onBackgroundMessage((evt) async {
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) {
-        return RequestHandlingView(
-          order: OrderModel.jsonFromByHour(jsonDecode(evt.data["json"])),
-        );
-      },
-    ));
-  });
-}
-
-class _HomeViewState extends State<HomeView> {
-  @override
-  void initState() {
-    super.initState();
-    firebaseCloudMessaging_Listeners(context);
+    ),(Route<dynamic> route)=>false);
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
