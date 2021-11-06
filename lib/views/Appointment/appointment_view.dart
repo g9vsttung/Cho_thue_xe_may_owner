@@ -1,8 +1,6 @@
 import 'package:chothuexemay_owner/models/booking_transaction.dart';
 import 'package:chothuexemay_owner/models/category_model.dart';
-import 'package:chothuexemay_owner/models/customer_model.dart';
 import 'package:chothuexemay_owner/view_model/category_view_model.dart';
-import 'package:chothuexemay_owner/view_model/customer_view_model.dart';
 import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
 import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -58,13 +56,6 @@ class AppointmentView extends StatelessWidget {
     list['transactions'] =
         await Provider.of<OwnerViewModel>(context, listen: false)
             .getBookingTransactions();
-    for (BookingTranstion booking in list['transactions']) {
-      Customer customer =
-          await Provider.of<CustomerViewModel>(context, listen: false)
-              .getCustomerById(booking.customerId);
-      booking.customerName = customer.fullname;
-      booking.customerPhone = customer.phoneNumber;
-    }
     list['categories'] =
         await Provider.of<CategoryViewModel>(context, listen: false).getAll();
     return list;

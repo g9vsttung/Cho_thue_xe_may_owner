@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:chothuexemay_owner/view_model/bike_view_model.dart';
+import 'package:chothuexemay_owner/view_model/booking_view_model.dart';
 import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/view_model/category_view_model.dart';
 import 'package:chothuexemay_owner/view_model/customer_view_model.dart';
@@ -39,6 +40,8 @@ class MyApp extends StatelessWidget {
             create: (create) => CategoryViewModel()),
         ChangeNotifierProvider<FeedbackViewModel>(
             create: (create) => FeedbackViewModel()),
+        ChangeNotifierProvider<BookingTransactionViewModel>(
+            create: (create) => BookingTransactionViewModel()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

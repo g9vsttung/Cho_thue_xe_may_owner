@@ -29,7 +29,9 @@ class BookingTranstion {
       required this.price,
       required this.status,
       required this.voucherCode,
-      required this.address});
+      required this.address,
+      this.customerName,
+      this.customerPhone});
 
   factory BookingTranstion.jsonFrom(Map<String, dynamic> json) {
     return BookingTranstion(
@@ -43,6 +45,8 @@ class BookingTranstion {
         price: json['price'].toDouble() ?? 0,
         status: json['status'] == null ? 0 : json['status'].toInt(),
         voucherCode: json['voucherCode'] ?? "",
-        address: json['address'] ?? "Unknow");
+        address: json['address'] ?? "Unknow",
+        customerName: json['customerName'] ?? "",
+        customerPhone: json['phoneNum'] ?? "");
   }
 }

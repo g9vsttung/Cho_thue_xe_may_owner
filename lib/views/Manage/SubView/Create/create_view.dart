@@ -4,7 +4,6 @@ import 'package:chothuexemay_owner/models/brand_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/views/Components/app_bar.dart';
-import 'package:chothuexemay_owner/views/Components/app_bar_main.dart';
 import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Create/components/body.dart';
 

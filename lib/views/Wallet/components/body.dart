@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, prefer_function_declarations_over_variables
+// ignore_for_file: must_be_immutable, prefer_function_declarations_over_variables, deprecated_member_use
 
 import 'package:chothuexemay_owner/models/history_wallet_model.dart';
 import 'package:chothuexemay_owner/models/wallet_model.dart';
@@ -18,14 +18,14 @@ class BodyWallet extends StatefulWidget {
 }
 
 class _BodyWalletState extends State<BodyWallet> {
-  List<TransactionHistory> showList=[];
+  List<TransactionHistory> showList = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    showList=widget.transactions;
+    showList = widget.transactions;
   }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -55,24 +55,26 @@ class _BodyWalletState extends State<BodyWallet> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         showMyAlertDialog(size, context);
                       },
                       child: Container(
-                        padding: EdgeInsets.only(top: 5, bottom: 5, left: 10,right: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          color: ColorConstants.containerBoldBackground
-                        ),
+                        padding: const EdgeInsets.only(
+                            top: 5, bottom: 5, left: 10, right: 10),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: ColorConstants.containerBoldBackground),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                             Image.asset(
+                            Image.asset(
                               StringConstants.iconDirectory + "filter.png",
                               width: 20,
                             ),
-                            SizedBox(width: 10,),
+                            const SizedBox(
+                              width: 10,
+                            ),
                             const Text(
                               "Bộ lọc",
                               style: TextStyle(
@@ -222,15 +224,15 @@ class _BodyWalletState extends State<BodyWallet> {
     RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
     String Function(Match) mathFunc = (Match match) => '${match[1]}.';
 
-    String text ="";
-    if(trans.action){
-      if(trans.bookingId!=null){
-        text= "Rút tiền từ tài khoản";
-      }else{
-        text= "Trả chi phí";
+    String text = "";
+    if (trans.action) {
+      if (trans.bookingId.isEmpty) {
+        text = "Rút tiền từ tài khoản";
+      } else {
+        text = "Trả chi phí";
       }
-    }else{
-      text="Nạp tiền vào tài khoản";
+    } else {
+      text = "Nạp tiền vào tài khoản";
     }
     Color color = Colors.white;
     String beforeAmount = "";
@@ -316,74 +318,74 @@ class _BodyWalletState extends State<BodyWallet> {
 
   showMyAlertDialog(Size size, BuildContext context) {
     Dialog dialog = Dialog(
-            child: Container(
-        decoration: BoxDecoration(
+      child: Container(
+        decoration: const BoxDecoration(
           color: ColorConstants.containerBackground,
         ),
         child: Padding(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 "Chọn bộ lọc",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              RaisedButton(onPressed: (){
-                Navigator.pop(context, "nap");
-              },
+              RaisedButton(
+                onPressed: () {
+                  Navigator.pop(context, "nap");
+                },
                 color: ColorConstants.containerBoldBackground,
-              child: Text(
-                "Cộng vào"
-              ),),
-              SizedBox(
+                child: const Text("Nguồn thu"),
+              ),
+              const SizedBox(
                 height: 10,
               ),
-              RaisedButton(onPressed: (){
-                Navigator.pop(context, "rut");
-              },
+              RaisedButton(
+                onPressed: () {
+                  Navigator.pop(context, "rut");
+                },
                 color: ColorConstants.containerBoldBackground,
-                child: Text(
-                    "Trừ ra"
-                ),),
-              SizedBox(
+                child: const Text("Ngườn chi"),
+              ),
+              const SizedBox(
                 height: 10,
               ),
-              RaisedButton(onPressed: (){
-                Navigator.pop(context, "all");
-              },
+              RaisedButton(
+                onPressed: () {
+                  Navigator.pop(context, "all");
+                },
                 color: ColorConstants.containerBoldBackground,
-                child: Text(
-                    "Tất cả"
-                ),)
-
+                child: const Text("Tất cả"),
+              )
             ],
           ),
         ),
       ),
       backgroundColor: Colors.white,
     );
+    // ignore: unused_local_variable
     Future<dynamic> futureValue = showGeneralDialog(
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) {
         return dialog;
       },
-    ).then((value){
-      if(value == "all"){
+    ).then((value) {
+      if (value == "all") {
         setState(() {
-          showList= widget.transactions;
+          showList = widget.transactions;
         });
-      }else{
-        bool action=true;
-        if(value == "nap"){
-          action=false;
+      } else {
+        bool action = true;
+        if (value == "nap") {
+          action = false;
         }
         setState(() {
-          showList= filterTransactions(action);
+          showList = filterTransactions(action);
         });
       }
     });

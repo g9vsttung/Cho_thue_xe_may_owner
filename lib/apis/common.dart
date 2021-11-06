@@ -73,6 +73,7 @@ class WalletApiPath {
 
 class BookingApiPath {
   static String GET_ALL_TRANSACTIONS = _URL_API + '/bookings';
+  static String GET_BY_ID = _URL_API + '/bookings/';
 }
 
 class FeedbackApiPath {
