@@ -1,10 +1,13 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
 import 'package:chothuexemay_owner/views/Profile/profile_view.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 // ignore: must_be_immutable
 class BodyEditProfile extends StatefulWidget {
@@ -18,6 +21,7 @@ class BodyEditProfile extends StatefulWidget {
 
 class _BodyEditProfileState extends State<BodyEditProfile> {
   OwnerViewModel ownerViewModel = OwnerViewModel();
+  File? _imageFile;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -43,14 +47,31 @@ class _BodyEditProfileState extends State<BodyEditProfile> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                StringConstants.imageDirectory + "avatar.png",
-                width: size.width * 0.2,
+              CircleAvatar(
+                backgroundImage: previewImage(size),
+                maxRadius: 50,
               )
             ],
           ),
+          Center(
+            child: SizedBox(
+              height: 25,
+              child: RaisedButton(
+                onPressed: () {
+                  pickImage();
+                },
+                color: Colors.grey,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                child: const Text(
+                  "Thay đổi ảnh",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
           SizedBox(
-            height: size.width * 0.1,
+            height: size.width * 0.05,
           ),
           const Text(
             "Họ và tên",
@@ -158,6 +179,25 @@ class _BodyEditProfileState extends State<BodyEditProfile> {
           )
         ],
       ),
+    );
+  }
+
+  Future pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _imageFile = File(pickedFile.path);
+      }
+    });
+  }
+
+  ImageProvider previewImage(Size size) {
+    if (_imageFile != null) {
+      return FileImage(_imageFile!);
+    }
+    return const ExactAssetImage(
+      StringConstants.imageDirectory + "avatar.png",
     );
   }
 }
