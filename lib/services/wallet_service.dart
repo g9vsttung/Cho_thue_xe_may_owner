@@ -39,10 +39,12 @@ class WalletService {
     return response.statusCode == 200;
   }
 
-  Future<List<TransactionHistory>> getWalletTransaction() async {
+  Future<List<TransactionHistory>> getWalletTransaction(
+      int page, int size) async {
     final SharedPreferences _preference = await SharedPreferences.getInstance();
     Uri url = Uri.parse(WalletApiPath.GET_HISTORY_TRANSACTIONS +
-        _preference.getString(GlobalDataConstants.USERID).toString());
+        _preference.getString(GlobalDataConstants.USERID).toString() +
+        '?size=$size&pageNum=$page');
     final headers = {
       'Content-Type': 'application/json ; charset=UTF-8',
     };

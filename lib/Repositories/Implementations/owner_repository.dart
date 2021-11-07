@@ -56,7 +56,8 @@ class OwnerRepository implements IOwnerRepository {
   }
 
   @override
-  Future<List<TransactionHistory>> getWalletTranstions() async {
-    return await _walletService.getWalletTransaction();
+  Future<List<TransactionHistory>> getWalletTranstions(
+      int page, int size) async {
+    return await _walletService.getWalletTransaction(page, size);
   }
 }

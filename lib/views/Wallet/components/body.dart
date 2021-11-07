@@ -3,9 +3,11 @@
 import 'package:chothuexemay_owner/models/history_wallet_model.dart';
 import 'package:chothuexemay_owner/models/wallet_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
 import 'package:chothuexemay_owner/views/Recharge/recharge_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BodyWallet extends StatefulWidget {
   Wallet wallet;
@@ -19,24 +21,25 @@ class BodyWallet extends StatefulWidget {
 
 class _BodyWalletState extends State<BodyWallet> {
   List<TransactionHistory> showList = [];
-  int page=1;
-  bool allLoaded=false;
-  ScrollController scrollController=ScrollController();
+  int page = 1;
+  bool allLoaded = false;
+  ScrollController scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
     showList = widget.transactions;
-    scrollController.addListener(() {
-      if(scrollController.position.pixels >= scrollController.position.maxScrollExtent){
-        if(allLoaded) {
+    scrollController.addListener(() async {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
+        if (allLoaded) {
           return;
         }
         page++;
-        List<TransactionHistory> listAdd=[];
-        //Thêm code get TransactionByPage vô listAdd
-        if(listAdd.isEmpty){
-          allLoaded=true;
-        }else{
+        List<TransactionHistory> listAdd = await loadPage(page);
+
+        if (listAdd.isEmpty) {
+          allLoaded = true;
+        } else {
           setState(() {
             showList.addAll(listAdd);
           });
@@ -44,12 +47,18 @@ class _BodyWalletState extends State<BodyWallet> {
       }
     });
   }
+
+  Future<List<TransactionHistory>> loadPage(int page) async {
+    return await Provider.of<OwnerViewModel>(context, listen: false)
+        .getWalletTransactions(page);
+  }
+
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     scrollController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

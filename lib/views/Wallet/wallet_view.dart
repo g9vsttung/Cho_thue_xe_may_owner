@@ -50,7 +50,7 @@ class WalletView extends StatelessWidget {
         await Provider.of<OwnerViewModel>(context, listen: false).getWallet();
     list['transactions'] =
         await Provider.of<OwnerViewModel>(context, listen: false)
-            .getWalletTransactions();
+            .getWalletTransactions(1);
     return list;
   }
 }

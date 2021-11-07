@@ -9,6 +9,7 @@ import 'package:chothuexemay_owner/models/booking_transaction.dart';
 import 'package:chothuexemay_owner/models/history_wallet_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/models/wallet_model.dart';
+import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class OwnerViewModel extends ChangeNotifier {
@@ -46,8 +47,9 @@ class OwnerViewModel extends ChangeNotifier {
     return await _bookingRepository.getBookingTransactions();
   }
 
-  Future<List<TransactionHistory>> getWalletTransactions() async {
-    return await ownerRepository.getWalletTranstions();
+  Future<List<TransactionHistory>> getWalletTransactions(int page) async {
+    return await ownerRepository.getWalletTranstions(
+        page, StringConstants.SIZE_PAGE);
   }
 
   Future<bool> updateProfile(String name, String phone, String address) async {

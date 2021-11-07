@@ -19,6 +19,7 @@ class StringConstants {
   static const String FIREBASE_FOLDER_IMAGE_BIKE = "BikeImages";
   static const int YEAR_DROPDOWN_START = 2012;
   static const String BEARER = "Bearer ";
+  static const int SIZE_PAGE = 7;
 }
 
 class GlobalDataConstants {
