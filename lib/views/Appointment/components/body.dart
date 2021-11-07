@@ -88,8 +88,8 @@ class _BodyAppointment extends State<BodyAppointment> {
             return;
           }
           pageHistory++;
-          log(pageOngoing.toString());
-          List<BookingTranstion> listAdd = await loadPage(true, pageOngoing);
+          log(pageHistory.toString());
+          List<BookingTranstion> listAdd = await loadPage(true, pageHistory);
           if (listAdd.isEmpty) {
             allLoadedHistory = true;
           } else {
