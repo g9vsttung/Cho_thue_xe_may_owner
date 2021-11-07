@@ -11,9 +11,13 @@ import 'package:url_launcher/url_launcher.dart';
 class BodyAppointment extends StatefulWidget {
   List<BookingTranstion> transactions;
   List<Category> categories;
+  List<BookingTranstion> bookingOngoing = [];
+  List<BookingTranstion> bookingHistory = [];
+
   BodyAppointment(
       {Key? key, required this.transactions, required this.categories})
       : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _BodyAppointment();
@@ -31,7 +35,16 @@ class _BodyAppointment extends State<BodyAppointment> {
     }
   }
 
+  //paging
+  bool allLoadedOngoing = false;
+  bool allLoadedHistory = false;
+  int pageOngoing = 1;
+  int pageHistory = 1;
+  ScrollController scrollController = ScrollController();
+
+  //cate
   String selectedCate = "renting";
+
   //Format currency number
   RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
   String Function(Match) mathFunc = (Match match) => '${match[1]}.';
@@ -40,6 +53,44 @@ class _BodyAppointment extends State<BodyAppointment> {
   void initState() {
     setData();
     super.initState();
+    scrollController.addListener(() async {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
+        if (selectedCate == "renting") {
+          if (allLoadedOngoing) {
+            return;
+          }
+          pageOngoing++;
+          List<BookingTranstion> listAdd = [];
+          if (listAdd.isEmpty) {
+            allLoadedOngoing = true;
+          } else {
+            setState(() {
+              widget.bookingOngoing.addAll(listAdd);
+            });
+          }
+        } else {
+          if (allLoadedHistory) {
+            return;
+          }
+          pageHistory++;
+          List<BookingTranstion> listAdd = [];
+          if (listAdd.isEmpty) {
+            allLoadedHistory = true;
+          } else {
+            setState(() {
+              widget.bookingHistory.addAll(listAdd);
+            });
+          }
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    scrollController.dispose();
   }
 
   @override
@@ -54,7 +105,11 @@ class _BodyAppointment extends State<BodyAppointment> {
         const SizedBox(
           height: 10,
         ),
-        Expanded(child: SingleChildScrollView(child: listAppointmentByCate())),
+        Expanded(
+            child: SingleChildScrollView(
+          child: listAppointmentByCate(),
+          controller: scrollController,
+        )),
       ],
     );
   }
@@ -64,18 +119,16 @@ class _BodyAppointment extends State<BodyAppointment> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (BookingTranstion booking in widget.transactions)
-            if (booking.status == 0 || booking.status == 1)
-              rentDetailBox(booking),
+          for (BookingTranstion booking in widget.bookingOngoing)
+            rentDetailBox(booking),
         ],
       );
     } else {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (BookingTranstion booking in widget.transactions)
-            if (booking.status == 2 || booking.status == 3)
-              rentDetailBox(booking),
+          for (BookingTranstion booking in widget.bookingHistory)
+            rentDetailBox(booking),
         ],
       );
     }

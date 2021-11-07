@@ -7,22 +7,59 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 
 // ignore: must_be_immutable
-class BodyHome extends StatelessWidget {
+class BodyHome extends StatefulWidget {
   Owner owner;
   List<FeedbackModel> feedbacks;
   BodyHome({Key? key, required this.owner, required this.feedbacks})
       : super(key: key);
 
   @override
+  State<BodyHome> createState() => _BodyHomeState();
+}
+
+class _BodyHomeState extends State<BodyHome> {
+  int page = 1;
+  bool allLoaded = false;
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() async {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
+        if (allLoaded) {
+          return;
+        }
+        page++;
+        List<FeedbackModel> listAdd =[];
+        if (listAdd.isEmpty) {
+          allLoaded = true;
+        } else {
+          setState(() {
+            widget.feedbacks.addAll(listAdd);
+          });
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    scrollController.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: scrollController,
       child: Column(
         children: [
           const SizedBox(
             height: 35,
           ),
           Text(
-            "Xin chào, " + owner.fullname,
+            "Xin chào, " + widget.owner.fullname,
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -34,12 +71,12 @@ class BodyHome extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              for (int i = 1; i <= owner.rating.round(); i++)
+              for (int i = 1; i <= widget.owner.rating.round(); i++)
                 Image.asset(
                   StringConstants.iconDirectory + "starRating.png",
                   width: 18,
                 ),
-              for (int i = 1; i <= 5 - owner.rating.round(); i++)
+              for (int i = 1; i <= 5 - widget.owner.rating.round(); i++)
                 Image.asset(
                   StringConstants.iconDirectory + "starBorder.png",
                   width: 18,
@@ -50,7 +87,7 @@ class BodyHome extends StatelessWidget {
             height: 5,
           ),
           Text(
-            "(" + owner.numberOfRatings.toString() + " đánh giá)",
+            "(" + widget.owner.numberOfRatings.toString() + " đánh giá)",
             style: const TextStyle(
               fontSize: 18,
             ),
@@ -74,7 +111,7 @@ class BodyHome extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          for (FeedbackModel feedback in feedbacks) feedbackBox(feedback),
+          for (FeedbackModel feedback in widget.feedbacks) feedbackBox(feedback),
         ],
       ),
     );
