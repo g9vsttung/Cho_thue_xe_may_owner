@@ -1,9 +1,15 @@
-// ignore_for_file: prefer_function_declarations_over_variables
+// ignore_for_file: prefer_function_declarations_over_variables, deprecated_member_use
+import 'dart:developer';
+
 import 'package:chothuexemay_owner/models/booking_transaction.dart';
+import 'package:chothuexemay_owner/view_model/booking_view_model.dart';
+import 'package:chothuexemay_owner/views/Appointment/appointment_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class BodyAppointmentDetail extends StatefulWidget {
@@ -219,7 +225,33 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                     height: 30,
                     margin: const EdgeInsets.only(right: 15),
                     child: RaisedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        bool isSent = await Provider.of<
+                                    BookingTransactionViewModel>(context,
+                                listen: false)
+                            .requestMoveBookingToInProgress(widget.booking.id);
+                        if (isSent) {
+                          Fluttertoast.showToast(
+                            msg: "Xác nhận thành công.",
+                            gravity: ToastGravity.CENTER,
+                            toastLength: Toast.LENGTH_SHORT,
+                          );
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Xác nhận thất bại! Hãy thử lại sau.",
+                            gravity: ToastGravity.CENTER,
+                            toastLength: Toast.LENGTH_SHORT,
+                          );
+                        }
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) =>
+                                const AppointmentView(),
+                          ),
+                          (route) => false,
+                        );
+                      },
                       color: Colors.deepOrange,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),

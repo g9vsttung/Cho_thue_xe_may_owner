@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:chothuexemay_owner/apis/common.dart';
 import 'package:chothuexemay_owner/models/booking_transaction.dart';
@@ -84,5 +85,34 @@ class BookingService {
     } else {
       throw Exception("Unable to perform request");
     }
+  }
+
+  Future<bool> cancelBooking(String id) async {
+    final SharedPreferences _prefs = await SharedPreferences.getInstance();
+    Uri url = Uri.parse(BookingApiPath.GET_ALL_TRANSACTIONS);
+
+    final response = await http.put(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json ; charset=UTF-8',
+          'Authorization':
+              'Bearer ' + _prefs.getString(GlobalDataConstants.TOKEN).toString()
+        },
+        body: jsonEncode({"id": id, "status": 3}));
+
+    return response.statusCode == 200;
+  }
+
+  Future requestMoveBookingToInProgress(String id) async {
+    final SharedPreferences _prefs = await SharedPreferences.getInstance();
+    final headers = <String, String>{
+      'Content-Type': 'application/json ; charset=UTF-8',
+      'Authorization':
+          'Bearer ' + _prefs.getString(GlobalDataConstants.TOKEN).toString()
+    };
+    Uri url = Uri.parse(BookingApiPath.SEND_CONFIRM_NOTI + id);
+    final reponse = await http.get(url, headers: headers);
+    log('Sending Confirm Notification Response Code :' +
+        reponse.statusCode.toString());
+    return reponse.statusCode == 200;
   }
 }

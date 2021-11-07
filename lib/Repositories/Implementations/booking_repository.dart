@@ -31,4 +31,14 @@ class BookingRepository implements IBookingRepository {
       int page, int size) async {
     return await _bookingService.getOngoingBookingTransactions(page, size);
   }
+
+  @override
+  Future<bool> cancelBooking(String id) async {
+    return await _bookingService.cancelBooking(id);
+  }
+
+  @override
+  Future<bool> requestMoveBookingToInProgress(String id) async {
+    return await _bookingService.requestMoveBookingToInProgress(id);
+  }
 }

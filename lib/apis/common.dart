@@ -74,6 +74,8 @@ class WalletApiPath {
 class BookingApiPath {
   static String GET_ALL_TRANSACTIONS = _URL_API + '/bookings';
   static String GET_BY_ID = _URL_API + '/bookings/';
+  static String SEND_CONFIRM_NOTI =
+      "http://18.138.110.46/api/v2/bookings/SendConfirmedNoti?bookingId=";
 }
 
 class FeedbackApiPath {
