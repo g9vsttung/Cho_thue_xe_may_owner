@@ -17,6 +17,7 @@ class StringConstants {
   static const String imageDirectory = "assets/images/";
   static const String iconDirectory = "assets/icons/";
   static const String FIREBASE_FOLDER_IMAGE_BIKE = "BikeImages";
+  static const String FIREBASE_FOLDER_IMAGE_AVATAR = "Avatars";
   static const int YEAR_DROPDOWN_START = 2012;
   static const String BEARER = "Bearer ";
   static const int SIZE_PAGE = 7;
@@ -33,6 +34,11 @@ class ImageConstants {
   static String getFullImagePath(String img) {
     const _token = "7db7d73c-c7bb-4265-b21f-095a97a3986f";
     return "https://firebasestorage.googleapis.com/v0/b/chothuexemay-35838.appspot.com/o/BikeImages%2F$img?alt=media&token=$_token";
+  }
+
+  static String getFullAvatarPath(String img) {
+    const _token = "7db7d73c-c7bb-4265-b21f-095a97a3986f";
+    return "https://firebasestorage.googleapis.com/v0/b/chothuexemay-35838.appspot.com/o/Avatars%2F$img?alt=media&token=$_token";
   }
 
   static const String DEFAULT_IMG_NAME = "defaultimage.jpg";
