@@ -208,6 +208,32 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 15,
+            ),
+            if (widget.booking.status == 0)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    height: 30,
+                    margin: const EdgeInsets.only(right: 15),
+                    child: RaisedButton(
+                      onPressed: () {},
+                      color: Colors.deepOrange,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                      child: const Text(
+                        "Xác nhận đã giao xe",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                  )
+                ],
+              )
           ],
         ),
       ],
