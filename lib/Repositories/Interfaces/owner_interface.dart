@@ -15,4 +15,6 @@ abstract class IOwnerRepository extends GenericRepository {
   Future<Owner> viewProfile();
   Future<Wallet> getWallet();
   Future<List<TransactionHistory>> getWalletTranstions(int page, int size);
+  Future<List<TransactionHistory>> getWalletTranstionsByStatus(
+      int page, int size, bool status);
 }

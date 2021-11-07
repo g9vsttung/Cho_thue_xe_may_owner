@@ -52,6 +52,18 @@ class OwnerViewModel extends ChangeNotifier {
         page, StringConstants.SIZE_PAGE);
   }
 
+  Future<List<TransactionHistory>> getWalletTransactionsStatusFalse(
+      int page) async {
+    return await ownerRepository.getWalletTranstionsByStatus(
+        page, StringConstants.SIZE_PAGE, false);
+  }
+
+  Future<List<TransactionHistory>> getWalletTransactionsStatusTrue(
+      int page) async {
+    return await ownerRepository.getWalletTranstionsByStatus(
+        page, StringConstants.SIZE_PAGE, true);
+  }
+
   Future<bool> updateProfile(String name, String phone, String address) async {
     return await ownerRepository.updateProfile(name, phone, address);
   }

@@ -60,4 +60,11 @@ class OwnerRepository implements IOwnerRepository {
       int page, int size) async {
     return await _walletService.getWalletTransaction(page, size);
   }
+
+  @override
+  Future<List<TransactionHistory>> getWalletTranstionsByStatus(
+      int page, int size, bool status) async {
+    return await _walletService.getWalletTransactionByStatus(
+        page, size, status);
+  }
 }
