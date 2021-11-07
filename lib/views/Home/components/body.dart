@@ -1,10 +1,12 @@
 import 'package:chothuexemay_owner/models/feedback_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/view_model/feedback_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class BodyHome extends StatefulWidget {
@@ -32,7 +34,9 @@ class _BodyHomeState extends State<BodyHome> {
           return;
         }
         page++;
-        List<FeedbackModel> listAdd =[];
+        List<FeedbackModel> listAdd =
+            await Provider.of<FeedbackViewModel>(context, listen: false)
+                .getFeebackByPage(page);
         if (listAdd.isEmpty) {
           allLoaded = true;
         } else {
@@ -49,6 +53,7 @@ class _BodyHomeState extends State<BodyHome> {
     super.dispose();
     scrollController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -111,7 +116,8 @@ class _BodyHomeState extends State<BodyHome> {
           const SizedBox(
             height: 15,
           ),
-          for (FeedbackModel feedback in widget.feedbacks) feedbackBox(feedback),
+          for (FeedbackModel feedback in widget.feedbacks)
+            feedbackBox(feedback),
         ],
       ),
     );

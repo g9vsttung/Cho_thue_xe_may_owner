@@ -25,14 +25,13 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-
-
 class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
     firebaseCloudMessaging_Listeners(context);
   }
+
   Future firebaseCloudMessaging_Listeners(BuildContext context) async {
     final FirebaseMessaging _fcm = FirebaseMessaging.instance;
     _fcm.getToken().then((token) async {
@@ -46,7 +45,8 @@ class _HomeViewState extends State<HomeView> {
     });
     //
   }
-  doNotiAction(RemoteMessage evt){
+
+  doNotiAction(RemoteMessage evt) {
     final data = jsonDecode(evt.data["json"]);
     OrderModel order = OrderModel(
         licensePlate: data["LicensePlate"],
@@ -65,8 +65,9 @@ class _HomeViewState extends State<HomeView> {
           order: order,
         );
       },
-    ),(Route<dynamic> route)=>false);
+    ), (Route<dynamic> route) => false);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +110,8 @@ class _HomeViewState extends State<HomeView> {
     list['owner'] =
         await Provider.of<OwnerViewModel>(context, listen: false).viewProfile();
     list['feedbacks'] =
-        await Provider.of<FeedbackViewModel>(context, listen: false).getAll();
+        await Provider.of<FeedbackViewModel>(context, listen: false)
+            .getFeebackByPage(1);
 
     return list;
   }

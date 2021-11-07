@@ -1,21 +1,27 @@
 // ignore_for_file: must_be_immutable, prefer_function_declarations_over_variables
 
+import 'dart:developer';
+
 import 'package:chothuexemay_owner/models/booking_model.dart';
 import 'package:chothuexemay_owner/models/booking_transaction.dart';
 import 'package:chothuexemay_owner/models/category_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/view_model/booking_view_model.dart';
 import 'package:chothuexemay_owner/views/AppointmentDetail/appointment_detail_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BodyAppointment extends StatefulWidget {
-  List<BookingTranstion> transactions;
   List<Category> categories;
   List<BookingTranstion> bookingOngoing = [];
   List<BookingTranstion> bookingHistory = [];
 
   BodyAppointment(
-      {Key? key, required this.transactions, required this.categories})
+      {Key? key,
+      required this.bookingHistory,
+      required this.bookingOngoing,
+      required this.categories})
       : super(key: key);
 
   @override
@@ -26,7 +32,14 @@ class BodyAppointment extends StatefulWidget {
 
 class _BodyAppointment extends State<BodyAppointment> {
   void setData() {
-    for (BookingTranstion b in widget.transactions) {
+    for (BookingTranstion b in widget.bookingHistory) {
+      for (Category c in widget.categories) {
+        if (b.bike.categoryId == c.id) {
+          b.bike.categoryName = c.name;
+        }
+      }
+    }
+    for (BookingTranstion b in widget.bookingOngoing) {
       for (Category c in widget.categories) {
         if (b.bike.categoryId == c.id) {
           b.bike.categoryName = c.name;
@@ -61,7 +74,8 @@ class _BodyAppointment extends State<BodyAppointment> {
             return;
           }
           pageOngoing++;
-          List<BookingTranstion> listAdd = [];
+          log(pageOngoing.toString());
+          List<BookingTranstion> listAdd = await loadPage(false, pageOngoing);
           if (listAdd.isEmpty) {
             allLoadedOngoing = true;
           } else {
@@ -74,7 +88,8 @@ class _BodyAppointment extends State<BodyAppointment> {
             return;
           }
           pageHistory++;
-          List<BookingTranstion> listAdd = [];
+          log(pageOngoing.toString());
+          List<BookingTranstion> listAdd = await loadPage(true, pageOngoing);
           if (listAdd.isEmpty) {
             allLoadedHistory = true;
           } else {
@@ -461,5 +476,27 @@ class _BodyAppointment extends State<BodyAppointment> {
         return dialog;
       },
     );
+  }
+
+  Future<List<BookingTranstion>> loadPage(bool status, int page) async {
+    List<BookingTranstion> rs = [];
+    //1:done - 0:on going
+    if (status) {
+      rs =
+          await Provider.of<BookingTransactionViewModel>(context, listen: false)
+              .getHistoryBookingTransactions(page);
+    } else {
+      rs =
+          await Provider.of<BookingTransactionViewModel>(context, listen: false)
+              .getOngoingBookingTransactions(page);
+    }
+    for (BookingTranstion b in rs) {
+      for (Category c in widget.categories) {
+        if (b.bike.categoryId == c.id) {
+          b.bike.categoryName = c.name;
+        }
+      }
+    }
+    return rs;
   }
 }

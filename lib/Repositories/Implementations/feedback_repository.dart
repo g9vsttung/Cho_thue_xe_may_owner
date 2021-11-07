@@ -8,4 +8,9 @@ class FeedbackRepository implements IFeedbackRepository {
   Future<List<FeedbackModel>> getAll() async {
     return await _service.getAll();
   }
+
+  @override
+  Future<List<FeedbackModel>> getByPage(int page, int size) async {
+    return await _service.getByPage(page, size);
+  }
 }
