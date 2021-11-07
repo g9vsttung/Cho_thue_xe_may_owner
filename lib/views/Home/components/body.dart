@@ -81,7 +81,7 @@ class BodyHome extends StatelessWidget {
   }
 
   Widget feedbackBox(FeedbackModel feedback) {
-    if (feedback.status == 0) {
+    if (feedback.rating != 0) {
       return Padding(
         padding: const EdgeInsets.only(left: 25, right: 25),
         child: Column(
