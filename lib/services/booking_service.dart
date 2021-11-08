@@ -46,8 +46,8 @@ class BookingService {
   Future<List<BookingTranstion>> getHistoryBookingTransactions(
       int page, int size) async {
     final SharedPreferences _prefs = await SharedPreferences.getInstance();
-    Uri url = Uri.parse(
-        BookingApiPath.GET_ALL_TRANSACTIONS + '?status=1&size=2&pageNum=$page');
+    Uri url = Uri.parse(BookingApiPath.GET_ALL_TRANSACTIONS +
+        '?status=1&size=$size&pageNum=$page');
     final headers = {
       'Content-Type': 'application/json ; charset=UTF-8',
       'Authorization':
