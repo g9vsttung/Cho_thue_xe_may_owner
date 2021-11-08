@@ -1,7 +1,7 @@
 import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
-import 'package:chothuexemay_owner/views/Components/app_bar_main.dart';
+import 'package:chothuexemay_owner/views/Components/app_bar.dart';
 import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
 import 'package:chothuexemay_owner/views/Manage/components/body.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,10 @@ class ManageView extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: ColorConstants.background,
-        title: const TopAppBarMain(),
+        title: TopAppBarTitle(
+          title: "Xe của bạn",
+          hasBack: false,
+        ),
       ),
       body: FutureBuilder(
         builder: (context, napshot) {

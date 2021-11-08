@@ -26,7 +26,10 @@ dependencies:
   firebase_storage: ^10.0.5
   firebase_database: ^6.0.0
   firebase_messaging: ^10.0.8
-  
+
+  fluttertoast: ^8.0.8
+  #phone
+  url_launcher: ^6.0.12
   #Google Icon
   font_awesome_flutter: ^9.1.0
   

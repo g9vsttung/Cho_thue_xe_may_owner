@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors
 
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/views/Appointment/appointment_view.dart';
 import 'package:chothuexemay_owner/views/Home/home_view.dart';
 import 'package:chothuexemay_owner/views/Manage/manage_view.dart';
+import 'package:chothuexemay_owner/views/Profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar extends StatelessWidget {
@@ -69,9 +71,15 @@ class BottomBar extends StatelessWidget {
                 ],
               ),
             ),
-          //=============================================================SEARCH
           if (selected == "order")
             GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return AppointmentView();
+                  },
+                ));
+              },
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -91,6 +99,13 @@ class BottomBar extends StatelessWidget {
             )
           else
             GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return AppointmentView();
+                  },
+                ));
+              },
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -108,7 +123,6 @@ class BottomBar extends StatelessWidget {
                 ],
               ),
             ),
-          //=============================================MANAGE
           if (selected == "manage")
             GestureDetector(
               onTap: () {
@@ -161,9 +175,15 @@ class BottomBar extends StatelessWidget {
                 ],
               ),
             ),
-          //================================================PROFILE
           if (selected == "profile")
             GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return ProfileView();
+                  },
+                ));
+              },
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -183,6 +203,13 @@ class BottomBar extends StatelessWidget {
             )
           else
             GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return ProfileView();
+                  },
+                ));
+              },
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,

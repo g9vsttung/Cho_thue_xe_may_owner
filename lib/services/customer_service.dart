@@ -26,4 +26,14 @@ class CustomerService {
       throw Exception("Unable to perform request");
     }
   }
+
+  Future<Customer> getCustomerById(String customerId) async {
+    Uri url = Uri.parse(CustomerApiPath.GET_BY_ID + customerId);
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      return Customer.jsonFrom(jsonDecode(response.body));
+    } else {
+      throw Exception("Unable to perform request");
+    }
+  }
 }

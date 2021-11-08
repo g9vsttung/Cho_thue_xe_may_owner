@@ -6,7 +6,15 @@ import 'package:flutter/painting.dart';
 
 class TopAppBarTitle extends StatefulWidget {
   String title;
-  TopAppBarTitle({Key? key, required this.title}) : super(key: key);
+  bool hasBack = true;
+
+  TopAppBarTitle({Key? key, required this.title, bool? hasBack})
+      : super(key: key) {
+    if (hasBack != null) {
+      this.hasBack = hasBack;
+    }
+  }
+
   @override
   State<StatefulWidget> createState() {
     return _TopAppBarTitle();
@@ -39,15 +47,16 @@ class _TopAppBarTitle extends State<TopAppBarTitle> {
               ],
             ),
           ),
-          IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Image.asset(
-                "assets/icons/back.png",
-                width: size.width * 0.07,
-                color: Colors.white,
-              )),
+          if (widget.hasBack)
+            IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Image.asset(
+                  "assets/icons/back.png",
+                  width: size.width * 0.07,
+                  color: Colors.white,
+                )),
         ]));
   }
 }

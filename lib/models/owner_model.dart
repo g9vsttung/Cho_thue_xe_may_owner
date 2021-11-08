@@ -1,4 +1,4 @@
-import 'package:chothuexemay_owner/models/bike_model.dart';
+import 'package:chothuexemay_owner/models/feedback_model.dart';
 
 class Owner {
   String id;
@@ -13,7 +13,9 @@ class Owner {
   int numberOfbikes;
   double rating;
   int numberOfRatings;
-  List<Bike> bikes;
+
+  List<FeedbackModel> feedbacks;
+
   factory Owner.jsonFrom(Map<String, dynamic> json) {
     return Owner(
         id: json['id'],
@@ -28,26 +30,27 @@ class Owner {
         banTimes: json['banTimes'] ?? 0,
         mail: json['mail'] ?? "Unknow",
         status: json['status'] ?? 0,
-        bikes: (json['listBike'] == null
+        feedbacks: (json['listFeedback'] == null
             ? []
-            : (json['listBike'] as List)
-                .map((e) => Bike.jsonFrom(e))
+            : (json['listFeedback'] as List)
+                .map((e) => FeedbackModel.jsonFrom(e))
                 .toList()));
   }
 
   //Constructor
-  Owner(
-      {required this.id,
-      required this.phoneNumber,
-      required this.fullname,
-      required this.address,
-      required this.numberOfbikes,
-      required this.rating,
-      required this.numberOfRatings,
-      required this.areaId,
-      required this.status,
-      required this.adminId,
-      required this.banTimes,
-      required this.mail,
-      required this.bikes});
+  Owner({
+    required this.id,
+    required this.phoneNumber,
+    required this.fullname,
+    required this.address,
+    required this.numberOfbikes,
+    required this.rating,
+    required this.numberOfRatings,
+    required this.areaId,
+    required this.status,
+    required this.adminId,
+    required this.banTimes,
+    required this.mail,
+    required this.feedbacks,
+  });
 }

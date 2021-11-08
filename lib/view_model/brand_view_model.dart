@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 class BrandViewModel extends ChangeNotifier {
   final List<Brand> brands = [];
-  //final Map<Brand, List<Category>> brandCates = {};
+
   BrandRepository brandRepository = BrandRepository();
   Future getAll() async {
     brands.clear();

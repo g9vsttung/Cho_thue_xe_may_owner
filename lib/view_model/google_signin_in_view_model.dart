@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:chothuexemay_owner/Repositories/Implementations/owner_repository.dart';
-import 'package:chothuexemay_owner/views/Home/home_view.dart';
+import 'package:chothuexemay_owner/views/Login/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleSignInViewModel extends ChangeNotifier {
@@ -13,21 +15,6 @@ class GoogleSignInViewModel extends ChangeNotifier {
   GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
   final OwnerRepository _ownerRepository = OwnerRepository();
-  static Future<FirebaseApp> initializeFirebase({
-    required BuildContext context,
-  }) async {
-    FirebaseApp firebaseApp = await Firebase.initializeApp();
-
-    User? user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomeView()),
-      );
-    }
-
-    return firebaseApp;
-  }
 
   Future<int> googleLogin({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -54,44 +41,39 @@ class GoogleSignInViewModel extends ChangeNotifier {
         return await _ownerRepository.login(user!.uid, accessToken);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            customSnackBar(
-              content:
-                  'The account already exists with a different credential.',
-            ),
+          Fluttertoast.showToast(
+            msg: "Tài khoản không hợp lệ",
+            gravity: ToastGravity.CENTER,
+            toastLength: Toast.LENGTH_SHORT,
           );
+          log('The account already exists with a different credential.');
         } else if (e.code == 'invalid-credential') {
-          customSnackBar(
-            content: 'Error occurred while accessing credentials. Try again.',
-          );
+          log('Error occurred while accessing credentials. Try again.');
         }
       } catch (e) {
-        customSnackBar(
-          content: 'Error occurred using Google Sign-In. Try again.',
-        );
+        log('Error occurred using Google Sign-In. Try again.');
       }
     }
     notifyListeners();
     return -1;
   }
 
-  static Future<void> signOut({required BuildContext context}) async {
+  Future signOut({required BuildContext context}) async {
     try {
       await FirebaseAuth.instance.signOut();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => LoginView(),
+        ),
+        (route) => false,
+      );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(customSnackBar(
-        content: 'Lỗi, vui lòng thử lại',
-      ));
+      Fluttertoast.showToast(
+        msg: "Xảy ra lỗi, vui lòng thử lại",
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+      );
     }
-  }
-
-  static SnackBar customSnackBar({required String content}) {
-    return SnackBar(
-      backgroundColor: Colors.black,
-      content: Text(
-        content,
-        style: TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
-      ),
-    );
   }
 }

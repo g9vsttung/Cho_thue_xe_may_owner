@@ -1,10 +1,14 @@
 import 'package:chothuexemay_owner/Repositories/Interfaces/owner_interface.dart';
 import 'package:chothuexemay_owner/models/bike_model.dart';
+import 'package:chothuexemay_owner/models/history_wallet_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
+import 'package:chothuexemay_owner/models/wallet_model.dart';
 import 'package:chothuexemay_owner/services/owner_service.dart';
+import 'package:chothuexemay_owner/services/wallet_service.dart';
 
 class OwnerRepository implements IOwnerRepository {
   OwnerService service = OwnerService();
+  final WalletService _walletService = WalletService();
   @override
   Future<List<Owner>> getAll() async {
     Future.delayed(const Duration(seconds: 5));
@@ -23,14 +27,12 @@ class OwnerRepository implements IOwnerRepository {
 
   @override
   Future<bool> logout() {
-    // TODO: implement logout
     throw UnimplementedError();
   }
 
   @override
-  Future<Owner> updateProfile(Owner owner) {
-    // TODO: implement updateProfile
-    throw UnimplementedError();
+  Future<bool> updateProfile(String name, String phone, String address) {
+    return service.updateProfile(name, phone, address);
   }
 
   @override
@@ -41,5 +43,28 @@ class OwnerRepository implements IOwnerRepository {
   @override
   Future<int> denyOrder(String customerId) {
     return service.denyOrder(customerId);
+  }
+
+  @override
+  Future<Owner> viewProfile() {
+    return service.viewProfile();
+  }
+
+  @override
+  Future<Wallet> getWallet() {
+    return _walletService.getWallet();
+  }
+
+  @override
+  Future<List<TransactionHistory>> getWalletTranstions(
+      int page, int size) async {
+    return await _walletService.getWalletTransaction(page, size);
+  }
+
+  @override
+  Future<List<TransactionHistory>> getWalletTranstionsByStatus(
+      int page, int size, bool status) async {
+    return await _walletService.getWalletTransactionByStatus(
+        page, size, status);
   }
 }

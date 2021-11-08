@@ -32,7 +32,6 @@ class _ManageBody extends State<ManageBody> {
   Widget build(BuildContext context) {
     final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
 
-    //List<Brand> brands = _brandViewModel.brands;
     List<Bike> bikes = widget.bikes;
     return Padding(
       padding: EdgeInsets.all(12),
@@ -40,16 +39,6 @@ class _ManageBody extends State<ManageBody> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Bảng giá",
-              style: TextStyle(
-                  color: ColorConstants.textBold,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18),
-            ),
-            SizedBox(
-              height: 15,
-            ),
             Center(
               // ignore: deprecated_member_use
               child: RaisedButton(

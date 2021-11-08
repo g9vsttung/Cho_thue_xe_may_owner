@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_function_declarations_over_variables, deprecated_member_use
+
 import 'package:chothuexemay_owner/models/order_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
@@ -7,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:intl/intl.dart';
 
+// ignore: must_be_immutable
 class BodyRequestHandling extends StatefulWidget {
-  //OrderModel order=OrderModel(customerName: "Nguyễn Văn A",licensePlate: "AB231-SAS41", dateRent: "22/10/2221", bikeName: "Air Blade", bikeImage: "https://lh3.googleusercontent.com/proxy/aukiih8-NiuxNPOwTwwSA3GPhwjpNL64lZ_N172VE5M_LR7rET6C3D70bBRxEpSPSBnkU00X5pEQIZI_KgO4cHBxSS1OOP154QzaQXya5HGQLmbQvOqBPTSf8kJNDtHyFjQx", address: "95 đg 21", price: 130, dateReturn: "21/10/2221");
   OrderModel order;
 
-  BodyRequestHandling({required this.order});
+  BodyRequestHandling({Key? key, required this.order}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -21,9 +23,11 @@ class BodyRequestHandling extends StatefulWidget {
 
 class _BodyRequestHandling extends State<BodyRequestHandling> {
   final OwnerViewModel _ownerViewModel = OwnerViewModel();
+
   //Format currency number
   RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
   String Function(Match) mathFunc = (Match match) => '${match[1]}.';
+
   @override
   Widget build(BuildContext context) {
     DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
@@ -123,7 +127,7 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
               const SizedBox(
                 height: 15,
               ),
-              Container(
+              SizedBox(
                 width: size.width * 0.8,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -233,7 +237,7 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
+              SizedBox(
                   height: 45,
                   width: size.width * 0.46,
                   child: RaisedButton(
@@ -242,12 +246,10 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                     color: Colors.redAccent,
                     onPressed: () {
                       _ownerViewModel.denyOrder(widget.order.customerId!);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const HomeView();
-                        }),
-                      );
+                      Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(builder: (context) {
+                            return const HomeView();
+                          }), (Route<dynamic> route) => false);
                     },
                     child: const Text(
                       "TỪ CHỐI",
@@ -255,7 +257,7 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                           TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                   )),
-              Container(
+              SizedBox(
                   height: 45,
                   width: size.width * 0.46,
                   child: RaisedButton(
@@ -264,12 +266,10 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                     color: ColorConstants.background,
                     onPressed: () {
                       _ownerViewModel.acceptOrder(widget.order.customerId!);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const HomeView();
-                        }),
-                      );
+                      Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const HomeView();
+                      }), (Route<dynamic> route) => false);
                     },
                     child: const Text(
                       "CHẤP NHẬN",

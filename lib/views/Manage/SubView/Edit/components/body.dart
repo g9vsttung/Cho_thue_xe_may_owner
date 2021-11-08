@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, deprecated_member_use
 
 import 'dart:developer';
 import 'dart:io';
@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -87,10 +88,8 @@ class _EditBody extends State<EditBody> {
               Center(
                 child: SizedBox(
                   height: 35,
-                  // ignore: deprecated_member_use
                   child: RaisedButton(
                     onPressed: () async {
-                      //Thêm ảnh ở đây
                       await pickImage();
                     },
                     color: Colors.green,
@@ -114,7 +113,7 @@ class _EditBody extends State<EditBody> {
             ],
           ),
           previewImage(size),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Container(
@@ -187,7 +186,6 @@ class _EditBody extends State<EditBody> {
                           widget.bike.categoryId = value;
                         });
                       },
-                      //brand: widget.bike.,
                     ),
                     DropDownManage(
                       brands: _brandViewModel.brands,
@@ -249,7 +247,6 @@ class _EditBody extends State<EditBody> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              // ignore: deprecated_member_use
               RaisedButton(
                 color: Colors.red,
                 shape: const RoundedRectangleBorder(
@@ -265,7 +262,6 @@ class _EditBody extends State<EditBody> {
                       fontSize: 16),
                 ),
               ),
-              // ignore: deprecated_member_use
               RaisedButton(
                 color: Colors.orange,
                 shape: const RoundedRectangleBorder(
@@ -281,15 +277,28 @@ class _EditBody extends State<EditBody> {
                       _imageFile,
                       widget.bike.imgFile);
                   bool isSuccess = await _bikeViewModel.updateBike(bike);
+
                   if (isSuccess) {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return const ManageView();
-                      },
-                    ));
+                    Fluttertoast.showToast(
+                      msg: "Chỉnh sửa thành công!",
+                      gravity: ToastGravity.CENTER,
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
                   } else {
-                    //Edit failed
+                    Fluttertoast.showToast(
+                      msg: "Chỉnh sửa thất bại! Xin hãy thử lại sau.",
+                      gravity: ToastGravity.CENTER,
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
                   }
+
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute<dynamic>(
+                      builder: (BuildContext context) => const ManageView(),
+                    ),
+                    (route) => false,
+                  );
                 },
                 child: const Text(
                   "Sửa",
@@ -349,15 +358,28 @@ class _EditBody extends State<EditBody> {
                   onPressed: () async {
                     bool isSuccess =
                         await _bikeViewModel.deleteBike(_deleteBike!);
+
                     if (isSuccess) {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const ManageView();
-                        },
-                      ));
+                      Fluttertoast.showToast(
+                        msg: "Xóa thành công.",
+                        gravity: ToastGravity.CENTER,
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
                     } else {
-                      //Delete failed
+                      Fluttertoast.showToast(
+                        msg: "Xóa thất bại! Xin hãy thử lại sau.",
+                        gravity: ToastGravity.CENTER,
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
                     }
+
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute<dynamic>(
+                        builder: (BuildContext context) => const ManageView(),
+                      ),
+                      (route) => false,
+                    );
                   },
                   child: const Text(
                     "Xóa",
@@ -374,6 +396,7 @@ class _EditBody extends State<EditBody> {
       ),
       backgroundColor: Colors.white,
     );
+    // ignore: unused_local_variable
     Future<dynamic> futureValue = showGeneralDialog(
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) {

@@ -35,6 +35,8 @@ class CustomerApiPath {
   static String GET_ALL = "";
   // get a customer by phone
   static String GET_BY_PHONE = _URL_API + "/customers/phone/";
+  //get customer by id
+  static String GET_BY_ID = _URL_API + '/customers/';
 }
 
 class OwnerApiPath {
@@ -49,6 +51,8 @@ class OwnerApiPath {
   static String ACCEPT = _URL_API + "/owners/";
   //Deny order
   static String DENY = _URL_API + "/owners/";
+  //View Profile
+  static String VIEW_PROFILE = _URL_API + "/owners/";
 }
 
 class AdminApiPath {
@@ -57,4 +61,27 @@ class AdminApiPath {
 
 class BrandApiPath {
   static String GET_ALL = _URL_API + "/brands";
+}
+
+class WalletApiPath {
+  static String GET_WALLET = _URL_API + '/wallets/';
+  //get wallet transaction
+  static String GET_HISTORY_TRANSACTIONS =
+      'http://18.138.110.46/api/v2/wallets/transactionHistory/';
+  static String CREATE = _URL_API + '/wallets';
+}
+
+class BookingApiPath {
+  static String GET_ALL_TRANSACTIONS = _URL_API + '/bookings';
+  static String GET_BY_ID = _URL_API + '/bookings/';
+  static String SEND_CONFIRM_NOTI =
+      "http://18.138.110.46/api/v2/bookings/SendConfirmedNoti?bookingId=";
+}
+
+class FeedbackApiPath {
+  static String GET_ALL = _URL_API + '/feedbacks';
+}
+
+class CategoryApiPath {
+  static String GET_ALL = _URL_API + '/categories';
 }

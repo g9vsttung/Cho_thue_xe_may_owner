@@ -3,7 +3,7 @@
 import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/bike_view_model.dart';
-import 'package:chothuexemay_owner/views/Components/app_bar_main.dart';
+import 'package:chothuexemay_owner/views/Components/app_bar.dart';
 import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Edit/components/body.dart';
 
@@ -28,7 +28,7 @@ class EditView extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: ColorConstants.background,
-        title: TopAppBarMain(),
+        title: TopAppBarTitle(title: "Sửa thông tin xe"),
       ),
       body: FutureBuilder(
         builder: (context, napshot) {
