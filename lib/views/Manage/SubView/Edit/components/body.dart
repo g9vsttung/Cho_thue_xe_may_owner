@@ -217,7 +217,7 @@ class _EditBody extends State<EditBody> {
                       ),
                     ),
                     DropDownStatus(
-                      dropDownValue: widget.bike.status.toString(),
+                      dropDownValue: widget.bike.status == 0 ? '0' : '1',
                       onChanged: (value) {
                         setState(() {
                           widget.bike.status = int.parse(value);
@@ -275,12 +275,31 @@ class _EditBody extends State<EditBody> {
                       widget.bike.categoryId,
                       widget.bike.status,
                       _imageFile,
-                      widget.bike.imgFile);
-                  bool isSuccess = await _bikeViewModel.updateBike(bike);
+                      widget.bike.imgPath);
+                  int statusCode = await _bikeViewModel.updateBike(bike);
 
-                  if (isSuccess) {
+                  if (statusCode == 200) {
                     Fluttertoast.showToast(
                       msg: "Chỉnh sửa thành công!",
+                      gravity: ToastGravity.CENTER,
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute<dynamic>(
+                        builder: (BuildContext context) => ManageView(),
+                      ),
+                      (route) => false,
+                    );
+                  } else if (statusCode == 400) {
+                    Fluttertoast.showToast(
+                      msg: "Hoàn thành đơn để chỉnh sửa!",
+                      gravity: ToastGravity.CENTER,
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
+                  } else if (statusCode == 422) {
+                    Fluttertoast.showToast(
+                      msg: "Biển số xe này đã có trong hệ thống",
                       gravity: ToastGravity.CENTER,
                       toastLength: Toast.LENGTH_SHORT,
                     );
@@ -290,15 +309,14 @@ class _EditBody extends State<EditBody> {
                       gravity: ToastGravity.CENTER,
                       toastLength: Toast.LENGTH_SHORT,
                     );
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute<dynamic>(
+                        builder: (BuildContext context) => ManageView(),
+                      ),
+                      (route) => false,
+                    );
                   }
-
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute<dynamic>(
-                      builder: (BuildContext context) => const ManageView(),
-                    ),
-                    (route) => false,
-                  );
                 },
                 child: const Text(
                   "Sửa",
@@ -356,12 +374,19 @@ class _EditBody extends State<EditBody> {
                 RaisedButton(
                   color: Colors.red,
                   onPressed: () async {
-                    bool isSuccess =
+                    int statusCode =
                         await _bikeViewModel.deleteBike(_deleteBike!);
 
-                    if (isSuccess) {
+                    if (statusCode == 200) {
                       Fluttertoast.showToast(
                         msg: "Xóa thành công.",
+                        gravity: ToastGravity.CENTER,
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
+                    } else if (statusCode == 400) {
+                      Fluttertoast.showToast(
+                        msg:
+                            "Xe đang được sử dụng, không thể xóa trong lúc này!",
                         gravity: ToastGravity.CENTER,
                         toastLength: Toast.LENGTH_SHORT,
                       );
@@ -376,7 +401,7 @@ class _EditBody extends State<EditBody> {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute<dynamic>(
-                        builder: (BuildContext context) => const ManageView(),
+                        builder: (BuildContext context) => ManageView(),
                       ),
                       (route) => false,
                     );

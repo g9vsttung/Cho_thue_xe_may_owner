@@ -38,7 +38,17 @@ class GoogleSignInViewModel extends ChangeNotifier {
             await auth.signInWithCredential(credential);
         user = userCredential.user;
         var accessToken = await userCredential.user!.getIdToken();
-        return await _ownerRepository.login(user!.uid, accessToken);
+        int statusCode = await _ownerRepository.login(user!.uid, accessToken);
+        if (statusCode == 404) {
+          final code = await _ownerRepository.register(
+              user.email!, accessToken, user.displayName!);
+          if (code == 200) {
+            return 1;
+          } else {
+            return -1;
+          }
+        }
+        return statusCode;
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           Fluttertoast.showToast(

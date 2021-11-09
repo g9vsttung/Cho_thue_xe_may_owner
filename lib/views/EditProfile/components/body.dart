@@ -3,7 +3,6 @@
 import 'dart:io';
 
 import 'package:chothuexemay_owner/models/owner_model.dart';
-import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
 import 'package:chothuexemay_owner/views/Profile/profile_view.dart';
 import 'package:flutter/material.dart';
@@ -157,11 +156,16 @@ class _BodyEditProfileState extends State<BodyEditProfile> {
           Center(
             child: RaisedButton(
               onPressed: () async {
-                await ownerViewModel.updateProfile(nameController.text,
-                    phoneController.text, addressController.text);
+                Owner o = Owner.updateProfile(
+                    fullname: nameController.text,
+                    phoneNumber: phoneController.text,
+                    address: addressController.text,
+                    imgPath: widget.owner.imgPath,
+                    imgFile: _imageFile);
+                await ownerViewModel.updateProfile(o);
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
-                    return const ProfileView();
+                    return ProfileView();
                   },
                 ));
               },
@@ -193,11 +197,9 @@ class _BodyEditProfileState extends State<BodyEditProfile> {
   }
 
   ImageProvider previewImage(Size size) {
-    if (_imageFile != null) {
-      return FileImage(_imageFile!);
+    if (_imageFile == null) {
+      return NetworkImage(widget.owner.imgPath);
     }
-    return const ExactAssetImage(
-      StringConstants.imageDirectory + "avatar.png",
-    );
+    return FileImage(_imageFile!);
   }
 }

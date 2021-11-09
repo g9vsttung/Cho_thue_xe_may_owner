@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 class BodyProfile extends StatefulWidget {
   Owner owner;
   double balance;
+
   BodyProfile({Key? key, required this.owner, required this.balance})
       : super(key: key);
 
@@ -40,9 +41,9 @@ class _BodyProfileState extends State<BodyProfile> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset(
-                    StringConstants.imageDirectory + "avatar.png",
-                    width: 65,
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(widget.owner.imgPath),
+                    maxRadius: 30,
                   ),
                   const SizedBox(
                     width: 10,
@@ -102,14 +103,14 @@ class _BodyProfileState extends State<BodyProfile> {
         getOptionFrame("Lịch đặt của tôi", () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return const AppointmentView();
+              return AppointmentView();
             },
           ));
         }),
         getOptionFrame("Xe của tôi", () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return const ManageView();
+              return ManageView();
             },
           ));
         }),

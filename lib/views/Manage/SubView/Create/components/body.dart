@@ -22,10 +22,12 @@ class CreateBody extends StatefulWidget {
   String? selectedBrand;
   String selectedYear = StringConstants.YEAR_DROPDOWN_START.toString();
   String? selectedType;
+
   CreateBody({
     Key? key,
     required this.brands,
   }) : super(key: key);
+
   void init() {
     selectedBrand = brands[0].id;
     selectedType = brands[0].categories[0].id;
@@ -247,7 +249,7 @@ class _CreateBody extends State<CreateBody> {
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return const ManageView();
+                      return ManageView();
                     },
                   ));
                 },
@@ -271,11 +273,17 @@ class _CreateBody extends State<CreateBody> {
                       widget.selectedYear,
                       widget.selectedType!,
                       _imageFile);
-                  bool isSuccess = await _bikeViewModel.createNewBike(bike);
+                  int statusCode = await _bikeViewModel.createNewBike(bike);
 
-                  if (isSuccess) {
+                  if (statusCode == 200) {
                     Fluttertoast.showToast(
                       msg: "Thêm xe thành công.",
+                      gravity: ToastGravity.CENTER,
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
+                  } else if (statusCode == 422) {
+                    Fluttertoast.showToast(
+                      msg: "Biển số đã có trong hệ thống",
                       gravity: ToastGravity.CENTER,
                       toastLength: Toast.LENGTH_SHORT,
                     );
@@ -290,7 +298,7 @@ class _CreateBody extends State<CreateBody> {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute<dynamic>(
-                        builder: (BuildContext context) => const ManageView()),
+                        builder: (BuildContext context) => ManageView()),
                     (route) => false,
                   );
                 },

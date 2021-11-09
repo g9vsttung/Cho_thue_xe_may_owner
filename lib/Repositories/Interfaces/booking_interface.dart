@@ -10,4 +10,5 @@ abstract class IBookingRepository extends GenericRepository {
   Future<BookingTranstion> getBookingTransactionById(String id);
   Future<bool> cancelBooking(String id);
   Future<bool> requestMoveBookingToInProgress(String id);
+  Future<bool> finishBooking(String id);
 }

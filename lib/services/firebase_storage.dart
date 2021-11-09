@@ -42,10 +42,12 @@ class FirebaseStorageCustom {
   }
 
   Future<void> deleteFile(String filePath) async {
+    log('Prepare to Delete file: ' + filePath);
     storage
         .refFromURL(filePath)
         .delete()
         .whenComplete(() => 'Deleted $filePath')
-        .onError((error, stackTrace) => log(error.toString()));
+        .onError((error, stackTrace) =>
+            log('Cannot delete img:' + error.toString()));
   }
 }

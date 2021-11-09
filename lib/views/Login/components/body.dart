@@ -1,6 +1,9 @@
 // ignore_for_file: must_be_immutable, avoid_unnecessary_containers, prefer_const_constructors
 
+import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/view_model/google_signin_in_view_model.dart';
+import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
+import 'package:chothuexemay_owner/views/EditProfile/edit_profile.dart';
 import 'package:chothuexemay_owner/views/Home/home_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,8 +42,30 @@ class LoginBody extends StatelessWidget {
                         ),
                         (route) => false,
                       );
-                    } else if (isLoginSuccess == 404) {
-                      //New user
+                    } else if (isLoginSuccess == 1) {
+                      Owner o = await Provider.of<OwnerViewModel>(context,
+                              listen: false)
+                          .viewProfile();
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute<dynamic>(
+                          builder: (BuildContext context) =>
+                              EditProfileView(owner: o),
+                        ),
+                        (route) => false,
+                      );
+                    } else if (isLoginSuccess == 403) {
+                      Fluttertoast.showToast(
+                        msg: 'Tài khoản này đang bị tạm khóa!',
+                        gravity: ToastGravity.CENTER,
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
+                    } else if (isLoginSuccess == -1) {
+                      Fluttertoast.showToast(
+                        msg: 'Tạo tài khoản thất bại! Hãy thử lại sau.',
+                        gravity: ToastGravity.CENTER,
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
                     } else {
                       Fluttertoast.showToast(
                         msg: 'Xin lỗi, bạn không thể đăng nhập lúc này.',

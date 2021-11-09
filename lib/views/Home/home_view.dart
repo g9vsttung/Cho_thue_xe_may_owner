@@ -16,6 +16,7 @@ import 'package:chothuexemay_owner/views/RequestHandling/request_handling_view.d
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
@@ -68,39 +69,59 @@ class _HomeViewState extends State<HomeView> {
     ), (Route<dynamic> route) => false);
   }
 
+  int countExit = 0;
+
+  Future<bool> _onWillPop() async {
+    countExit++;
+    if (countExit != 2) {
+      Fluttertoast.showToast(
+        msg: "Bấm quay về lần nữa để thoát",
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+      );
+      return false;
+    } else {
+      countExit = 0;
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: ColorConstants.background,
-        title: TopAppBarTitle(
-          title: "Trang chủ",
-          hasBack: false,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: ColorConstants.background,
+          title: TopAppBarTitle(
+            title: "Trang chủ",
+            hasBack: false,
+          ),
         ),
-      ),
-      body: FutureBuilder(
-        builder: (context, napshot) {
-          if (napshot.connectionState == ConnectionState.done) {
-            if (napshot.hasData) {
-              final owner = (napshot.data as dynamic)['owner'] as Owner;
-              final feedbacks =
-                  (napshot.data as dynamic)['feedbacks'] as List<FeedbackModel>;
-              return BodyHome(
-                owner: owner,
-                feedbacks: feedbacks,
-              );
+        body: FutureBuilder(
+          builder: (context, napshot) {
+            if (napshot.connectionState == ConnectionState.done) {
+              if (napshot.hasData) {
+                final owner = (napshot.data as dynamic)['owner'] as Owner;
+                final feedbacks = (napshot.data as dynamic)['feedbacks']
+                    as List<FeedbackModel>;
+                return BodyHome(
+                  owner: owner,
+                  feedbacks: feedbacks,
+                );
+              }
             }
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-        future: getData(context),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: ColorConstants.background,
-        child: BottomBar(selected: "home"),
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+          future: getData(context),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: ColorConstants.background,
+          child: BottomBar(selected: "home"),
+        ),
       ),
     );
   }

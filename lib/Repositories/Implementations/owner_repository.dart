@@ -31,8 +31,8 @@ class OwnerRepository implements IOwnerRepository {
   }
 
   @override
-  Future<bool> updateProfile(String name, String phone, String address) {
-    return service.updateProfile(name, phone, address);
+  Future<bool> updateProfile(Owner owner) {
+    return service.updateProfile(owner);
   }
 
   @override
@@ -66,5 +66,11 @@ class OwnerRepository implements IOwnerRepository {
       int page, int size, bool status) async {
     return await _walletService.getWalletTransactionByStatus(
         page, size, status);
+  }
+
+  @override
+  Future<int> register(
+      String email, String accessToken, String displayName) async {
+    return await service.register(email, accessToken, displayName);
   }
 }

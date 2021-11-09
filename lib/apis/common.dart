@@ -43,6 +43,8 @@ class OwnerApiPath {
   static String GET_ALL = _URL_API + "/owners";
   //Login
   static String LOGIN = _URL_API + "/owners/login";
+  //Registration
+  static String REGISTER = _URL_API + "/owners/register";
   //Get owner by id
   static String GET_BY_ID = _URL_API + "/owners/";
   //Get list bike of owner

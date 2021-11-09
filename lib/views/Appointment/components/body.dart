@@ -134,16 +134,26 @@ class _BodyAppointment extends State<BodyAppointment> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (BookingTranstion booking in widget.bookingOngoing)
-            rentDetailBox(booking),
+          if (widget.bookingOngoing.isNotEmpty)
+            for (BookingTranstion booking in widget.bookingOngoing)
+              rentDetailBox(booking),
+          if (widget.bookingOngoing.isEmpty)
+            const Center(
+              child: Text("Hiện bạn chưa có đơn nào đang cho thuê!"),
+            )
         ],
       );
     } else {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (BookingTranstion booking in widget.bookingHistory)
-            rentDetailBox(booking),
+          if (widget.bookingHistory.isNotEmpty)
+            for (BookingTranstion booking in widget.bookingHistory)
+              rentDetailBox(booking),
+          if (widget.bookingHistory.isEmpty)
+            const Center(
+              child: Text("Hiện bạn chưa có đơn nào hoàn thành!"),
+            )
         ],
       );
     }

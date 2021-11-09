@@ -11,17 +11,17 @@ class BikeRepository implements IBikeRepository {
   }
 
   @override
-  Future<bool> createNewBike(Bike bike) async {
+  Future<int> createNewBike(Bike bike) async {
     return service.createNewBike(bike);
   }
 
   @override
-  Future<bool> deleteBike(Bike bike) {
+  Future<int> deleteBike(Bike bike) {
     return service.deleteBike(bike);
   }
 
   @override
-  Future<bool> updateBike(Bike bike) {
+  Future<int> updateBike(Bike bike) {
     return service.updateBike(bike);
   }
 

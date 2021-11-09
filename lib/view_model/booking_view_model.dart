@@ -27,4 +27,8 @@ class BookingTransactionViewModel extends ChangeNotifier {
   Future<bool> requestMoveBookingToInProgress(String id) async {
     return await _repository.requestMoveBookingToInProgress(id);
   }
+
+  Future<bool> finishBooking(String id) async {
+    return await _repository.finishBooking(id);
+  }
 }

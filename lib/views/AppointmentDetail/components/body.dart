@@ -29,9 +29,20 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
   final BookingTransactionViewModel _bookingTransactionViewModel =
       BookingTransactionViewModel();
   TextEditingController controller = TextEditingController();
+  String status = "";
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    if (widget.booking.status == 0) {
+      status = "Chờ nhận xe";
+    } else if (widget.booking.status == 1) {
+      status = "Đang thuê";
+    } else if (widget.booking.status == 2) {
+      status = "Hoàn thành";
+    } else {
+      status = "Đã hủy";
+    }
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,7 +112,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                           const Text("Loại xe:",
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
-                          Text(widget.booking.bike.brandName,
+                          Text(widget.booking.bike.categoryName,
                               style: const TextStyle(
                                 fontSize: 18,
                               )),
@@ -177,10 +188,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                           const Text("Trạng thái: ",
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
-                          Text(
-                              widget.booking.status == 0
-                                  ? "Chờ giao xe"
-                                  : "Khách đang thuê",
+                          Text(status,
                               style: const TextStyle(
                                 fontSize: 18,
                               ))
@@ -254,7 +262,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                             context,
                             MaterialPageRoute<dynamic>(
                               builder: (BuildContext context) =>
-                                  const AppointmentView(),
+                                  AppointmentView(),
                             ),
                             (route) => false,
                           );
@@ -273,9 +281,10 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                     )
                   ],
                 ),
-              const SizedBox(
-                height: 15,
-              ),
+              if (widget.booking.status == 0)
+                const SizedBox(
+                  height: 15,
+                ),
               if (widget.booking.status == 0)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -300,7 +309,53 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                       ),
                     )
                   ],
-                )
+                ),
+              if (widget.booking.status == 1)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      height: 30,
+                      margin: const EdgeInsets.only(right: 15),
+                      child: RaisedButton(
+                        onPressed: () async {
+                          bool isSuccess =
+                              await Provider.of<BookingTransactionViewModel>(
+                                      context,
+                                      listen: false)
+                                  .finishBooking(widget.booking.id);
+                          if (isSuccess) {
+                            Fluttertoast.showToast(
+                              msg: "Cập nhật thành công",
+                              gravity: ToastGravity.CENTER,
+                              toastLength: Toast.LENGTH_SHORT,
+                            );
+                            //Update booking status to show the result.
+                            widget.booking.status = 3;
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: "Cập nhật thất bại ",
+                              gravity: ToastGravity.CENTER,
+                              toastLength: Toast.LENGTH_SHORT,
+                            );
+                          }
+                          //reload detail page after update status
+                          setState(() {});
+                        },
+                        color: Colors.orange,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: const Text(
+                          "Hoàn thành đơn",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
             ],
           ),
         ],
@@ -468,7 +523,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                                       context,
                                       MaterialPageRoute<dynamic>(
                                         builder: (BuildContext context) =>
-                                            const AppointmentView(),
+                                            AppointmentView(),
                                       ),
                                       (route) => false,
                                     );

@@ -41,4 +41,9 @@ class BookingRepository implements IBookingRepository {
   Future<bool> requestMoveBookingToInProgress(String id) async {
     return await _bookingService.requestMoveBookingToInProgress(id);
   }
+
+  @override
+  Future<bool> finishBooking(String id) async {
+    return await _bookingService.finishBooking(id);
+  }
 }

@@ -38,6 +38,8 @@ class FeedbackService {
       final body = jsonDecode(response.body);
       Iterable feedbacks = body['data'];
       return feedbacks.map((e) => FeedbackModel.jsonFrom(e)).toList();
+    } else if (response.statusCode == 204) {
+      return [];
     } else {
       throw Exception("Unable to perform request");
     }

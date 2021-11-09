@@ -15,7 +15,7 @@ class WalletService {
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return Wallet.jsonFrom(jsonDecode(response.body));
-    } else if (response.statusCode == 404) {
+    } else if (response.statusCode == 204) {
       await createWallet();
       return getWallet();
     } else {

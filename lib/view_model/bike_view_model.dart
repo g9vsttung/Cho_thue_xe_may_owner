@@ -20,7 +20,7 @@ class BikeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> createNewBike(Bike bike) async {
+  Future<int> createNewBike(Bike bike) async {
     return await _bikeRepository.createNewBike(bike);
   }
 
@@ -32,11 +32,11 @@ class BikeViewModel extends ChangeNotifier {
     this.img = img;
   }
 
-  Future<bool> updateBike(Bike bike) async {
+  Future<int> updateBike(Bike bike) async {
     return await _bikeRepository.updateBike(bike);
   }
 
-  Future<bool> deleteBike(Bike bike) async {
+  Future<int> deleteBike(Bike bike) async {
     return await _bikeRepository.deleteBike(bike);
   }
 }
