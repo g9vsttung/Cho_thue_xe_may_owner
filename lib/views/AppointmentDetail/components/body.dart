@@ -5,6 +5,7 @@ import 'package:chothuexemay_owner/models/booking_transaction.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:chothuexemay_owner/view_model/booking_view_model.dart';
 import 'package:chothuexemay_owner/views/Appointment/appointment_view.dart';
+import 'package:chothuexemay_owner/views/AppointmentDetail/appointment_detail_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -318,8 +319,28 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                       height: 30,
                       margin: const EdgeInsets.only(right: 15),
                       child: RaisedButton(
-                        onPressed: () {
-                          showMyAlertDialog(size);
+                        onPressed: () async {
+                          bool isSuccess =
+                              await Provider.of<BookingTransactionViewModel>(
+                                      context,
+                                      listen: false)
+                                  .finishBooking(widget.booking.id);
+                          if (isSuccess) {
+                            Fluttertoast.showToast(
+                              msg: "Cập nhật thành công",
+                              gravity: ToastGravity.CENTER,
+                              toastLength: Toast.LENGTH_SHORT,
+                            );
+                            widget.booking.status = 3;
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: "Cập nhật thất bại ",
+                              gravity: ToastGravity.CENTER,
+                              toastLength: Toast.LENGTH_SHORT,
+                            );
+                          }
+                          //reload detail page after update status
+                          setState(() {});
                         },
                         color: Colors.orange,
                         shape: const RoundedRectangleBorder(

@@ -115,4 +115,19 @@ class BookingService {
         reponse.statusCode.toString());
     return reponse.statusCode == 200;
   }
+
+  Future<bool> finishBooking(String id) async {
+    final SharedPreferences _prefs = await SharedPreferences.getInstance();
+    Uri url = Uri.parse(BookingApiPath.GET_ALL_TRANSACTIONS);
+
+    final response = await http.put(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json ; charset=UTF-8',
+          'Authorization':
+              'Bearer ' + _prefs.getString(GlobalDataConstants.TOKEN).toString()
+        },
+        body: jsonEncode({"id": id, "status": 2}));
+
+    return response.statusCode == 200;
+  }
 }
