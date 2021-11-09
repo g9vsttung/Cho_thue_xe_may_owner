@@ -29,9 +29,19 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
   final BookingTransactionViewModel _bookingTransactionViewModel =
       BookingTransactionViewModel();
   TextEditingController controller = TextEditingController();
+  String status = "";
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    if (widget.booking.status == 0) {
+      status = "Chờ nhận xe";
+    } else if (widget.booking.status == 1) {
+      status = "Đang thuê";
+    } else if (widget.booking.status == 2) {
+      status = "Hoàn thành";
+    } else {
+      status = "Đã hủy";
+    }
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,7 +111,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                           const Text("Loại xe:",
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
-                          Text(widget.booking.bike.brandName,
+                          Text(widget.booking.bike.categoryName,
                               style: const TextStyle(
                                 fontSize: 18,
                               )),
@@ -177,10 +187,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                           const Text("Trạng thái: ",
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
-                          Text(
-                              widget.booking.status == 0
-                                  ? "Chờ giao xe"
-                                  : "Khách đang thuê",
+                          Text(status,
                               style: const TextStyle(
                                 fontSize: 18,
                               ))
