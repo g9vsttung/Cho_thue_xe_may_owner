@@ -1,5 +1,7 @@
 import 'package:chothuexemay_owner/models/bike_model.dart';
+import 'package:chothuexemay_owner/models/brand_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
+import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
 import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
 import 'package:chothuexemay_owner/views/Components/app_bar.dart';
 import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
@@ -15,6 +17,8 @@ class ManageView extends StatelessWidget {
     Map<String, List<Object>> list = {};
     await Provider.of<OwnerViewModel>(context, listen: false).getBikes();
     list['bikes'] = Provider.of<OwnerViewModel>(context, listen: false).bikes;
+    await Provider.of<BrandViewModel>(context, listen: false).getAll();
+    list['brands'] = Provider.of<BrandViewModel>(context, listen: false).brands;
     return list;
   }
 
@@ -54,9 +58,14 @@ class ManageView extends StatelessWidget {
               if (napshot.hasData) {
                 final List<Bike> bikes =
                     (napshot.data as dynamic)['bikes'] as List<Bike>;
-                return ManageBody(
-                  bikes: bikes,
-                );
+                final List<Brand> brands =
+                    (napshot.data as dynamic)['brands'] as List<Brand>;
+                if (bikes.isNotEmpty) {
+                  return ManageBody(
+                    bikes: bikes,
+                    brands: brands,
+                  );
+                }
               }
             }
             return const Center(

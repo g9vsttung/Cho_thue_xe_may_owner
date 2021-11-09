@@ -20,15 +20,15 @@ class Owner {
     return Owner(
         id: json['id'],
         phoneNumber: json['phoneNumber'] ?? "",
-        fullname: json['fullname'] ?? "Unknow",
-        address: json['address'] ?? "Unknow",
+        fullname: json['fullname'] ?? "",
+        address: json['address'] ?? "",
         numberOfbikes: json['numberOfBikes'] ?? 0,
         rating: json['rating'] == null ? 0.0 : json['rating'].toDouble(),
         numberOfRatings: json['numberOfRatings'] ?? 0,
-        adminId: json['adminId'] ?? "Unknow",
-        areaId: json['areaId'] ?? "Unknow",
+        adminId: json['adminId'] ?? "",
+        areaId: json['areaId'] ?? "",
         banTimes: json['banTimes'] ?? 0,
-        mail: json['mail'] ?? "Unknow",
+        mail: json['mail'] ?? "",
         status: json['status'] ?? 0,
         feedbacks: (json['listFeedback'] == null
             ? []

@@ -273,11 +273,17 @@ class _CreateBody extends State<CreateBody> {
                       widget.selectedYear,
                       widget.selectedType!,
                       _imageFile);
-                  bool isSuccess = await _bikeViewModel.createNewBike(bike);
+                  int statusCode = await _bikeViewModel.createNewBike(bike);
 
-                  if (isSuccess) {
+                  if (statusCode == 200) {
                     Fluttertoast.showToast(
                       msg: "Thêm xe thành công.",
+                      gravity: ToastGravity.CENTER,
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
+                  } else if (statusCode == 422) {
+                    Fluttertoast.showToast(
+                      msg: "Biển số đã có trong hệ thống",
                       gravity: ToastGravity.CENTER,
                       toastLength: Toast.LENGTH_SHORT,
                     );

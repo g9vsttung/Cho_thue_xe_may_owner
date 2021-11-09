@@ -1,19 +1,19 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors
 
 import 'package:chothuexemay_owner/models/bike_model.dart';
+import 'package:chothuexemay_owner/models/brand_model.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
-import 'package:chothuexemay_owner/view_model/brand_view_model.dart';
-import 'package:chothuexemay_owner/view_model/owner_view_model.dart';
 import 'package:chothuexemay_owner/views/Components/bike_info.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Create/create_view.dart';
 import 'package:chothuexemay_owner/views/Manage/SubView/Edit/edit_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ManageBody extends StatefulWidget {
   List<Bike> bikes;
-  ManageBody({Key? key, required this.bikes}) : super(key: key);
+  List<Brand> brands;
+  ManageBody({Key? key, required this.bikes, required this.brands})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _ManageBody();
@@ -22,17 +22,7 @@ class ManageBody extends StatefulWidget {
 
 class _ManageBody extends State<ManageBody> {
   @override
-  void initState() {
-    super.initState();
-    Provider.of<BrandViewModel>(context, listen: false).getAll();
-    Provider.of<OwnerViewModel>(context, listen: false).getBikes();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final BrandViewModel _brandViewModel = Provider.of<BrandViewModel>(context);
-
-    List<Bike> bikes = widget.bikes;
     return Padding(
       padding: EdgeInsets.all(12),
       child: SingleChildScrollView(
@@ -72,27 +62,39 @@ class _ManageBody extends State<ManageBody> {
             SizedBox(
               height: 15,
             ),
-            for (Bike bike in bikes)
-              BikeInfo(
-                bike: bike,
-                onEdit: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      String value = _brandViewModel.brands[0].id;
-                      String type = _brandViewModel.brands[0].categories[0].id;
-                      String bikeId = bike.id;
-                      return EditView(
-                          bikeId: bikeId,
-                          fisrtSelectBrand: value,
-                          fisrtSelectType: type,
-                          fisrtSelectYear: "2018");
-                    },
-                  ));
-                },
-              ),
+            if (widget.bikes.isNotEmpty)
+              for (Bike bike in widget.bikes)
+                getBikeInfo(bike, widget.brands[0]),
+            if (widget.bikes.isEmpty)
+              const Center(
+                child: Text("Hiện bạn chưa có chiếc xe nào"),
+              )
           ],
         ),
       ),
     );
+  }
+
+  Widget getBikeInfo(Bike bike, Brand brand) {
+    if (bike.status == 0 || bike.status == 4) {
+      return BikeInfo(
+        bike: bike,
+        onEdit: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              String value = brand.id;
+              String type = brand.categories[0].id;
+              String bikeId = bike.id;
+              return EditView(
+                  bikeId: bikeId,
+                  fisrtSelectBrand: value,
+                  fisrtSelectType: type,
+                  fisrtSelectYear: "2018");
+            },
+          ));
+        },
+      );
+    }
+    return Container();
   }
 }

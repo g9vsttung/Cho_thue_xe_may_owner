@@ -116,8 +116,13 @@ class _BodyHomeState extends State<BodyHome> {
           const SizedBox(
             height: 15,
           ),
-          for (FeedbackModel feedback in widget.feedbacks)
-            feedbackBox(feedback),
+          if (widget.feedbacks.isNotEmpty)
+            for (FeedbackModel feedback in widget.feedbacks)
+              feedbackBox(feedback),
+          if (widget.feedbacks.isEmpty)
+            const Center(
+              child: Text("Bạn chưa có đánh giá nào!"),
+            )
         ],
       ),
     );
