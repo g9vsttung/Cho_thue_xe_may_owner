@@ -97,8 +97,9 @@ class BikeService {
       try {
         imgPath = await _firebaseStorageCustom.uploadFile(bike.imgFile!);
         //delete old img
-        if (imgPath != ImageConstants.DEFAULT_IMG_NAME) {
-          _firebaseStorageCustom.deleteFile(bike.imgFileOld!.path);
+        if (bike.imgPath != ImageConstants.DEFAULT_IMG_NAME) {
+          _firebaseStorageCustom.deleteFile(ImageConstants.getDeleteBikePath(
+              ImageConstants.getBikePath(bike.imgPath)));
         }
         if (imgPath == "") {
           log('Cannot upload img to FirebaseStorage');

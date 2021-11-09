@@ -64,7 +64,7 @@ class OwnerViewModel extends ChangeNotifier {
         page, StringConstants.SIZE_PAGE, true);
   }
 
-  Future<bool> updateProfile(String name, String phone, String address) async {
-    return await ownerRepository.updateProfile(name, phone, address);
+  Future<bool> updateProfile(Owner owner) async {
+    return await ownerRepository.updateProfile(owner);
   }
 }

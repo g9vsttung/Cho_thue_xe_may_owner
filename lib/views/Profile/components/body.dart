@@ -41,8 +41,8 @@ class _BodyProfileState extends State<BodyProfile> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset(
-                    StringConstants.imageDirectory + "avatar.png",
+                  Image.network(
+                    widget.owner.imgPath,
                     width: 65,
                   ),
                   const SizedBox(

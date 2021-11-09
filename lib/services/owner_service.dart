@@ -6,6 +6,7 @@ import 'package:chothuexemay_owner/apis/common.dart';
 import 'package:chothuexemay_owner/models/bike_model.dart';
 import 'package:chothuexemay_owner/models/owner_model.dart';
 import 'package:chothuexemay_owner/services/firebase_database.dart';
+import 'package:chothuexemay_owner/services/firebase_storage.dart';
 import 'package:chothuexemay_owner/utils/constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class OwnerService {
   final _firebaseRealtimeService = FirebaseDatabaseCustom();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  final FirebaseStorageCustom _firebaseStorageCustom = FirebaseStorageCustom();
   Future<List<Owner>> getAll() async {
     Uri url = Uri.parse(OwnerApiPath.GET_ALL);
     final response = await http.get(url);
@@ -116,7 +118,31 @@ class OwnerService {
     }
   }
 
-  Future<bool> updateProfile(String name, String phone, String address) async {
+  Future<bool> updateProfile(Owner owner) async {
+    //Storing and get image path
+    String imgPath = owner.imgPath.replaceFirst(
+        'https://firebasestorage.googleapis.com/v0/b/chothuexemay-35838.appspot.com/o/Avatars%2F',
+        ''); //set default img to db
+    imgPath = imgPath.replaceFirst(
+        '?alt=media&token=0de320e1-51c3-403d-a55f-7f513fa272de', '');
+    if (owner.imgFile != null) {
+      try {
+        imgPath = await _firebaseStorageCustom.uploadFile(owner.imgFile!);
+        //delete old img
+        if (owner.imgPath != ImageConstants.DEFAULT_IMG_NAME) {
+          _firebaseStorageCustom.deleteFile(ImageConstants.getDeleteAvatarPath(
+              ImageConstants.getAvatarPath(owner.imgPath)));
+        }
+        if (imgPath == "") {
+          log('Cannot upload img to FirebaseStorage');
+          return false;
+        } else {
+          log('Upload img to FirebaseStorage successfully!');
+        }
+      } catch (e) {
+        log('No img added');
+      }
+    }
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final response = await http.put(Uri.parse(OwnerApiPath.VIEW_PROFILE),
         headers: <String, String>{
@@ -126,9 +152,10 @@ class OwnerService {
         },
         body: jsonEncode({
           "id": prefs.getString(GlobalDataConstants.USERID).toString(),
-          "phoneNumber": phone,
-          "fullname": name,
-          "address": address
+          "phoneNumber": owner.phoneNumber,
+          "fullname": owner.fullname,
+          "address": owner.address,
+          'imgpath': imgPath
         }));
     return response.statusCode == 200;
   }

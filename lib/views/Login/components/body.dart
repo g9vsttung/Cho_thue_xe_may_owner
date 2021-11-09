@@ -54,6 +54,12 @@ class LoginBody extends StatelessWidget {
                         ),
                         (route) => false,
                       );
+                    } else if (isLoginSuccess == 403) {
+                      Fluttertoast.showToast(
+                        msg: 'Tài khoản này đang bị tạm khóa!',
+                        gravity: ToastGravity.CENTER,
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
                     } else if (isLoginSuccess == -1) {
                       Fluttertoast.showToast(
                         msg: 'Tạo tài khoản thất bại! Hãy thử lại sau.',

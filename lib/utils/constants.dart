@@ -37,11 +37,39 @@ class ImageConstants {
   }
 
   static String getFullAvatarPath(String img) {
-    const _token = "7db7d73c-c7bb-4265-b21f-095a97a3986f";
+    const _token = "0de320e1-51c3-403d-a55f-7f513fa272de";
     return "https://firebasestorage.googleapis.com/v0/b/chothuexemay-35838.appspot.com/o/Avatars%2F$img?alt=media&token=$_token";
   }
 
+  static String getDeleteBikePath(String img) {
+    return 'gs://chothuexemay-35838.appspot.com/BikeImages/' + img;
+  }
+
+  static String getBikePath(String path) {
+    String imgPath = path.replaceFirst(
+        'https://firebasestorage.googleapis.com/v0/b/chothuexemay-35838.appspot.com/o/BikeImages%2F',
+        '');
+    imgPath = imgPath.replaceFirst(
+        '?alt=media&token=7db7d73c-c7bb-4265-b21f-095a97a3986f', '');
+    return imgPath;
+  }
+
+  static String getDeleteAvatarPath(String img) {
+    return 'gs://chothuexemay-35838.appspot.com/Avatars/' + img;
+  }
+
+  static String getAvatarPath(String path) {
+    String imgPath = path.replaceFirst(
+        'https://firebasestorage.googleapis.com/v0/b/chothuexemay-35838.appspot.com/o/Avatars%2F',
+        '');
+    imgPath = imgPath.replaceFirst(
+        '?alt=media&token=0de320e1-51c3-403d-a55f-7f513fa272de', '');
+    return imgPath;
+  }
+
   static const String DEFAULT_IMG_NAME = "defaultimage.jpg";
+  static const String IMAGE_AVATAR_DEFAULT_PATH =
+      "https://firebasestorage.googleapis.com/v0/b/chothuexemay-35838.appspot.com/o/Avatars%2Fdefaultimage.jpg?alt=media&token=0de320e1-51c3-403d-a55f-7f513fa272de";
   static const String IMAGE_DEFAULT_PATH =
       "https://firebasestorage.googleapis.com/v0/b/chothuexemay-35838.appspot.com/o/BikeImages%2Fdefaultimage.jpg?alt=media&token=7db7d73c-c7bb-4265-b21f-095a97a3986f";
 }

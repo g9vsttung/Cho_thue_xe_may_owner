@@ -31,8 +31,8 @@ class OwnerRepository implements IOwnerRepository {
   }
 
   @override
-  Future<bool> updateProfile(String name, String phone, String address) {
-    return service.updateProfile(name, phone, address);
+  Future<bool> updateProfile(Owner owner) {
+    return service.updateProfile(owner);
   }
 
   @override
