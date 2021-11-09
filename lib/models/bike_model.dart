@@ -42,7 +42,7 @@ class Bike {
   Bike.createBike(this.licensePlate, this.color, this.modelYear,
       this.categoryId, this.imgFile);
   Bike.updateBike(this.id, this.licensePlate, this.color, this.modelYear,
-      this.categoryId, this.status, this.imgFile, this.imgFileOld);
+      this.categoryId, this.status, this.imgFile, this.imgPath);
   Bike.deleteBike(this.id, this.imgFile);
   factory Bike.jsonFrom(Map<String, dynamic> json) {
     return Bike(

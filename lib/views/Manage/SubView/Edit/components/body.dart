@@ -217,7 +217,7 @@ class _EditBody extends State<EditBody> {
                       ),
                     ),
                     DropDownStatus(
-                      dropDownValue: widget.bike.status.toString(),
+                      dropDownValue: widget.bike.status == 0 ? '0' : '1',
                       onChanged: (value) {
                         setState(() {
                           widget.bike.status = int.parse(value);
@@ -275,7 +275,7 @@ class _EditBody extends State<EditBody> {
                       widget.bike.categoryId,
                       widget.bike.status,
                       _imageFile,
-                      widget.bike.imgFile);
+                      widget.bike.imgPath);
                   int statusCode = await _bikeViewModel.updateBike(bike);
 
                   if (statusCode == 200) {
