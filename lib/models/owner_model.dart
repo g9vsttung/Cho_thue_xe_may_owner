@@ -23,7 +23,7 @@ class Owner {
         fullname: json['fullname'] ?? "Unknow",
         address: json['address'] ?? "Unknow",
         numberOfbikes: json['numberOfBikes'] ?? 0,
-        rating: json['rating'].toDouble() ?? 0,
+        rating: json['rating'] == null ? 0.0 : json['rating'].toDouble(),
         numberOfRatings: json['numberOfRatings'] ?? 0,
         adminId: json['adminId'] ?? "Unknow",
         areaId: json['areaId'] ?? "Unknow",

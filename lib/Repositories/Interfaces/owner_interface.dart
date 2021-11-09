@@ -10,6 +10,7 @@ abstract class IOwnerRepository extends GenericRepository {
   Future<List<Bike>> getListBike();
   Future<bool> updateProfile(String name, String phone, String address);
   Future<bool> logout();
+  Future<int> register(String email, String accessToken, String displayName);
   Future<int> acceptOrder(String customerId);
   Future<int> denyOrder(String customerId);
   Future<Owner> viewProfile();

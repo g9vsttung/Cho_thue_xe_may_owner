@@ -69,6 +69,8 @@ class OwnerService {
       final body = jsonDecode(response.body);
       final Iterable bikes = body;
       return bikes.map((o) => Bike.jsonFrom(o)).toList();
+    } else if (response.statusCode == 404) {
+      return [];
     } else {
       throw Exception("Unable to perform request");
     }
@@ -128,5 +130,46 @@ class OwnerService {
           "address": address
         }));
     return response.statusCode == 200;
+  }
+
+  Future<int> register(
+      String email, String accessToken, String displayName) async {
+    final response = await http.post(
+      Uri.parse(OwnerApiPath.REGISTER),
+      headers: <String, String>{
+        'Content-Type': 'application/json ; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        "accessToken": accessToken,
+        "owner": <String, String>{
+          "phoneNumber": "",
+          "identityNumber": "",
+          "fullname": displayName,
+          "address": "",
+          "identityImg": "",
+          "mail": email
+        }
+      }),
+    );
+    //Store data
+    if (response.statusCode == 200) {
+      final SharedPreferences _preference =
+          await SharedPreferences.getInstance();
+      final body = jsonDecode(response.body);
+      String fullName = displayName;
+      await _preference.setString(GlobalDataConstants.USER_NAME, fullName);
+      String token = body['token'];
+      await _preference.setString(GlobalDataConstants.TOKEN, token);
+      Map<String, dynamic> payload = Jwt.parseJwt(token);
+      log(payload["id"]);
+      await _preference.setString(GlobalDataConstants.USERID, payload["id"]);
+      //Location
+      _firebaseRealtimeService.storingLocationRealtime();
+      //FCM token
+      _fcm.getToken().then((token) {
+        _firebaseRealtimeService.updateTokenFCM(token!);
+      });
+    }
+    return response.statusCode;
   }
 }

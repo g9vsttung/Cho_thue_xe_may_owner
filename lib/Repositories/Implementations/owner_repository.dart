@@ -67,4 +67,10 @@ class OwnerRepository implements IOwnerRepository {
     return await _walletService.getWalletTransactionByStatus(
         page, size, status);
   }
+
+  @override
+  Future<int> register(
+      String email, String accessToken, String displayName) async {
+    return await service.register(email, accessToken, displayName);
+  }
 }
