@@ -127,9 +127,9 @@ class OwnerService {
         '?alt=media&token=0de320e1-51c3-403d-a55f-7f513fa272de', '');
     if (owner.imgFile != null) {
       try {
-        imgPath = await _firebaseStorageCustom.uploadFile(owner.imgFile!);
+        imgPath = await _firebaseStorageCustom.uploadAvatar(owner.imgFile!);
         //delete old img
-        if (owner.imgPath != ImageConstants.DEFAULT_IMG_NAME) {
+        if (owner.imgPath != ImageConstants.IMAGE_AVATAR_DEFAULT_PATH) {
           _firebaseStorageCustom.deleteFile(ImageConstants.getDeleteAvatarPath(
               ImageConstants.getAvatarPath(owner.imgPath)));
         }

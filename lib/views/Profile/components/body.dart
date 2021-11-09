@@ -41,9 +41,9 @@ class _BodyProfileState extends State<BodyProfile> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.network(
-                    widget.owner.imgPath,
-                    width: 65,
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(widget.owner.imgPath),
+                    maxRadius: 30,
                   ),
                   const SizedBox(
                     width: 10,
