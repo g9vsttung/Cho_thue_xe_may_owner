@@ -30,6 +30,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
       BookingTransactionViewModel();
   TextEditingController controller = TextEditingController();
   String status = "";
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -261,7 +262,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                             context,
                             MaterialPageRoute<dynamic>(
                               builder: (BuildContext context) =>
-                                  const AppointmentView(),
+                                  AppointmentView(),
                             ),
                             (route) => false,
                           );
@@ -280,9 +281,10 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                     )
                   ],
                 ),
-              const SizedBox(
-                height: 15,
-              ),
+              if (widget.booking.status == 0)
+                const SizedBox(
+                  height: 15,
+                ),
               if (widget.booking.status == 0)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -307,7 +309,32 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                       ),
                     )
                   ],
-                )
+                ),
+              if (widget.booking.status == 1)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      height: 30,
+                      margin: const EdgeInsets.only(right: 15),
+                      child: RaisedButton(
+                        onPressed: () {
+                          showMyAlertDialog(size);
+                        },
+                        color: Colors.orange,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: const Text(
+                          "Hoàn thành đơn",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
             ],
           ),
         ],
@@ -475,7 +502,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                                       context,
                                       MaterialPageRoute<dynamic>(
                                         builder: (BuildContext context) =>
-                                            const AppointmentView(),
+                                            AppointmentView(),
                                       ),
                                       (route) => false,
                                     );

@@ -295,7 +295,7 @@ class _EditBody extends State<EditBody> {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute<dynamic>(
-                      builder: (BuildContext context) => const ManageView(),
+                      builder: (BuildContext context) => ManageView(),
                     ),
                     (route) => false,
                   );
@@ -376,7 +376,7 @@ class _EditBody extends State<EditBody> {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute<dynamic>(
-                        builder: (BuildContext context) => const ManageView(),
+                        builder: (BuildContext context) => ManageView(),
                       ),
                       (route) => false,
                     );

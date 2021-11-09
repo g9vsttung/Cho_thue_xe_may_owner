@@ -22,10 +22,12 @@ class CreateBody extends StatefulWidget {
   String? selectedBrand;
   String selectedYear = StringConstants.YEAR_DROPDOWN_START.toString();
   String? selectedType;
+
   CreateBody({
     Key? key,
     required this.brands,
   }) : super(key: key);
+
   void init() {
     selectedBrand = brands[0].id;
     selectedType = brands[0].categories[0].id;
@@ -247,7 +249,7 @@ class _CreateBody extends State<CreateBody> {
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return const ManageView();
+                      return ManageView();
                     },
                   ));
                 },
@@ -290,7 +292,7 @@ class _CreateBody extends State<CreateBody> {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute<dynamic>(
-                        builder: (BuildContext context) => const ManageView()),
+                        builder: (BuildContext context) => ManageView()),
                     (route) => false,
                   );
                 },

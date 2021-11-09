@@ -161,7 +161,7 @@ class _BodyEditProfileState extends State<BodyEditProfile> {
                     phoneController.text, addressController.text);
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
-                    return const ProfileView();
+                    return ProfileView();
                   },
                 ));
               },

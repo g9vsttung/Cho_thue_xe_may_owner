@@ -5,10 +5,11 @@ import 'package:chothuexemay_owner/views/Components/app_bar.dart';
 import 'package:chothuexemay_owner/views/Components/botton_app_bar.dart';
 import 'package:chothuexemay_owner/views/Manage/components/body.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class ManageView extends StatelessWidget {
-  const ManageView({Key? key}) : super(key: key);
+  ManageView({Key? key}) : super(key: key);
 
   Future<Map<String, List<Object>>> getData(BuildContext context) async {
     Map<String, List<Object>> list = {};
@@ -17,37 +18,57 @@ class ManageView extends StatelessWidget {
     return list;
   }
 
+  int countExit = 0;
+
+  Future<bool> _onWillPop() async {
+    countExit++;
+    if (countExit != 2) {
+      Fluttertoast.showToast(
+        msg: "Bấm quay về lần nữa để thoát",
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_SHORT,
+      );
+      return false;
+    } else {
+      countExit = 0;
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: ColorConstants.background,
-        title: TopAppBarTitle(
-          title: "Xe của bạn",
-          hasBack: false,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: ColorConstants.background,
+          title: TopAppBarTitle(
+            title: "Xe của bạn",
+            hasBack: false,
+          ),
         ),
-      ),
-      body: FutureBuilder(
-        builder: (context, napshot) {
-          if (napshot.connectionState == ConnectionState.done) {
-            if (napshot.hasData) {
-              final List<Bike> bikes =
-                  (napshot.data as dynamic)['bikes'] as List<Bike>;
-              return ManageBody(
-                bikes: bikes,
-              );
+        body: FutureBuilder(
+          builder: (context, napshot) {
+            if (napshot.connectionState == ConnectionState.done) {
+              if (napshot.hasData) {
+                final List<Bike> bikes =
+                    (napshot.data as dynamic)['bikes'] as List<Bike>;
+                return ManageBody(
+                  bikes: bikes,
+                );
+              }
             }
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-        future: getData(context),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: ColorConstants.background,
-        child: BottomBar(selected: "manage"),
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+          future: getData(context),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: ColorConstants.background,
+          child: BottomBar(selected: "manage"),
+        ),
       ),
     );
   }

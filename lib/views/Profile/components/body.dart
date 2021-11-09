@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 class BodyProfile extends StatefulWidget {
   Owner owner;
   double balance;
+
   BodyProfile({Key? key, required this.owner, required this.balance})
       : super(key: key);
 
@@ -102,14 +103,14 @@ class _BodyProfileState extends State<BodyProfile> {
         getOptionFrame("Lịch đặt của tôi", () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return const AppointmentView();
+              return AppointmentView();
             },
           ));
         }),
         getOptionFrame("Xe của tôi", () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return const ManageView();
+              return ManageView();
             },
           ));
         }),
