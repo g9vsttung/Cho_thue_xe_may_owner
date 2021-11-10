@@ -331,7 +331,7 @@ class _BodyAppointmentDetail extends State<BodyAppointmentDetail> {
                               toastLength: Toast.LENGTH_SHORT,
                             );
                             //Update booking status to show the result.
-                            widget.booking.status = 3;
+                            widget.booking.status = 2;
                           } else {
                             Fluttertoast.showToast(
                               msg: "Cập nhật thất bại ",

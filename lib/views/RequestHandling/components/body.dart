@@ -78,12 +78,12 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      widget.order.licensePlate + " ",
+                      widget.order.licensePlate,
                       style: const TextStyle(fontSize: 18),
                     ),
                     Image.asset(StringConstants.iconDirectory + "point.png"),
                     Text(
-                      " " + widget.order.bikeName,
+                      widget.order.bikeName,
                       style: const TextStyle(fontSize: 18),
                     ),
                   ],
@@ -248,8 +248,8 @@ class _BodyRequestHandling extends State<BodyRequestHandling> {
                       _ownerViewModel.denyOrder(widget.order.customerId!);
                       Navigator.pushAndRemoveUntil(context,
                           MaterialPageRoute(builder: (context) {
-                            return const HomeView();
-                          }), (Route<dynamic> route) => false);
+                        return const HomeView();
+                      }), (Route<dynamic> route) => false);
                     },
                     child: const Text(
                       "TỪ CHỐI",
